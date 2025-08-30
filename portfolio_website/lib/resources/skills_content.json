@@ -7,22 +7,22 @@
       "color": "#0080FF",
       "skills": [
         {
+          "name": "C/C++/C#",
+          "icon": "terminal",
+          "percentage": 75,
+          "description": "Systems & .NET Development"
+        },
+        {
+          "name": "JavaScript/TypeScript",
+          "icon": "javascript",
+          "percentage": 90,
+          "description": "Full-Stack Web Development"
+        },
+        {
           "name": "Python",
           "icon": "code",
           "percentage": 95,
           "description": "Backend & AI Development"
-        },
-        {
-          "name": "JavaScript",
-          "icon": "javascript",
-          "percentage": 90,
-          "description": "Frontend & Backend"
-        },
-        {
-          "name": "TypeScript",
-          "icon": "code",
-          "percentage": 88,
-          "description": "Type-Safe Development"
         },
         {
           "name": "Dart",
@@ -37,10 +37,10 @@
           "description": "Enterprise Applications"
         },
         {
-          "name": "C#",
-          "icon": "window",
-          "percentage": 75,
-          "description": ".NET Development"
+          "name": "PHP",
+          "icon": "php",
+          "percentage": 70,
+          "description": "Web Backend Development"
         },
         {
           "name": "SQL",
@@ -49,7 +49,7 @@
           "description": "Database Queries"
         },
         {
-          "name": "HTML/CSS",
+          "name": "HTML/CSS/Tailwind",
           "icon": "web",
           "percentage": 95,
           "description": "Web Markup & Styling"

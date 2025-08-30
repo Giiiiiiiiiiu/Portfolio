@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import '../modern_skill_card.dart';
+import '../../services/content_service.dart';
 
 class SkillsSection extends StatefulWidget {
   const SkillsSection({Key? key}) : super(key: key);
@@ -11,78 +12,150 @@ class SkillsSection extends StatefulWidget {
 
 class _SkillsSectionState extends State<SkillsSection> {
   String? expandedCategory;
+  final ContentService _contentService = ContentService();
+  Map<String, List<SkillItem>> skillCategories = {};
+  Map<String, IconData> categoryIcons = {};
+  Map<String, Color> categoryColors = {};
+  String title = '';
+  String subtitle = '';
+  bool _isLoading = true;
 
-  final Map<String, List<SkillItem>> skillCategories = {
-    'LANGUAGES': [
-      SkillItem('Python', Icons.code, 95, 'Backend & AI'),
-      SkillItem('JavaScript', Icons.javascript, 90, 'Frontend & Backend'),
-      SkillItem('TypeScript', Icons.code, 88, 'Type-Safe Development'),
-      SkillItem('Dart', Icons.phone_android, 85, 'Flutter Development'),
-      SkillItem('Java', Icons.coffee, 80, 'Enterprise Applications'),
-      SkillItem('C#', Icons.window, 75, '.NET Development'),
-      SkillItem('SQL', Icons.storage, 85, 'Database Queries'),
-      SkillItem('HTML/CSS', Icons.web, 95, 'Web Markup & Styling'),
-    ],
-    'FRAMEWORKS': [
-      SkillItem('React', Icons.web, 90, 'SPA Development'),
-      SkillItem('Next.js', Icons.web_asset, 88, 'Full-Stack React'),
-      SkillItem('Flutter', Icons.mobile_friendly, 85, 'Cross-Platform Apps'),
-      SkillItem('Node.js', Icons.dns, 85, 'Server-Side JavaScript'),
-      SkillItem('Express.js', Icons.api, 83, 'REST APIs'),
-      SkillItem('Django', Icons.security, 75, 'Python Web Framework'),
-      SkillItem('Spring Boot', Icons.settings_applications, 70, 'Java Framework'),
-      SkillItem('Vue.js', Icons.view_agenda, 72, 'Progressive Framework'),
-    ],
-    'DATABASES': [
-      SkillItem('PostgreSQL', Icons.storage, 85, 'Relational Database'),
-      SkillItem('MongoDB', Icons.data_object, 80, 'NoSQL Database'),
-      SkillItem('MySQL', Icons.storage, 82, 'Relational Database'),
-      SkillItem('Redis', Icons.speed, 75, 'In-Memory Cache'),
-      SkillItem('Elasticsearch', Icons.search, 70, 'Search Engine'),
-      SkillItem('Firebase', Icons.cloud, 78, 'Real-time Database'),
-      SkillItem('DynamoDB', Icons.table_chart, 68, 'AWS NoSQL'),
-      SkillItem('SQLite', Icons.phone_android, 75, 'Embedded Database'),
-    ],
-    'CLOUD & DEVOPS': [
-      SkillItem('AWS', Icons.cloud_queue, 85, 'Amazon Web Services'),
-      SkillItem('Microsoft Azure', Icons.cloud_circle, 80, 'Microsoft Cloud'),
-      SkillItem('Google Cloud', Icons.cloud, 75, 'GCP Platform'),
-      SkillItem('Docker', Icons.hub, 82, 'Containerization'),
-      SkillItem('Kubernetes', Icons.hub_outlined, 78, 'Container Orchestration'),
-      SkillItem('CI/CD', Icons.autorenew, 80, 'Jenkins, GitHub Actions'),
-      SkillItem('Terraform', Icons.build, 70, 'Infrastructure as Code'),
-      SkillItem('Linux', Icons.computer, 85, 'Server Administration'),
-    ],
-    'AI INTEGRATION': [
-      SkillItem('OpenAI API', Icons.auto_awesome, 90, 'GPT-4, DALL-E'),
-      SkillItem('LangChain', Icons.link, 80, 'LLM Orchestration'),
-      SkillItem('TensorFlow', Icons.psychology, 75, 'Machine Learning'),
-      SkillItem('PyTorch', Icons.psychology_alt, 70, 'Deep Learning'),
-      SkillItem('Hugging Face', Icons.face, 78, 'NLP Models'),
-      SkillItem('Vector DBs', Icons.scatter_plot, 76, 'Pinecone, Weaviate'),
-      SkillItem('Prompt Engineering', Icons.edit_note, 88, 'LLM Optimization'),
-      SkillItem('RAG Systems', Icons.find_in_page, 82, 'Retrieval Augmented'),
-    ],
-  };
+  @override
+  void initState() {
+    super.initState();
+    _loadSkillsFromJSON();
+  }
 
-  final Map<String, IconData> categoryIcons = {
-    'LANGUAGES': Icons.code,
-    'FRAMEWORKS': Icons.layers,
-    'DATABASES': Icons.storage,
-    'CLOUD & DEVOPS': Icons.cloud,
-    'AI INTEGRATION': Icons.auto_awesome,
-  };
+  Future<void> _loadSkillsFromJSON() async {
+    try {
+      await _contentService.loadSkillsContent();
+      final categories = _contentService.skillCategories;
+      
+      print('Loading skills, found ${categories.length} categories');
+      
+      // Load title and subtitle from JSON
+      title = _contentService.skillsTitle;
+      subtitle = _contentService.skillsContent?['subtitle'] ?? 'Comprehensive skill set across modern technologies';
+      
+      Map<String, List<SkillItem>> loadedCategories = {};
+      Map<String, IconData> loadedIcons = {};
+      Map<String, Color> loadedColors = {};
+      
+      categories.forEach((categoryName, categoryData) {
+        print('Processing category: $categoryName');
+      List<SkillItem> skills = [];
+      if (categoryData['skills'] != null) {
+        for (var skill in categoryData['skills']) {
+          skills.add(SkillItem(
+            skill['name'] ?? '',
+            _getIconData(skill['icon'] ?? 'code'),
+            skill['percentage'] ?? 0,
+            skill['description'] ?? '',
+          ));
+        }
+      }
+      loadedCategories[categoryName] = skills;
+      loadedIcons[categoryName] = _getIconData(categoryData['icon'] ?? 'code');
+      
+      // Parse color safely
+      String colorString = categoryData['color'] ?? '#0080FF';
+      if (colorString.startsWith('#')) {
+        colorString = colorString.replaceFirst('#', '0xFF');
+      } else if (!colorString.startsWith('0x')) {
+        colorString = '0xFF$colorString';
+      }
+      try {
+        loadedColors[categoryName] = Color(int.parse(colorString));
+      } catch (e) {
+        loadedColors[categoryName] = const Color(0xFF0080FF);
+        print('Error parsing color for $categoryName: $e');
+      }
+    });
+    
+      setState(() {
+        skillCategories = loadedCategories;
+        categoryIcons = loadedIcons;
+        categoryColors = loadedColors;
+        _isLoading = false;
+        print('Loaded ${skillCategories.length} categories: ${skillCategories.keys.toList()}');
+      });
+    } catch (e) {
+      print('Error loading skills: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
-  final Map<String, Color> categoryColors = {
-    'LANGUAGES': const Color(0xFF0080FF),
-    'FRAMEWORKS': const Color(0xFF00BFFF),
-    'DATABASES': const Color(0xFF4A90E2),
-    'CLOUD & DEVOPS': const Color(0xFF0066CC),
-    'AI INTEGRATION': const Color(0xFF00CEC9),
-  };
+  IconData _getIconData(String iconName) {
+    switch (iconName) {
+      case 'javascript': return Icons.javascript;
+      case 'code': return Icons.code;
+      case 'terminal': return Icons.terminal;
+      case 'phone_android': return Icons.phone_android;
+      case 'coffee': return Icons.coffee;
+      case 'window': return Icons.window;
+      case 'php': return Icons.code;
+      case 'storage': return Icons.storage;
+      case 'web': return Icons.web;
+      case 'layers': return Icons.layers;
+      case 'web_asset': return Icons.web_asset;
+      case 'mobile_friendly': return Icons.mobile_friendly;
+      case 'dns': return Icons.dns;
+      case 'api': return Icons.api;
+      case 'security': return Icons.security;
+      case 'settings_applications': return Icons.settings_applications;
+      case 'view_agenda': return Icons.view_agenda;
+      case 'data_object': return Icons.data_object;
+      case 'speed': return Icons.speed;
+      case 'search': return Icons.search;
+      case 'cloud': return Icons.cloud;
+      case 'table_chart': return Icons.table_chart;
+      case 'cloud_queue': return Icons.cloud_queue;
+      case 'cloud_circle': return Icons.cloud_circle;
+      case 'hub': return Icons.hub;
+      case 'hub_outlined': return Icons.hub_outlined;
+      case 'autorenew': return Icons.autorenew;
+      case 'build': return Icons.build;
+      case 'computer': return Icons.computer;
+      case 'auto_awesome': return Icons.auto_awesome;
+      case 'link': return Icons.link;
+      case 'psychology': return Icons.psychology;
+      case 'psychology_alt': return Icons.psychology_alt;
+      case 'face': return Icons.face;
+      case 'scatter_plot': return Icons.scatter_plot;
+      case 'edit_note': return Icons.edit_note;
+      case 'find_in_page': return Icons.find_in_page;
+      default: return Icons.code;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Container(
+        height: 400,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF0A0A0A),
+              Color(0xFF121216),
+              Color(0xFF1C1C24),
+              Color(0xFF2C2C34),
+            ],
+            stops: [0.0, 0.3, 0.7, 1.0],
+          ),
+        ),
+        child: const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFF0080FF),
+          ),
+        ),
+      );
+    }
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 20),
       decoration: const BoxDecoration(
@@ -109,7 +182,7 @@ class _SkillsSectionState extends State<SkillsSection> {
               ],
             ).createShader(bounds),
             child: Text(
-              'TECHNICAL MASTERY',
+              title.isNotEmpty ? title : 'TECHNICAL EXPERTISE',
               style: Theme.of(context).textTheme.displayLarge?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w900,
@@ -126,7 +199,7 @@ class _SkillsSectionState extends State<SkillsSection> {
           ),
           const SizedBox(height: 10),
           Text(
-            'Next-Generation Skills & Technologies',
+            subtitle.isNotEmpty ? subtitle : 'Comprehensive skill set across modern technologies',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white.withOpacity(0.7),
               fontWeight: FontWeight.w300,
@@ -153,9 +226,9 @@ class _SkillsSectionState extends State<SkillsSection> {
 
   Widget _buildCategoryCard(BuildContext context, String category) {
     final isExpanded = expandedCategory == category;
-    final color = categoryColors[category]!;
-    final icon = categoryIcons[category]!;
-    final skillCount = skillCategories[category]!.length;
+    final color = categoryColors[category] ?? const Color(0xFF0080FF);
+    final icon = categoryIcons[category] ?? Icons.code;
+    final skillCount = skillCategories[category]?.length ?? 0;
 
     return ModernSkillCard(
       category: category,
@@ -172,8 +245,8 @@ class _SkillsSectionState extends State<SkillsSection> {
   }
 
   Widget _buildExpandedSkills(BuildContext context) {
-    final skills = skillCategories[expandedCategory]!;
-    final color = categoryColors[expandedCategory]!;
+    final skills = skillCategories[expandedCategory] ?? [];
+    final color = categoryColors[expandedCategory] ?? const Color(0xFF0080FF);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
