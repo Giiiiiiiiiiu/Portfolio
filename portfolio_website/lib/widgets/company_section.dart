@@ -64,7 +64,7 @@ class _CompanySectionState extends State<CompanySection> {
                   ],
                 ).createShader(bounds),
                 child: const Text(
-                  'Berufserfahrung',
+                  'MY COMPANY',
                   style: TextStyle(
                     fontSize: 48,
                     fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class _CompanySectionState extends State<CompanySection> {
               ),
               const SizedBox(height: 10),
               Text(
-                'Unternehmen, mit denen ich zusammengearbeitet habe',
+                'Building the Future of Digital Solutions',
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.white.withOpacity(0.7),
@@ -90,44 +90,14 @@ class _CompanySectionState extends State<CompanySection> {
   Widget _buildCompanyGrid(BuildContext context) {
     final companies = [
       {
-        'name': 'Tech Innovations GmbH',
-        'position': 'Senior Full-Stack Developer',
-        'period': '2023 - Heute',
-        'description': 'Entwicklung von Cloud-nativen Anwendungen mit Kubernetes und Microservices',
+        'name': 'FESTUSCODE',
+        'position': 'Founder & Lead Developer',
+        'period': 'Seit 2024',
+        'description': 'Gründer und Hauptentwickler - Innovative Softwarelösungen und digitale Produkte für moderne Unternehmen',
         'logo': FontAwesomeIcons.rocket,
-        'color': const Color(0xFF00D2FF),
-        'technologies': ['Flutter', 'Node.js', 'AWS', 'Docker'],
-        'website': 'https://example.com',
-      },
-      {
-        'name': 'Digital Solutions AG',
-        'position': 'Flutter Developer',
-        'period': '2021 - 2023',
-        'description': 'Mobile App-Entwicklung für iOS und Android mit Flutter',
-        'logo': FontAwesomeIcons.mobileAlt,
-        'color': const Color(0xFF3A7BD5),
-        'technologies': ['Flutter', 'Firebase', 'REST APIs', 'Git'],
-        'website': 'https://example.com',
-      },
-      {
-        'name': 'StartUp Ventures',
-        'position': 'Junior Developer',
-        'period': '2020 - 2021',
-        'description': 'Full-Stack Entwicklung und Prototyping für verschiedene Startup-Projekte',
-        'logo': FontAwesomeIcons.lightbulb,
-        'color': const Color(0xFF8B5CF6),
-        'technologies': ['React', 'Python', 'PostgreSQL', 'CI/CD'],
-        'website': 'https://example.com',
-      },
-      {
-        'name': 'Freelance Projekte',
-        'position': 'Selbstständiger Entwickler',
-        'period': '2019 - 2020',
-        'description': 'Webentwicklung und Consulting für KMUs',
-        'logo': FontAwesomeIcons.laptop,
-        'color': const Color(0xFF10B981),
-        'technologies': ['WordPress', 'JavaScript', 'PHP', 'MySQL'],
-        'website': 'https://example.com',
+        'color': const Color(0xFF0080FF),
+        'technologies': ['React', 'Next.js', 'Flutter', 'TypeScript', 'Node.js', 'AWS', 'PostgreSQL', 'Docker'],
+        'website': 'https://festuscode.com',
       },
     ];
 
@@ -319,7 +289,7 @@ class _CompanySectionState extends State<CompanySection> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Mehr erfahren',
+                        'VISIT WEBSITE',
                         style: TextStyle(
                           fontSize: 14,
                           color: company['color'] as Color,

@@ -350,35 +350,6 @@ class _ModernSkillCardState extends State<ModernSkillCard>
                         ),
                       ),
                       
-                      // Floating particles
-                      if (_isHovered)
-                        ...List.generate(5, (index) {
-                          return AnimatedPositioned(
-                            duration: Duration(milliseconds: 1000 + (index * 200)),
-                            curve: Curves.easeOutBack,
-                            left: _isHovered 
-                              ? 50.0 + (index * 40) + (math.Random().nextDouble() * 20)
-                              : -20,
-                            top: _isHovered 
-                              ? 30.0 + (index * 20) + (math.Random().nextDouble() * 30)
-                              : 250,
-                            child: Container(
-                              width: 6,
-                              height: 6,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: widget.color,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: widget.color,
-                                    blurRadius: 12,
-                                    spreadRadius: 3,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
                     ],
                   ),
                 ),

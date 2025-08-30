@@ -82,36 +82,20 @@ class EducationSection extends StatelessWidget {
   Widget _buildEducationTimeline(BuildContext context) {
     final educationData = [
       {
-        'title': 'Master of Science',
-        'institution': 'Technische Universität',
-        'period': '2022 - 2024',
-        'description': 'Informatik mit Schwerpunkt KI & Machine Learning',
+        'title': 'Bachelor - Angewandte Informatik',
+        'institution': 'Hochschule/Universität',
+        'period': 'Seit 2024',
+        'description': 'Aktuell im Studium - Software Engineering, Web Development, KI-Integration',
         'icon': FontAwesomeIcons.graduationCap,
-        'color': const Color(0xFF00D2FF),
+        'color': const Color(0xFF0080FF),
       },
       {
-        'title': 'Bachelor of Science',
-        'institution': 'Universität',
-        'period': '2018 - 2022',
-        'description': 'Wirtschaftsinformatik',
-        'icon': FontAwesomeIcons.university,
-        'color': const Color(0xFF3A7BD5),
-      },
-      {
-        'title': 'Zertifizierungen',
-        'institution': 'Verschiedene Anbieter',
-        'period': '2020 - Heute',
-        'description': 'AWS Certified, Google Cloud, Microsoft Azure',
-        'icon': FontAwesomeIcons.certificate,
-        'color': const Color(0xFF8B5CF6),
-      },
-      {
-        'title': 'Abitur',
-        'institution': 'Gymnasium',
-        'period': '2010 - 2018',
-        'description': 'Naturwissenschaftlicher Schwerpunkt',
+        'title': 'Fachhochschulreife',
+        'institution': 'Fachoberschule',
+        'period': '2022 - 2024',
+        'description': 'Schwerpunkt Informatik - Programmierung, Datenbanken, Netzwerktechnik',
         'icon': FontAwesomeIcons.school,
-        'color': const Color(0xFF10B981),
+        'color': const Color(0xFF00BFFF),
       },
     ];
 
