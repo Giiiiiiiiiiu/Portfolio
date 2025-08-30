@@ -11,16 +11,16 @@
 ## 📋 Ausstehende Aufgaben
 
 - [x] IT-Fähigkeiten Section mit 3D-Buttons implementieren
-- [ ] Bildungsweg Section entwickeln
-- [ ] Unternehmen Section erstellen
-- [ ] Glassmorphism/Neumorphism Design-Elemente hinzufügen
+- [x] Bildungsweg Section entwickeln
+- [x] Unternehmen Section erstellen
+- [x] Glassmorphism/Neumorphism Design-Elemente hinzufügen
+- [x] Kontakt Section und Footer erstellen
 - [ ] Animationen und Übergänge implementieren
 - [ ] Performance-Optimierung (Lazy Loading, etc.)
 - [ ] Smooth Scrolling implementieren
 - [ ] Dark/Light Mode Toggle hinzufügen
-- [ ] Kontakt Section und Footer erstellen
 - [ ] Testing und Finalisierung
 
 ## 🚀 Nächste Schritte
 
-Als nächstes arbeite ich an der IT-Fähigkeiten Section mit 3D-Buttons.
+Als nächstes: Dark/Light Mode Toggle und finale Optimierungen.
