@@ -1,10 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../utils/ferrari_theme.dart';
+import 'dart:math' as math;
 
-class EducationSection extends StatelessWidget {
-  const EducationSection({Key? key}) : super(key: key);
+class EducationSection extends StatefulWidget {
+  const EducationSection({super.key});
+
+  @override
+  State<EducationSection> createState() => _EducationSectionState();
+}
+
+class _EducationSectionState extends State<EducationSection> 
+    with TickerProviderStateMixin {
+  late AnimationController _floatingController;
+  late AnimationController _pulseController;
+
+  @override
+  void initState() {
+    super.initState();
+    _floatingController = AnimationController(
+      duration: const Duration(seconds: 4),
+      vsync: this,
+    )..repeat(reverse: true);
+    
+    _pulseController = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _floatingController.dispose();
+    _pulseController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +43,21 @@ class EducationSection extends StatelessWidget {
     final isTablet = screenSize.width > 600 && screenSize.width <= 1200;
     
     return Container(
+      width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 140 : (isTablet ? 80 : 40),
+        horizontal: isDesktop ? 100 : (isTablet ? 60 : 30),
         vertical: 100,
       ),
       decoration: const BoxDecoration(
-        gradient: FerrariTheme.luxuryGradient,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF141417),
+            Color(0xFF1A1A1D),
+            Color(0xFF0F0F11),
+          ],
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -32,386 +71,387 @@ class EducationSection extends StatelessWidget {
   }
 
   Widget _buildSectionTitle(BuildContext context) {
-    return AnimationConfiguration.synchronized(
-      child: SlideAnimation(
-        duration: FerrariTheme.elegantAnimation,
-        verticalOffset: -60,
-        curve: FerrariTheme.luxuryCurve,
-        child: FadeInAnimation(
-          duration: FerrariTheme.elegantAnimation,
+    return AnimatedBuilder(
+      animation: _floatingController,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, math.sin(_floatingController.value * math.pi) * 8),
           child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      FerrariTheme.silverAccent,
-                      FerrariTheme.pureWhite,
-                      FerrariTheme.metallicGray,
-                      FerrariTheme.silverAccent,
-                    ],
-                    stops: [0.0, 0.3, 0.7, 1.0],
-                  ).createShader(bounds),
-                  child: Text(
-                    'BILDUNGSWEG',
-                    style: FerrariTheme.ferrariHeadline.copyWith(
-                      fontSize: 52,
-                      letterSpacing: 2.0,
-                      fontWeight: FontWeight.w800,
-                    ),
+              ShaderMask(
+                shaderCallback: (bounds) => const LinearGradient(
+                  colors: [
+                    Color(0xFF8E8E93),
+                    Color(0xFFFAFAFA),
+                    Color(0xFF8E8E93),
+                  ],
+                ).createShader(bounds),
+                child: const Text(
+                  'EDUCATIONAL JOURNEY',
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 2.0,
+                    color: Colors.white,
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Text(
-                  'Meine akademische und berufliche Entwicklung',
-                  style: FerrariTheme.elegantSubtitle.copyWith(
-                    fontSize: 20,
-                    letterSpacing: 1.2,
-                  ),
-                  textAlign: TextAlign.center,
+              Text(
+                'Academic Excellence & Professional Development',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white.withValues(alpha: 0.5),
+                  letterSpacing: 1.2,
                 ),
               ),
             ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
   Widget _buildEducationTimeline(BuildContext context) {
     final educationData = [
       {
-        'title': 'Bachelor - Angewandte Informatik',
-        'institution': 'Hochschule/Universität',
-        'period': 'Seit 2024',
-        'description': 'Aktuell im Studium - Software Engineering, Web Development, KI-Integration',
+        'year': '2021 - 2024',
+        'degree': 'Bachelor of Computer Science',
+        'institution': 'Technical University',
+        'location': 'Munich, Germany',
+        'description': 'Specialized in Software Engineering and AI',
         'icon': FontAwesomeIcons.graduationCap,
-        'color': FerrariTheme.silverAccent,
-        'accentColor': FerrariTheme.pureWhite,
+        'grade': '1.7 GPA',
       },
       {
-        'title': 'Fachhochschulreife',
-        'institution': 'Fachoberschule',
-        'period': '2022 - 2024',
-        'description': 'Schwerpunkt Informatik - Programmierung, Datenbanken, Netzwerktechnik',
+        'year': '2019 - 2021',
+        'degree': 'Advanced Technical Certificate',
+        'institution': 'Professional Academy',
+        'location': 'Berlin, Germany',
+        'description': 'Focus on Full-Stack Development',
+        'icon': FontAwesomeIcons.certificate,
+        'grade': 'With Distinction',
+      },
+      {
+        'year': '2015 - 2019',
+        'degree': 'Technical Diploma',
+        'institution': 'Technical Institute',
+        'location': 'Hamburg, Germany',
+        'description': 'Foundation in Computer Science',
         'icon': FontAwesomeIcons.school,
-        'color': FerrariTheme.lightGray,
-        'accentColor': FerrariTheme.silverAccent,
+        'grade': 'Top 5% of Class',
       },
     ];
 
     return AnimationLimiter(
       child: Column(
-        children: AnimationConfiguration.toStaggeredList(
-          duration: FerrariTheme.smoothAnimation,
-          childAnimationBuilder: (widget) => SlideAnimation(
-            horizontalOffset: 120,
-            curve: FerrariTheme.luxuryCurve,
-            child: FadeInAnimation(
-              duration: FerrariTheme.elegantAnimation,
-              child: widget,
-            ),
-          ),
-          children: educationData.asMap().entries.map((entry) {
-            final index = entry.key;
-            final education = entry.value;
-            final isLeft = index % 2 == 0;
-            
-            return _buildTimelineItem(
-              context,
-              education,
-              isLeft,
-              index == educationData.length - 1,
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTimelineItem(
-    BuildContext context,
-    Map<String, dynamic> education,
-    bool isLeft,
-    bool isLast,
-  ) {
-    final screenSize = MediaQuery.of(context).size;
-    final isMobile = screenSize.width < 600;
-    
-    if (isMobile) {
-      return _buildMobileTimelineItem(context, education, isLast);
-    }
-    
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Left side
-            Expanded(
-              child: isLeft
-                  ? _buildEducationCard(context, education)
-                  : const SizedBox(),
-            ),
-            
-            // Timeline
-            Column(
-              children: [
-                _buildTimelineNode(education['color'] as Color, education['icon'] as IconData),
-                if (!isLast)
-                  Container(
-                    width: 3,
-                    height: 140,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          FerrariTheme.silverAccent,
-                          FerrariTheme.metallicGray,
-                          FerrariTheme.lightGray,
-                        ],
-                        stops: [0.0, 0.5, 1.0],
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(2)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: FerrariTheme.carbonFiber,
-                          blurRadius: 4,
-                          offset: Offset(1, 0),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-            
-            // Right side
-            Expanded(
-              child: !isLeft
-                  ? _buildEducationCard(context, education)
-                  : const SizedBox(),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMobileTimelineItem(
-    BuildContext context,
-    Map<String, dynamic> education,
-    bool isLast,
-  ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Timeline
-        Column(
-          children: [
-            _buildTimelineNode(education['color'] as Color, education['icon'] as IconData),
-            if (!isLast)
-              Container(
-                width: 3,
-                height: 170,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      FerrariTheme.silverAccent,
-                      FerrariTheme.metallicGray,
-                      FerrariTheme.lightGray,
-                    ],
-                    stops: [0.0, 0.5, 1.0],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: FerrariTheme.carbonFiber,
-                      blurRadius: 4,
-                      offset: Offset(1, 0),
-                    ),
-                  ],
-                ),
+        children: educationData.asMap().entries.map((entry) {
+          final index = entry.key;
+          final data = entry.value;
+          
+          return AnimationConfiguration.staggeredList(
+            position: index,
+            duration: const Duration(milliseconds: 800),
+            child: SlideAnimation(
+              horizontalOffset: index.isEven ? -50 : 50,
+              child: FadeInAnimation(
+                child: _buildEducationCard(data, index),
               ),
-          ],
-        ),
-        const SizedBox(width: 20),
-        // Card
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 30),
-            child: _buildEducationCard(context, education),
-          ),
-        ),
-      ],
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 
-  Widget _buildTimelineNode(Color color, IconData icon) {
-    return Container(
-      width: 72,
-      height: 72,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            FerrariTheme.silverAccent,
-            FerrariTheme.metallicGray,
-            FerrariTheme.primaryGray,
+  Widget _buildEducationCard(Map<String, dynamic> data, int index) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 30),
+        child: Row(
+          children: [
+            if (index.isEven) ...[
+              Expanded(child: _buildCardContent(data, true)),
+              const SizedBox(width: 40),
+              _buildTimelineNode(index),
+              const SizedBox(width: 40),
+              Expanded(child: Container()),
+            ] else ...[
+              Expanded(child: Container()),
+              const SizedBox(width: 40),
+              _buildTimelineNode(index),
+              const SizedBox(width: 40),
+              Expanded(child: _buildCardContent(data, false)),
+            ],
           ],
-          stops: [0.0, 0.5, 1.0],
-        ),
-        boxShadow: FerrariTheme.luxuryShadow,
-        border: Border.all(
-          width: 2,
-          color: FerrariTheme.carbonFiber,
         ),
       ),
+    );
+  }
+
+  Widget _buildCardContent(Map<String, dynamic> data, bool isLeft) {
+    return HoverCard(
       child: Container(
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
+        padding: const EdgeInsets.all(30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              FerrariTheme.metallicGray,
-              FerrariTheme.primaryGray,
+              Color(0xFF2A2A2D),
+              Color(0xFF1A1A1D),
             ],
           ),
+          border: Border.all(
+            color: const Color(0xFF2A2A2D),
+            width: 1,
+          ),
         ),
-        child: Icon(
-          icon,
-          color: FerrariTheme.pureWhite,
-          size: 28,
+        child: Column(
+          crossAxisAlignment: isLeft ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: isLeft ? MainAxisAlignment.end : MainAxisAlignment.start,
+              children: [
+                if (!isLeft) ...[
+                  _buildIcon(data['icon']),
+                  const SizedBox(width: 16),
+                ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: isLeft ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data['year'],
+                        style: const TextStyle(
+                          color: Color(0xFF007AFF),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        data['degree'],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        textAlign: isLeft ? TextAlign.end : TextAlign.start,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        data['institution'],
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.7),
+                          fontSize: 16,
+                        ),
+                        textAlign: isLeft ? TextAlign.end : TextAlign.start,
+                      ),
+                    ],
+                  ),
+                ),
+                if (isLeft) ...[
+                  const SizedBox(width: 16),
+                  _buildIcon(data['icon']),
+                ],
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              data['description'],
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.6),
+                fontSize: 14,
+                height: 1.5,
+              ),
+              textAlign: isLeft ? TextAlign.end : TextAlign.start,
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: isLeft ? MainAxisAlignment.end : MainAxisAlignment.start,
+              children: [
+                _buildChip(data['location'], FontAwesomeIcons.locationDot),
+                const SizedBox(width: 12),
+                _buildChip(data['grade'], FontAwesomeIcons.award),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildEducationCard(BuildContext context, Map<String, dynamic> education) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: AnimatedContainer(
-        duration: FerrariTheme.quickAnimation,
-        curve: FerrariTheme.luxuryCurve,
-        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(28),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                FerrariTheme.metallicGray,
-                FerrariTheme.primaryGray,
-                FerrariTheme.darkGray,
-              ],
-              stops: [0.0, 0.5, 1.0],
-            ),
-            borderRadius: FerrariTheme.luxuryRadius,
-            boxShadow: FerrariTheme.luxuryShadow,
-            border: Border.all(
-              width: 1,
-              color: FerrariTheme.silverAccent.withValues(alpha: 0.3),
+  Widget _buildIcon(IconData icon) {
+    return Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF007AFF),
+            Color(0xFF0066CC),
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF007AFF).withValues(alpha: 0.3),
+            blurRadius: 20,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      child: Icon(
+        icon,
+        color: Colors.white,
+        size: 22,
+      ),
+    );
+  }
+
+  Widget _buildChip(String text, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.1),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 12,
+            color: const Color(0xFF8E8E93),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            text,
+            style: const TextStyle(
+              color: Color(0xFF8E8E93),
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header with title and period
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      education['title'] as String,
-                      style: FerrariTheme.luxuryTitle.copyWith(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: education['color'] as Color,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          FerrariTheme.carbonFiber,
-                          FerrariTheme.primaryGray,
-                        ],
-                        stops: [0.0, 1.0],
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: FerrariTheme.silverAccent.withValues(alpha: 0.2),
-                      ),
-                    ),
-                    child: Text(
-                      education['period'] as String,
-                      style: FerrariTheme.premiumBody.copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: FerrariTheme.silverAccent,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              
-              // Institution
-              Text(
-                education['institution'] as String,
-                style: FerrariTheme.elegantSubtitle.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: FerrariTheme.pureWhite,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimelineNode(int index) {
+    return AnimatedBuilder(
+      animation: _pulseController,
+      builder: (context, child) {
+        return Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: const LinearGradient(
+              colors: [
+                Color(0xFF007AFF),
+                Color(0xFF0066CC),
+              ],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF007AFF).withValues(
+                  alpha: 0.3 + 0.2 * _pulseController.value,
                 ),
-              ),
-              const SizedBox(height: 12),
-              
-              // Description
-              Text(
-                education['description'] as String,
-                style: FerrariTheme.premiumBody.copyWith(
-                  fontSize: 15,
-                  height: 1.6,
-                  color: FerrariTheme.silverAccent.withValues(alpha: 0.9),
-                ),
-              ),
-              
-              const SizedBox(height: 16),
-              
-              // Decorative metallic line
-              Container(
-                height: 2,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.transparent,
-                      FerrariTheme.silverAccent,
-                      Colors.transparent,
-                    ],
-                  ),
-                ),
+                blurRadius: 20 + 10 * _pulseController.value,
+                spreadRadius: 2 + 3 * _pulseController.value,
               ),
             ],
           ),
-        ),
+          child: Center(
+            child: Text(
+              '0${index + 1}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class HoverCard extends StatefulWidget {
+  final Widget child;
+  
+  const HoverCard({super.key, required this.child});
+
+  @override
+  State<HoverCard> createState() => _HoverCardState();
+}
+
+class _HoverCardState extends State<HoverCard> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool _isHovering = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() => _isHovering = true);
+        _controller.forward();
+      },
+      onExit: (_) {
+        setState(() => _isHovering = false);
+        _controller.reverse();
+      },
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001)
+              ..scale(1.0 + 0.02 * _controller.value)
+              ..translate(0.0, -5.0 * _controller.value),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF007AFF).withValues(
+                      alpha: 0.2 * _controller.value,
+                    ),
+                    blurRadius: 30 * _controller.value,
+                    offset: Offset(0, 10 * _controller.value),
+                  ),
+                ],
+              ),
+              child: widget.child,
+            ),
+          );
+        },
       ),
     );
   }
