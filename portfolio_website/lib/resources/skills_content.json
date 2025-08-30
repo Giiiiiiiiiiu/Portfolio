@@ -1,322 +1,319 @@
 {
-  "title": "TECHNICAL EXPERTISE",
-  "subtitle": "Comprehensive skill set across modern technologies",
+  "title": "DIGITAL CRAFTSMANSHIP",
+  "subtitle": "Building the future with cutting-edge technologies",
   "categories": {
-    "LANGUAGES": {
-      "icon": "code",
-      "color": "#0080FF",
+    "WEB DEVELOPMENT": {
+      "icon": "language",
+      "color": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      "glowColor": "#667eea",
       "skills": [
         {
-          "name": "C",
-          "icon": "c",
-          "percentage": 70,
-          "description": "Systems Programming"
-        },
-        {
-          "name": "C++",
-          "icon": "c",
-          "percentage": 75,
-          "description": "Object-Oriented Systems"
-        },
-        {
-          "name": "C#",
-          "icon": "window",
-          "percentage": 75,
-          "description": ".NET Development"
-        },
-        {
-          "name": "JavaScript",
-          "icon": "javascript",
-          "percentage": 90,
-          "description": "Web Development"
+          "name": "React & Next.js",
+          "icon": "react",
+          "percentage": 92,
+          "description": "Modern Web Applications",
+          "gradient": "linear-gradient(135deg, #61DAFB 0%, #1976D2 100%)"
         },
         {
           "name": "TypeScript",
-          "icon": "javascript",
-          "percentage": 88,
-          "description": "Type-Safe JavaScript"
-        },
-        {
-          "name": "Python",
-          "icon": "python",
-          "percentage": 95,
-          "description": "Backend & AI Development"
-        },
-        {
-          "name": "Dart",
-          "icon": "dart",
-          "percentage": 85,
-          "description": "Flutter Development"
-        },
-        {
-          "name": "Java",
-          "icon": "java",
-          "percentage": 80,
-          "description": "Enterprise Applications"
-        },
-        {
-          "name": "PHP",
-          "icon": "php",
-          "percentage": 70,
-          "description": "Web Backend Development"
-        },
-        {
-          "name": "SQL",
-          "icon": "sql",
-          "percentage": 85,
-          "description": "Database Queries"
-        },
-        {
-          "name": "HTML",
-          "icon": "html",
-          "percentage": 95,
-          "description": "Web Markup"
-        },
-        {
-          "name": "CSS",
-          "icon": "css",
-          "percentage": 93,
-          "description": "Styling & Layout"
-        },
-        {
-          "name": "SCSS",
-          "icon": "css",
-          "percentage": 85,
-          "description": "CSS Preprocessor"
-        }
-      ]
-    },
-    "FRAMEWORKS": {
-      "icon": "layers",
-      "color": "#00BFFF",
-      "skills": [
-        {
-          "name": "React",
-          "icon": "react",
+          "icon": "code",
           "percentage": 90,
-          "description": "SPA Development"
-        },
-        {
-          "name": "React Native",
-          "icon": "react",
-          "percentage": 82,
-          "description": "Mobile Apps"
-        },
-        {
-          "name": "Next.js",
-          "icon": "react",
-          "percentage": 88,
-          "description": "Full-Stack React"
-        },
-        {
-          "name": "Flutter",
-          "icon": "flutter",
-          "percentage": 85,
-          "description": "Cross-Platform Apps"
-        },
-        {
-          "name": "Node.js",
-          "icon": "nodejs",
-          "percentage": 85,
-          "description": "Server-Side JavaScript"
-        },
-        {
-          "name": "Express.js",
-          "icon": "nodejs",
-          "percentage": 83,
-          "description": "REST APIs"
-        },
-        {
-          "name": "Django",
-          "icon": "django",
-          "percentage": 75,
-          "description": "Python Web Framework"
-        },
-        {
-          "name": "Spring Boot",
-          "icon": "java",
-          "percentage": 70,
-          "description": "Java Framework"
+          "description": "Type-Safe Development",
+          "gradient": "linear-gradient(135deg, #3178C6 0%, #235A9D 100%)"
         },
         {
           "name": "Vue.js",
-          "icon": "vuejs",
-          "percentage": 72,
-          "description": "Progressive Framework"
+          "icon": "view_in_ar",
+          "percentage": 75,
+          "description": "Progressive Framework",
+          "gradient": "linear-gradient(135deg, #42b883 0%, #35495e 100%)"
         },
         {
           "name": "Tailwind CSS",
-          "icon": "css",
-          "percentage": 90,
-          "description": "Utility-First CSS"
+          "icon": "palette",
+          "percentage": 94,
+          "description": "Modern UI Design",
+          "gradient": "linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%)"
         },
         {
-          "name": "NativeWind",
-          "icon": "css",
-          "percentage": 80,
-          "description": "Tailwind for React Native"
+          "name": "Three.js & WebGL",
+          "icon": "view_in_ar",
+          "percentage": 78,
+          "description": "3D Web Experiences",
+          "gradient": "linear-gradient(135deg, #FF006E 0%, #8338EC 100%)"
+        },
+        {
+          "name": "Progressive Web Apps",
+          "icon": "install_mobile",
+          "percentage": 85,
+          "description": "Native-Like Web Apps",
+          "gradient": "linear-gradient(135deg, #5E60CE 0%, #6930C3 100%)"
+        },
+        {
+          "name": "WebSockets & Real-time",
+          "icon": "sync",
+          "percentage": 82,
+          "description": "Live Data Communication",
+          "gradient": "linear-gradient(135deg, #F72585 0%, #7209B7 100%)"
+        },
+        {
+          "name": "Micro-Frontends",
+          "icon": "widgets",
+          "percentage": 76,
+          "description": "Scalable Architecture",
+          "gradient": "linear-gradient(135deg, #4361EE 0%, #3F37C9 100%)"
         }
       ]
     },
-    "DATABASES": {
-      "icon": "storage",
-      "color": "#4A90E2",
+    "APP DEVELOPMENT": {
+      "icon": "phone_iphone",
+      "color": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+      "glowColor": "#f093fb",
       "skills": [
         {
-          "name": "PostgreSQL",
-          "icon": "storage",
-          "percentage": 85,
-          "description": "Relational Database"
+          "name": "Flutter",
+          "icon": "flutter_dash",
+          "percentage": 88,
+          "description": "Cross-Platform Excellence",
+          "gradient": "linear-gradient(135deg, #02569B 0%, #13B9FD 100%)"
         },
         {
-          "name": "MongoDB",
-          "icon": "data_object",
-          "percentage": 80,
-          "description": "NoSQL Database"
-        },
-        {
-          "name": "MySQL",
-          "icon": "storage",
-          "percentage": 82,
-          "description": "Relational Database"
-        },
-        {
-          "name": "Redis",
-          "icon": "speed",
-          "percentage": 75,
-          "description": "In-Memory Cache"
-        },
-        {
-          "name": "Elasticsearch",
-          "icon": "search",
-          "percentage": 70,
-          "description": "Search Engine"
-        },
-        {
-          "name": "Firebase",
-          "icon": "cloud",
-          "percentage": 78,
-          "description": "Real-time Database"
-        },
-        {
-          "name": "DynamoDB",
-          "icon": "table_chart",
-          "percentage": 68,
-          "description": "AWS NoSQL"
-        },
-        {
-          "name": "SQLite",
+          "name": "React Native",
           "icon": "phone_android",
-          "percentage": 75,
-          "description": "Embedded Database"
-        }
-      ]
-    },
-    "CLOUD & DEVOPS": {
-      "icon": "cloud",
-      "color": "#0066CC",
-      "skills": [
-        {
-          "name": "AWS",
-          "icon": "cloud_queue",
           "percentage": 85,
-          "description": "Amazon Web Services"
+          "description": "Native Mobile Apps",
+          "gradient": "linear-gradient(135deg, #61DAFB 0%, #282C34 100%)"
         },
         {
-          "name": "Microsoft Azure",
-          "icon": "cloud_circle",
-          "percentage": 80,
-          "description": "Microsoft Cloud"
+          "name": "Swift & SwiftUI",
+          "icon": "apple",
+          "percentage": 72,
+          "description": "iOS Development",
+          "gradient": "linear-gradient(135deg, #FA7343 0%, #F5453A 100%)"
         },
         {
-          "name": "Google Cloud",
-          "icon": "cloud",
-          "percentage": 75,
-          "description": "GCP Platform"
-        },
-        {
-          "name": "Docker",
-          "icon": "hub",
-          "percentage": 82,
-          "description": "Containerization"
-        },
-        {
-          "name": "Kubernetes",
-          "icon": "hub_outlined",
-          "percentage": 78,
-          "description": "Container Orchestration"
-        },
-        {
-          "name": "CI/CD",
-          "icon": "autorenew",
-          "percentage": 80,
-          "description": "Jenkins, GitHub Actions"
-        },
-        {
-          "name": "Terraform",
-          "icon": "build",
+          "name": "Kotlin",
+          "icon": "android",
           "percentage": 70,
-          "description": "Infrastructure as Code"
+          "description": "Android Native",
+          "gradient": "linear-gradient(135deg, #7F52FF 0%, #E44857 100%)"
         },
         {
-          "name": "Linux",
-          "icon": "computer",
-          "percentage": 85,
-          "description": "Server Administration"
+          "name": "Expo",
+          "icon": "speed",
+          "percentage": 80,
+          "description": "Rapid Development",
+          "gradient": "linear-gradient(135deg, #000020 0%, #4D4D4D 100%)"
+        },
+        {
+          "name": "App Store Optimization",
+          "icon": "trending_up",
+          "percentage": 78,
+          "description": "Market Visibility",
+          "gradient": "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)"
+        },
+        {
+          "name": "Push Notifications",
+          "icon": "notifications_active",
+          "percentage": 83,
+          "description": "User Engagement",
+          "gradient": "linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%)"
+        },
+        {
+          "name": "In-App Purchases",
+          "icon": "shopping_cart",
+          "percentage": 75,
+          "description": "Monetization",
+          "gradient": "linear-gradient(135deg, #FDBB2D 0%, #22C1C3 100%)"
         }
       ]
     },
     "AI INTEGRATION": {
       "icon": "auto_awesome",
-      "color": "#00CEC9",
+      "color": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+      "glowColor": "#fa709a",
       "skills": [
         {
-          "name": "OpenAI API",
-          "icon": "auto_awesome",
-          "percentage": 90,
-          "description": "GPT-4, DALL-E"
+          "name": "OpenAI & GPT-4",
+          "icon": "psychology",
+          "percentage": 92,
+          "description": "Advanced Language Models",
+          "gradient": "linear-gradient(135deg, #74EBD5 0%, #9FACE6 100%)"
         },
         {
           "name": "LangChain",
           "icon": "link",
-          "percentage": 80,
-          "description": "LLM Orchestration"
+          "percentage": 85,
+          "description": "AI Orchestration",
+          "gradient": "linear-gradient(135deg, #A8EDEA 0%, #FED6E3 100%)"
         },
         {
-          "name": "TensorFlow",
-          "icon": "psychology",
-          "percentage": 75,
-          "description": "Machine Learning"
-        },
-        {
-          "name": "PyTorch",
-          "icon": "psychology_alt",
-          "percentage": 70,
-          "description": "Deep Learning"
-        },
-        {
-          "name": "Hugging Face",
-          "icon": "face",
+          "name": "Computer Vision",
+          "icon": "visibility",
           "percentage": 78,
-          "description": "NLP Models"
+          "description": "Image Recognition",
+          "gradient": "linear-gradient(135deg, #D299C2 0%, #FEF9D7 100%)"
         },
         {
-          "name": "Vector DBs",
+          "name": "Natural Language Processing",
+          "icon": "translate",
+          "percentage": 82,
+          "description": "Text Understanding",
+          "gradient": "linear-gradient(135deg, #89F7FE 0%, #66A6FF 100%)"
+        },
+        {
+          "name": "Machine Learning Ops",
+          "icon": "settings_suggest",
+          "percentage": 75,
+          "description": "Model Deployment",
+          "gradient": "linear-gradient(135deg, #37ECBA 0%, #72AFD3 100%)"
+        },
+        {
+          "name": "Vector Databases",
           "icon": "scatter_plot",
-          "percentage": 76,
-          "description": "Pinecone, Weaviate"
+          "percentage": 80,
+          "description": "Semantic Search",
+          "gradient": "linear-gradient(135deg, #EE9CA7 0%, #FFDDE1 100%)"
         },
         {
           "name": "Prompt Engineering",
           "icon": "edit_note",
-          "percentage": 88,
-          "description": "LLM Optimization"
+          "percentage": 90,
+          "description": "AI Optimization",
+          "gradient": "linear-gradient(135deg, #3EECAC 0%, #EE74E1 100%)"
         },
         {
-          "name": "RAG Systems",
-          "icon": "find_in_page",
+          "name": "AI Agents & Automation",
+          "icon": "smart_toy",
+          "percentage": 83,
+          "description": "Intelligent Systems",
+          "gradient": "linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 100%)"
+        }
+      ]
+    },
+    "BACKEND DEVELOPMENT": {
+      "icon": "dns",
+      "color": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+      "glowColor": "#4facfe",
+      "skills": [
+        {
+          "name": "Node.js & Express",
+          "icon": "javascript",
+          "percentage": 90,
+          "description": "Scalable APIs",
+          "gradient": "linear-gradient(135deg, #43E97B 0%, #38F9D7 100%)"
+        },
+        {
+          "name": "Python & FastAPI",
+          "icon": "code",
+          "percentage": 93,
+          "description": "High-Performance Backend",
+          "gradient": "linear-gradient(135deg, #4FB06D 0%, #2F9E49 100%)"
+        },
+        {
+          "name": "GraphQL",
+          "icon": "hub",
+          "percentage": 85,
+          "description": "Modern API Design",
+          "gradient": "linear-gradient(135deg, #E10098 0%, #FF006E 100%)"
+        },
+        {
+          "name": "Microservices",
+          "icon": "widgets",
           "percentage": 82,
-          "description": "Retrieval Augmented"
+          "description": "Distributed Systems",
+          "gradient": "linear-gradient(135deg, #6A5ACD 0%, #483D8B 100%)"
+        },
+        {
+          "name": "PostgreSQL & MongoDB",
+          "icon": "storage",
+          "percentage": 88,
+          "description": "Database Management",
+          "gradient": "linear-gradient(135deg, #336699 0%, #4DB8FF 100%)"
+        },
+        {
+          "name": "Redis & Caching",
+          "icon": "speed",
+          "percentage": 80,
+          "description": "Performance Optimization",
+          "gradient": "linear-gradient(135deg, #DC382D 0%, #A41E11 100%)"
+        },
+        {
+          "name": "Docker & Kubernetes",
+          "icon": "hub",
+          "percentage": 84,
+          "description": "Container Orchestration",
+          "gradient": "linear-gradient(135deg, #2496ED 0%, #0073EC 100%)"
+        },
+        {
+          "name": "AWS & Cloud Architecture",
+          "icon": "cloud",
+          "percentage": 86,
+          "description": "Scalable Infrastructure",
+          "gradient": "linear-gradient(135deg, #FF9900 0%, #252F3E 100%)"
+        }
+      ]
+    },
+    "GAME DEVELOPMENT": {
+      "icon": "sports_esports",
+      "color": "linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)",
+      "glowColor": "#FF6B6B",
+      "skills": [
+        {
+          "name": "Unity 3D",
+          "icon": "view_in_ar",
+          "percentage": 85,
+          "description": "3D Game Engine",
+          "gradient": "linear-gradient(135deg, #000000 0%, #434343 100%)"
+        },
+        {
+          "name": "Unreal Engine 5",
+          "icon": "auto_awesome",
+          "percentage": 72,
+          "description": "AAA Game Development",
+          "gradient": "linear-gradient(135deg, #313131 0%, #0A0A0A 100%)"
+        },
+        {
+          "name": "C# Game Programming",
+          "icon": "code",
+          "percentage": 88,
+          "description": "Unity Scripting",
+          "gradient": "linear-gradient(135deg, #512BD4 0%, #8B5CF6 100%)"
+        },
+        {
+          "name": "WebGL & Three.js",
+          "icon": "language",
+          "percentage": 80,
+          "description": "Browser Games",
+          "gradient": "linear-gradient(135deg, #0099F7 0%, #F11712 100%)"
+        },
+        {
+          "name": "Game Physics",
+          "icon": "sports_soccer",
+          "percentage": 75,
+          "description": "Realistic Simulations",
+          "gradient": "linear-gradient(135deg, #f12711 0%, #f5af19 100%)"
+        },
+        {
+          "name": "AI & Pathfinding",
+          "icon": "psychology",
+          "percentage": 78,
+          "description": "Intelligent NPCs",
+          "gradient": "linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%)"
+        },
+        {
+          "name": "Multiplayer Networking",
+          "icon": "group",
+          "percentage": 70,
+          "description": "Online Gaming",
+          "gradient": "linear-gradient(135deg, #4776E6 0%, #8E54E9 100%)"
+        },
+        {
+          "name": "VR/AR Development",
+          "icon": "view_in_ar",
+          "percentage": 68,
+          "description": "Immersive Experiences",
+          "gradient": "linear-gradient(135deg, #00dbde 0%, #fc00ff 100%)"
         }
       ]
     }

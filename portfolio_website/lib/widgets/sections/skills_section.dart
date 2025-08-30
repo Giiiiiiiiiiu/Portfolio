@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import '../ferrari_luxury_skill_card.dart';
+import 'dart:math' as math;
 import '../../services/content_service.dart';
 import '../../utils/ferrari_theme.dart';
 
@@ -12,20 +12,37 @@ class SkillsSection extends StatefulWidget {
   State<SkillsSection> createState() => _SkillsSectionState();
 }
 
-class _SkillsSectionState extends State<SkillsSection> {
+class _SkillsSectionState extends State<SkillsSection> with TickerProviderStateMixin {
   String? expandedCategory;
   final ContentService _contentService = ContentService();
-  Map<String, List<SkillItem>> skillCategories = {};
-  Map<String, IconData> categoryIcons = {};
-  Map<String, Color> categoryColors = {};
+  Map<String, dynamic> skillCategories = {};
   String title = '';
   String subtitle = '';
   bool _isLoading = true;
+  late AnimationController _floatingController;
+  late AnimationController _pulseController;
 
   @override
   void initState() {
     super.initState();
+    _floatingController = AnimationController(
+      duration: const Duration(seconds: 4),
+      vsync: this,
+    )..repeat(reverse: true);
+    
+    _pulseController = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..repeat(reverse: true);
+    
     _loadSkillsFromJSON();
+  }
+
+  @override
+  void dispose() {
+    _floatingController.dispose();
+    _pulseController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadSkillsFromJSON() async {
@@ -33,53 +50,14 @@ class _SkillsSectionState extends State<SkillsSection> {
       await _contentService.loadSkillsContent();
       final categories = _contentService.skillCategories;
       
-      print('Loading skills, found ${categories.length} categories');
+      print('DEBUG: Loaded categories: ${categories.keys.toList()}');
       
-      // Load title and subtitle from JSON
       title = _contentService.skillsTitle;
-      subtitle = _contentService.skillsContent?['subtitle'] ?? 'Comprehensive skill set across modern technologies';
+      subtitle = _contentService.skillsContent?['subtitle'] ?? '';
       
-      Map<String, List<SkillItem>> loadedCategories = {};
-      Map<String, IconData> loadedIcons = {};
-      Map<String, Color> loadedColors = {};
-      
-      categories.forEach((categoryName, categoryData) {
-        print('Processing category: $categoryName');
-      List<SkillItem> skills = [];
-      if (categoryData['skills'] != null) {
-        for (var skill in categoryData['skills']) {
-          skills.add(SkillItem(
-            skill['name'] ?? '',
-            _getIconData(skill['icon'] ?? 'code'),
-            skill['percentage'] ?? 0,
-            skill['description'] ?? '',
-          ));
-        }
-      }
-      loadedCategories[categoryName] = skills;
-      loadedIcons[categoryName] = _getIconData(categoryData['icon'] ?? 'code');
-      
-      // Parse color safely
-      String colorString = categoryData['color'] ?? '#0080FF';
-      if (colorString.startsWith('#')) {
-        colorString = colorString.replaceFirst('#', '0xFF');
-      } else if (!colorString.startsWith('0x')) {
-        colorString = '0xFF$colorString';
-      }
-      try {
-        loadedColors[categoryName] = Color(int.parse(colorString));
-      } catch (e) {
-        loadedColors[categoryName] = const Color(0xFF0080FF);
-        print('Error parsing color for $categoryName: $e');
-      }
-    });
-    
       setState(() {
-        skillCategories = loadedCategories;
-        categoryIcons = loadedIcons;
-        categoryColors = loadedColors;
+        skillCategories = categories;
         _isLoading = false;
-        print('Loaded ${skillCategories.length} categories: ${skillCategories.keys.toList()}');
       });
     } catch (e) {
       print('Error loading skills: $e');
@@ -91,96 +69,37 @@ class _SkillsSectionState extends State<SkillsSection> {
 
   IconData _getIconData(String iconName) {
     switch (iconName) {
-      // Programming Languages
-      case 'javascript': return FontAwesomeIcons.js;
-      case 'typescript': return FontAwesomeIcons.js; // TypeScript uses JS icon variant
-      case 'python': return FontAwesomeIcons.python;
-      case 'java': return FontAwesomeIcons.java;
-      case 'php': return FontAwesomeIcons.php;
-      case 'dart': return Icons.flutter_dash; // Use Flutter Dash icon for Dart
-      case 'c': return FontAwesomeIcons.c;
-      case 'terminal': return FontAwesomeIcons.c; // For C/C++/C#
-      case 'sql': return FontAwesomeIcons.database;
-      case 'html': return FontAwesomeIcons.html5;
-      case 'css': return FontAwesomeIcons.css3Alt;
-      case 'web': return FontAwesomeIcons.html5; // For HTML/CSS combo
-      
-      // Frameworks & Libraries
+      case 'language': return FontAwesomeIcons.globe;
+      case 'phone_iphone': return FontAwesomeIcons.mobileScreen;
+      case 'auto_awesome': return FontAwesomeIcons.wandMagicSparkles;
+      case 'dns': return FontAwesomeIcons.server;
       case 'react': return FontAwesomeIcons.react;
-      case 'angular': return FontAwesomeIcons.angular;
-      case 'vuejs': return FontAwesomeIcons.vuejs;
-      case 'node': return FontAwesomeIcons.nodeJs;
-      case 'nodejs': return FontAwesomeIcons.nodeJs;
-      case 'flutter': return Icons.flutter_dash; // Use Flutter Dash icon
-      case 'django': return FontAwesomeIcons.python;
-      case 'laravel': return FontAwesomeIcons.laravel;
-      case 'bootstrap': return FontAwesomeIcons.bootstrap;
-      
-      // Databases
-      case 'storage': return FontAwesomeIcons.database;
-      case 'mongodb': return FontAwesomeIcons.database;
-      case 'postgresql': return FontAwesomeIcons.database;
-      case 'mysql': return FontAwesomeIcons.database;
-      case 'redis': return FontAwesomeIcons.memory;
-      case 'firebase': return FontAwesomeIcons.fire;
-      
-      // Cloud & DevOps
-      case 'aws': return FontAwesomeIcons.aws;
-      case 'cloud': return FontAwesomeIcons.cloud;
-      case 'cloud_queue': return FontAwesomeIcons.aws;
-      case 'cloud_circle': return FontAwesomeIcons.microsoft; // For Azure
-      case 'docker': return FontAwesomeIcons.docker;
-      case 'kubernetes': return FontAwesomeIcons.dharmachakra;
-      case 'git': return FontAwesomeIcons.gitAlt;
-      case 'github': return FontAwesomeIcons.github;
-      case 'gitlab': return FontAwesomeIcons.gitlab;
-      case 'linux': return FontAwesomeIcons.linux;
-      case 'ubuntu': return FontAwesomeIcons.ubuntu;
-      case 'windows': return FontAwesomeIcons.windows;
+      case 'code': return FontAwesomeIcons.code;
+      case 'view_in_ar': return FontAwesomeIcons.cube;
+      case 'palette': return FontAwesomeIcons.palette;
+      case 'install_mobile': return FontAwesomeIcons.mobileScreenButton;
+      case 'sync': return FontAwesomeIcons.arrowsRotate;
+      case 'widgets': return FontAwesomeIcons.shapes;
+      case 'flutter_dash': return Icons.flutter_dash;
+      case 'phone_android': return FontAwesomeIcons.android;
       case 'apple': return FontAwesomeIcons.apple;
-      
-      // Tools & Others
-      case 'vscode': return FontAwesomeIcons.code;
-      case 'npm': return FontAwesomeIcons.npm;
-      case 'yarn': return FontAwesomeIcons.yarn;
-      case 'webpack': return FontAwesomeIcons.cube;
-      
-      // AI & Machine Learning
-      case 'auto_awesome': return FontAwesomeIcons.robot;
-      case 'brain': return FontAwesomeIcons.brain;
+      case 'android': return FontAwesomeIcons.android;
+      case 'speed': return FontAwesomeIcons.gaugeHigh;
+      case 'trending_up': return FontAwesomeIcons.chartLine;
+      case 'notifications_active': return FontAwesomeIcons.bell;
+      case 'shopping_cart': return FontAwesomeIcons.cartShopping;
       case 'psychology': return FontAwesomeIcons.brain;
       case 'link': return FontAwesomeIcons.link;
-      
-      // Mobile
-      case 'phone_android': return FontAwesomeIcons.android;
-      case 'mobile_friendly': return FontAwesomeIcons.mobileScreen;
-      case 'apple_mobile': return FontAwesomeIcons.apple;
-      
-      // General/Default icons
-      case 'code': return FontAwesomeIcons.code;
-      case 'layers': return FontAwesomeIcons.layerGroup;
-      case 'api': return FontAwesomeIcons.plug;
-      case 'security': return FontAwesomeIcons.shield;
-      case 'web_asset': return FontAwesomeIcons.globe;
-      case 'dns': return FontAwesomeIcons.server;
-      case 'build': return FontAwesomeIcons.hammer;
-      case 'hub': return FontAwesomeIcons.codeBranch;
-      case 'hub_outlined': return FontAwesomeIcons.codeBranch;
-      case 'autorenew': return FontAwesomeIcons.rotate;
-      case 'computer': return FontAwesomeIcons.desktop;
-      case 'settings_applications': return FontAwesomeIcons.gear;
-      case 'view_agenda': return FontAwesomeIcons.tableColumns;
-      case 'data_object': return FontAwesomeIcons.database;
-      case 'speed': return FontAwesomeIcons.gaugeHigh;
-      case 'search': return FontAwesomeIcons.magnifyingGlass;
-      case 'table_chart': return FontAwesomeIcons.table;
-      case 'face': return FontAwesomeIcons.faceSmile;
-      case 'scatter_plot': return FontAwesomeIcons.chartLine;
+      case 'visibility': return FontAwesomeIcons.eye;
+      case 'translate': return FontAwesomeIcons.language;
+      case 'settings_suggest': return FontAwesomeIcons.gears;
+      case 'scatter_plot': return FontAwesomeIcons.chartScatter;
       case 'edit_note': return FontAwesomeIcons.penToSquare;
-      case 'find_in_page': return FontAwesomeIcons.fileLines;
-      case 'window': return FontAwesomeIcons.microsoft; // For C#/.NET
-      case 'coffee': return FontAwesomeIcons.java; // Java
-      
+      case 'smart_toy': return FontAwesomeIcons.robot;
+      case 'javascript': return FontAwesomeIcons.js;
+      case 'hub': return FontAwesomeIcons.hubspot;
+      case 'storage': return FontAwesomeIcons.database;
+      case 'cloud': return FontAwesomeIcons.cloud;
       default: return FontAwesomeIcons.code;
     }
   }
@@ -190,12 +109,19 @@ class _SkillsSectionState extends State<SkillsSection> {
     if (_isLoading) {
       return Container(
         height: 400,
-        decoration: const BoxDecoration(
-          gradient: FerrariTheme.luxuryGradient,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.black,
+              Colors.grey.shade900,
+            ],
+          ),
         ),
         child: const Center(
           child: CircularProgressIndicator(
-            color: FerrariTheme.ferrariBlue,
+            color: Colors.blueAccent,
           ),
         ),
       );
@@ -210,298 +136,191 @@ class _SkillsSectionState extends State<SkillsSection> {
         horizontal: isDesktop ? 140 : (isTablet ? 80 : 40),
         vertical: 100,
       ),
-      decoration: const BoxDecoration(
-        gradient: FerrariTheme.ferrariGradient,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xFF0A0E27),
+            const Color(0xFF151933),
+            const Color(0xFF0A0E27),
+          ],
+        ),
       ),
       child: Column(
         children: [
-          AnimationConfiguration.synchronized(
-            child: SlideAnimation(
-              duration: FerrariTheme.elegantAnimation,
-              verticalOffset: -60,
-              curve: FerrariTheme.luxuryCurve,
-              child: FadeInAnimation(
-                duration: FerrariTheme.elegantAnimation,
-                child: ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      FerrariTheme.electricBlue,
-                      FerrariTheme.pureWhite,
-                      FerrariTheme.ferrariBlue,
-                      FerrariTheme.electricBlue,
-                    ],
-                    stops: [0.0, 0.3, 0.7, 1.0],
-                  ).createShader(bounds),
-                  child: Text(
-                    title.isNotEmpty ? title : 'TECHNICAL EXPERTISE',
-                    style: FerrariTheme.ferrariHeadline.copyWith(
-                      fontSize: 52,
-                      letterSpacing: 2.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          AnimationConfiguration.synchronized(
-            child: SlideAnimation(
-              duration: FerrariTheme.smoothAnimation,
-              verticalOffset: -40,
-              curve: FerrariTheme.luxuryCurve,
-              child: FadeInAnimation(
-                child: Text(
-                  subtitle.isNotEmpty ? subtitle : 'Comprehensive skill set across modern technologies',
-                  style: FerrariTheme.elegantSubtitle.copyWith(
-                    fontSize: 20,
-                    letterSpacing: 1.2,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 60),
-          Wrap(
-            spacing: 30,
-            runSpacing: 30,
-            alignment: WrapAlignment.center,
-            children: skillCategories.keys.map((category) {
-              return _buildCategoryCard(context, category);
-            }).toList(),
-          ),
+          _buildTitle(),
+          const SizedBox(height: 80),
+          _buildCategoryGrid(),
           if (expandedCategory != null) ...[
-            const SizedBox(height: 60),
-            _buildExpandedSkills(context),
+            const SizedBox(height: 80),
+            _buildExpandedSkills(),
           ],
         ],
       ),
     );
   }
 
-  Widget _buildCategoryCard(BuildContext context, String category) {
-    final isExpanded = expandedCategory == category;
-    final color = categoryColors[category] ?? FerrariTheme.ferrariBlue;
-    final icon = categoryIcons[category] ?? Icons.code;
-    final skillCount = skillCategories[category]?.length ?? 0;
-
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: InkWell(
-        onTap: () {
-          setState(() {
-            expandedCategory = isExpanded ? null : category;
-          });
-        },
-        child: AnimatedContainer(
-          duration: FerrariTheme.quickAnimation,
-          width: 280,
-          height: 180,
-          transform: Matrix4.identity()
-            ..translate(0.0, isExpanded ? -10.0 : 0.0)
-            ..scale(isExpanded ? 1.05 : 1.0),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isExpanded
-                  ? [
-                      color.withValues(alpha: 0.3),
-                      FerrariTheme.primaryGray,
-                      FerrariTheme.darkGray,
-                    ]
-                  : [
-                      FerrariTheme.metallicGray,
-                      FerrariTheme.primaryGray,
-                      FerrariTheme.darkGray,
-                    ],
-              stops: const [0.0, 0.5, 1.0],
-            ),
-            borderRadius: FerrariTheme.luxuryRadius,
-            boxShadow: isExpanded
-                ? [
-                    ...FerrariTheme.luxuryShadow,
-                    BoxShadow(
-                      color: color.withValues(alpha: 0.3),
-                      blurRadius: 25,
-                      offset: const Offset(0, 12),
-                    ),
-                  ]
-                : FerrariTheme.subtleShadow,
-            border: Border.all(
-              width: 1.5,
-              color: isExpanded
-                  ? color.withValues(alpha: 0.6)
-                  : FerrariTheme.silverAccent.withValues(alpha: 0.3),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(25),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [
-                        color,
-                        color.withValues(alpha: 0.7),
-                      ],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: color.withValues(alpha: 0.4),
-                        blurRadius: 15,
-                        spreadRadius: 2,
-                      ),
-                    ],
-                  ),
-                  child: Icon(
-                    icon,
-                    color: FerrariTheme.pureWhite,
-                    size: 28,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  category,
-                  style: FerrariTheme.luxuryTitle.copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.0,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '$skillCount Skills',
+  Widget _buildTitle() {
+    return AnimatedBuilder(
+      animation: _floatingController,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, math.sin(_floatingController.value * math.pi) * 10),
+          child: Column(
+            children: [
+              ShaderMask(
+                shaderCallback: (bounds) => LinearGradient(
+                  colors: [
+                    const Color(0xFF00D9FF),
+                    const Color(0xFFFF00FF),
+                    const Color(0xFF00FF88),
+                    const Color(0xFF00D9FF),
+                  ],
+                  stops: [
+                    0.0,
+                    _floatingController.value * 0.5,
+                    _floatingController.value,
+                    1.0,
+                  ],
+                ).createShader(bounds),
+                child: Text(
+                  title,
                   style: TextStyle(
-                    color: FerrariTheme.silverAccent.withValues(alpha: 0.8),
-                    fontSize: 14,
-                    letterSpacing: 0.5,
+                    fontSize: 72,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 3.0,
+                    height: 1.2,
                   ),
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white.withOpacity(0.6),
+                  letterSpacing: 1.5,
+                ),
+              ),
+            ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildExpandedSkills(BuildContext context) {
-    final skills = skillCategories[expandedCategory] ?? [];
-    final color = categoryColors[expandedCategory] ?? const Color(0xFF0080FF);
+  Widget _buildCategoryGrid() {
+    return Wrap(
+      spacing: 30,
+      runSpacing: 30,
+      alignment: WrapAlignment.center,
+      children: skillCategories.entries.map((entry) {
+        return Ultra3DCategoryCard(
+          category: entry.key,
+          data: entry.value,
+          icon: _getIconData(entry.value['icon'] ?? 'code'),
+          onTap: () {
+            setState(() {
+              expandedCategory = expandedCategory == entry.key ? null : entry.key;
+            });
+          },
+          isExpanded: expandedCategory == entry.key,
+        );
+      }).toList(),
+    );
+  }
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeOutBack,
+  Widget _buildExpandedSkills() {
+    final skills = skillCategories[expandedCategory]?['skills'] ?? [];
+    final categoryData = skillCategories[expandedCategory];
+    
+    return AnimationLimiter(
       child: Column(
         children: [
           ShaderMask(
             shaderCallback: (bounds) => LinearGradient(
               colors: [
-                color,
-                color.withValues(alpha: 0.6),
+                const Color(0xFF00D9FF),
+                const Color(0xFFFF00FF),
               ],
             ).createShader(bounds),
             child: Text(
               expandedCategory!,
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                color: Colors.white,
+              style: TextStyle(
+                fontSize: 48,
                 fontWeight: FontWeight.w900,
-                letterSpacing: 3,
-                shadows: [
-                  Shadow(
-                    color: color,
-                    blurRadius: 20,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
+                letterSpacing: 2.0,
               ),
             ),
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 60),
           Wrap(
             spacing: 25,
             runSpacing: 25,
             alignment: WrapAlignment.center,
             children: skills.asMap().entries.map((entry) {
-              return _buildSkillCard(context, entry.value, color, entry.key);
+              final skill = entry.value;
+              return AnimationConfiguration.staggeredGrid(
+                position: entry.key,
+                duration: const Duration(milliseconds: 800),
+                columnCount: 4,
+                child: ScaleAnimation(
+                  scale: 0.5,
+                  child: FadeInAnimation(
+                    child: ModernSkillCard(
+                      name: skill['name'] ?? '',
+                      icon: _getIconData(skill['icon'] ?? 'code'),
+                      percentage: skill['percentage'] ?? 0,
+                      description: skill['description'] ?? '',
+                      gradient: skill['gradient'],
+                      index: entry.key,
+                    ),
+                  ),
+                ),
+              );
             }).toList(),
           ),
         ],
       ),
     );
   }
-
-  Widget _buildSkillCard(BuildContext context, SkillItem skill, Color color, int index) {
-    return FerrariLuxurySkillCard(
-      skillName: skill.name,
-      icon: skill.icon,
-      percentage: skill.percentage,
-      description: skill.description,
-      accentColor: color,
-      index: index,
-    );
-  }
-
 }
 
-class SkillItem {
-  final String name;
+class Ultra3DCategoryCard extends StatefulWidget {
+  final String category;
+  final Map<String, dynamic> data;
   final IconData icon;
-  final int percentage;
-  final String description;
+  final VoidCallback onTap;
+  final bool isExpanded;
 
-  SkillItem(this.name, this.icon, this.percentage, this.description);
-}
-
-class Skill3DCard extends StatefulWidget {
-  final String title;
-  final IconData icon;
-  final Color color;
-  final String description;
-  final int percentage;
-
-  const Skill3DCard({
-    super.key,
-    required this.title,
+  const Ultra3DCategoryCard({
+    Key? key,
+    required this.category,
+    required this.data,
     required this.icon,
-    required this.color,
-    required this.description,
-    required this.percentage,
-  });
+    required this.onTap,
+    required this.isExpanded,
+  }) : super(key: key);
 
   @override
-  State<Skill3DCard> createState() => _Skill3DCardState();
+  State<Ultra3DCategoryCard> createState() => _Ultra3DCategoryCardState();
 }
 
-class _Skill3DCardState extends State<Skill3DCard>
+class _Ultra3DCategoryCardState extends State<Ultra3DCategoryCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _rotationAnimation;
+  double _rotateX = 0.0;
+  double _rotateY = 0.0;
   bool _isHovering = false;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _rotationAnimation = Tween<double>(
-      begin: 0,
-      end: 0.15,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.elasticOut,
-    ));
   }
 
   @override
@@ -510,128 +329,479 @@ class _Skill3DCardState extends State<Skill3DCard>
     super.dispose();
   }
 
+  void _updateRotation(Offset localPosition, Size size) {
+    setState(() {
+      _rotateX = (localPosition.dy - size.height / 2) / size.height * 0.3;
+      _rotateY = (localPosition.dx - size.width / 2) / size.width * -0.3;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final gradientString = widget.data['color'] ?? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+    final glowColor = widget.data['glowColor'] ?? '#667eea';
+    final skillCount = (widget.data['skills'] as List?)?.length ?? 0;
+
     return MouseRegion(
       onEnter: (_) {
         setState(() => _isHovering = true);
         _controller.forward();
       },
       onExit: (_) {
-        setState(() => _isHovering = false);
+        setState(() {
+          _isHovering = false;
+          _rotateX = 0;
+          _rotateY = 0;
+        });
         _controller.reverse();
       },
+      onHover: (event) {
+        final renderBox = context.findRenderObject() as RenderBox;
+        _updateRotation(event.localPosition, renderBox.size);
+      },
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.001)
+            ..rotateX(_rotateX)
+            ..rotateY(_rotateY)
+            ..scale(_isHovering ? 1.05 : 1.0),
+          child: Container(
+            width: 280,
+            height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              gradient: _parseGradient(gradientString),
+              boxShadow: [
+                BoxShadow(
+                  color: _parseColor(glowColor).withOpacity(_isHovering ? 0.6 : 0.3),
+                  blurRadius: _isHovering ? 40 : 20,
+                  spreadRadius: _isHovering ? 5 : 0,
+                  offset: Offset(0, _isHovering ? 20 : 10),
+                ),
+              ],
+            ),
+            child: Stack(
+              children: [
+                if (_isHovering)
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.white.withOpacity(0.2),
+                            Colors.transparent,
+                            Colors.white.withOpacity(0.1),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.all(30),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withOpacity(0.2),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.3),
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.white.withOpacity(0.3),
+                              blurRadius: 20,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          widget.icon,
+                          color: Colors.white,
+                          size: 32,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        widget.category,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.2,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 10,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.3),
+                            width: 1,
+                          ),
+                        ),
+                        child: Text(
+                          '$skillCount Skills',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.9),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (widget.isExpanded)
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.greenAccent,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.greenAccent,
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  LinearGradient _parseGradient(String gradientString) {
+    if (gradientString.contains('linear-gradient')) {
+      // Extract colors from the gradient string
+      final regex = RegExp(r'#[0-9a-fA-F]{6}');
+      final matches = regex.allMatches(gradientString).toList();
+      
+      if (matches.length >= 2) {
+        final colors = matches.map((match) {
+          final colorStr = gradientString.substring(match.start, match.end);
+          return Color(int.parse(colorStr.replaceFirst('#', '0xFF')));
+        }).toList();
+        
+        return LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: colors,
+        );
+      }
+      
+      // Default fallback gradient
+      return const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color(0xFF667eea),
+          Color(0xFF764ba2),
+        ],
+      );
+    }
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [
+        _parseColor(gradientString),
+        _parseColor(gradientString).withValues(alpha: 0.7),
+      ],
+    );
+  }
+
+  Color _parseColor(String colorString) {
+    if (colorString.startsWith('#')) {
+      return Color(int.parse(colorString.replaceFirst('#', '0xFF')));
+    }
+    return const Color(0xFF667eea);
+  }
+}
+
+class ModernSkillCard extends StatefulWidget {
+  final String name;
+  final IconData icon;
+  final int percentage;
+  final String description;
+  final String? gradient;
+  final int index;
+
+  const ModernSkillCard({
+    Key? key,
+    required this.name,
+    required this.icon,
+    required this.percentage,
+    required this.description,
+    this.gradient,
+    required this.index,
+  }) : super(key: key);
+
+  @override
+  State<ModernSkillCard> createState() => _ModernSkillCardState();
+}
+
+class _ModernSkillCardState extends State<ModernSkillCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _progressAnimation;
+  bool _isHovering = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    
+    _scaleAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticOut,
+    ));
+    
+    _progressAnimation = Tween<double>(
+      begin: 0.0,
+      end: widget.percentage / 100,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutCubic,
+    ));
+    
+    Future.delayed(Duration(milliseconds: widget.index * 100), () {
+      if (mounted) {
+        _controller.forward();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  LinearGradient _parseSkillGradient() {
+    if (widget.gradient != null && widget.gradient!.contains('linear-gradient')) {
+      final colors = widget.gradient!
+          .replaceAll(RegExp(r'linear-gradient\([^)]*,\s*'), '')
+          .replaceAll(')', '')
+          .split(',')
+          .map((c) => c.trim())
+          .where((c) => c.startsWith('#'))
+          .map((c) => Color(int.parse(c.replaceFirst('#', '0xFF'))))
+          .toList();
+      
+      if (colors.length >= 2) {
+        return LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: colors,
+        );
+      }
+    }
+    
+    return LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [
+        Colors.blue.shade400,
+        Colors.purple.shade400,
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovering = true),
+      onExit: (_) => setState(() => _isHovering = false),
       cursor: SystemMouseCursors.click,
       child: AnimatedBuilder(
-        animation: _rotationAnimation,
+        animation: _controller,
         builder: (context, child) {
-          return Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateY(_rotationAnimation.value)
-              ..rotateX(_rotationAnimation.value * 0.5),
-            child: Container(
-              width: 200,
-              height: 250,
+          return Transform.scale(
+            scale: _scaleAnimation.value,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              width: 220,
+              height: 280,
+              transform: Matrix4.identity()
+                ..translate(0.0, _isHovering ? -10.0 : 0.0)
+                ..scale(_isHovering ? 1.05 : 1.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: _isHovering
-                      ? [
-                          widget.color.withOpacity(0.9),
-                          widget.color.withOpacity(0.6),
-                        ]
-                      : [
-                          const Color(0xFF2A2A3E),
-                          const Color(0xFF1A1A2E),
-                        ],
+                  colors: [
+                    Colors.white.withOpacity(0.1),
+                    Colors.white.withOpacity(0.05),
+                  ],
+                ),
+                border: Border.all(
+                  color: Colors.white.withOpacity(0.2),
+                  width: 1,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: widget.color.withOpacity(_isHovering ? 0.6 : 0.3),
+                    color: _parseSkillGradient().colors.first.withOpacity(_isHovering ? 0.4 : 0.2),
                     blurRadius: _isHovering ? 30 : 20,
                     offset: Offset(0, _isHovering ? 15 : 10),
                   ),
                 ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Stack(
                   children: [
-                    Icon(
-                      widget.icon,
-                      size: 50,
-                      color: _isHovering ? Colors.white : widget.color,
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      widget.title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        shadows: _isHovering
-                            ? [
-                                Shadow(
-                                  color: widget.color,
-                                  blurRadius: 10,
-                                ),
-                              ]
-                            : [],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      widget.description,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
-                        fontSize: 12,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Stack(
-                      children: [
-                        Container(
-                          height: 8,
+                    if (_isHovering)
+                      Positioned.fill(
+                        child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            color: Colors.white.withOpacity(0.2),
+                            gradient: _parseSkillGradient().scale(0.3),
                           ),
                         ),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 1000),
-                          height: 8,
-                          width: (160 * widget.percentage / 100),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            gradient: LinearGradient(
-                              colors: [
-                                widget.color,
-                                widget.color.withOpacity(0.6),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              gradient: _parseSkillGradient(),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: _parseSkillGradient().colors.first.withOpacity(0.5),
+                                  blurRadius: 20,
+                                  spreadRadius: 2,
+                                ),
                               ],
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: widget.color.withOpacity(0.5),
-                                blurRadius: 10,
-                              ),
-                            ],
+                            child: Icon(
+                              widget.icon,
+                              color: Colors.white,
+                              size: 28,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      '${widget.percentage}%',
-                      style: TextStyle(
-                        color: widget.color,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                          const SizedBox(height: 20),
+                          Text(
+                            widget.name,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            widget.description,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.7),
+                              fontSize: 12,
+                              height: 1.4,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Container(
+                            height: 40,
+                            width: 40,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: CircularProgressIndicator(
+                                    value: _progressAnimation.value,
+                                    strokeWidth: 3,
+                                    backgroundColor: Colors.white.withOpacity(0.2),
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      _parseSkillGradient().colors.first,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${widget.percentage}%',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            height: 6,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: Colors.white.withOpacity(0.1),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(3),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 1500),
+                                width: double.infinity,
+                                child: FractionallySizedBox(
+                                  alignment: Alignment.centerLeft,
+                                  widthFactor: _progressAnimation.value,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      gradient: _parseSkillGradient(),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: _parseSkillGradient().colors.first.withOpacity(0.5),
+                                          blurRadius: 10,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math' as math;
+import '../services/content_service.dart';
 
 class ModernSkillsSection extends StatefulWidget {
-  const ModernSkillsSection({Key? key}) : super(key: key);
+  const ModernSkillsSection({super.key});
 
   @override
   State<ModernSkillsSection> createState() => _ModernSkillsSectionState();
@@ -14,68 +15,12 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
   String? selectedCategory;
   late AnimationController _floatingController;
   late AnimationController _pulseController;
+  final ContentService _contentService = ContentService();
+  Map<String, dynamic> skillCategories = {};
+  String title = '';
+  String subtitle = '';
+  bool _isLoading = true;
   
-  final Map<String, List<SkillData>> skillsData = {
-    'LANGUAGES': [
-      SkillData('C', FontAwesomeIcons.c, 70, const Color(0xFF00599C)),
-      SkillData('C++', Icons.add_box_outlined, 75, const Color(0xFF00599C)),
-      SkillData('C#', Icons.tag, 75, const Color(0xFF239120)),
-      SkillData('JavaScript', FontAwesomeIcons.js, 90, const Color(0xFFF7DF1E)),
-      SkillData('TypeScript', FontAwesomeIcons.squareJs, 88, const Color(0xFF3178C6)),
-      SkillData('Python', FontAwesomeIcons.python, 95, const Color(0xFF3776AB)), // Python hat beide Farben: #3776AB und #FFD43B
-      SkillData('Dart', Icons.code, 85, const Color(0xFF0175C2)), // Dart offizielle Farbe
-      SkillData('Java', FontAwesomeIcons.java, 80, const Color(0xFF007396)),
-      SkillData('PHP', FontAwesomeIcons.php, 70, const Color(0xFF777BB4)),
-      SkillData('SQL', FontAwesomeIcons.database, 85, const Color(0xFF336791)),
-      SkillData('HTML', FontAwesomeIcons.html5, 95, const Color(0xFFE34C26)),
-      SkillData('CSS', FontAwesomeIcons.css3Alt, 93, const Color(0xFF1572B6)),
-      SkillData('SCSS', FontAwesomeIcons.sass, 85, const Color(0xFFCC6699)),
-    ],
-    'FRAMEWORKS': [
-      SkillData('React', FontAwesomeIcons.react, 90, const Color(0xFF61DAFB)),
-      SkillData('React Native', FontAwesomeIcons.react, 82, const Color(0xFF61DAFB)),
-      SkillData('Next.js', FontAwesomeIcons.n, 88, const Color(0xFF000000)),
-      SkillData('Flutter', Icons.flutter_dash, 85, const Color(0xFF02569B)), // Flutter mit offiziellem Dash Icon
-      SkillData('Node.js', FontAwesomeIcons.nodeJs, 85, const Color(0xFF339933)),
-      SkillData('Express.js', FontAwesomeIcons.e, 83, const Color(0xFF000000)),
-      SkillData('Django', FontAwesomeIcons.python, 75, const Color(0xFF092E20)),
-      SkillData('Spring Boot', FontAwesomeIcons.leaf, 70, const Color(0xFF6DB33F)),
-      SkillData('Vue.js', FontAwesomeIcons.vuejs, 72, const Color(0xFF4FC08D)),
-      SkillData('Tailwind CSS', FontAwesomeIcons.wind, 90, const Color(0xFF06B6D4)),
-      SkillData('NativeWind', FontAwesomeIcons.wind, 80, const Color(0xFF06B6D4)),
-    ],
-    'DATABASES': [
-      SkillData('PostgreSQL', FontAwesomeIcons.database, 85, const Color(0xFF4169E1)), // PostgreSQL Blue
-      SkillData('MongoDB', FontAwesomeIcons.leaf, 80, const Color(0xFF47A248)), // MongoDB Green
-      SkillData('MySQL', FontAwesomeIcons.database, 82, const Color(0xFF00758F)), // MySQL Official Blue
-      SkillData('Redis', FontAwesomeIcons.memory, 75, const Color(0xFFDC382D)), // Redis Red
-      SkillData('Elasticsearch', FontAwesomeIcons.magnifyingGlass, 70, const Color(0xFF005571)), 
-      SkillData('Firebase', FontAwesomeIcons.fire, 78, const Color(0xFFFFA000)), // Firebase Orange
-      SkillData('DynamoDB', FontAwesomeIcons.aws, 68, const Color(0xFF4053D6)), // DynamoDB Blue
-      SkillData('SQLite', FontAwesomeIcons.database, 75, const Color(0xFF07405E)), // SQLite Blue
-    ],
-    'CLOUD & DEVOPS': [
-      SkillData('AWS', FontAwesomeIcons.aws, 85, const Color(0xFFFF9900)), // AWS Orange
-      SkillData('Azure', FontAwesomeIcons.microsoft, 80, const Color(0xFF0078D4)), // Azure Blue
-      SkillData('Google Cloud', FontAwesomeIcons.google, 75, const Color(0xFF4285F4)), // Google Blue
-      SkillData('Docker', FontAwesomeIcons.docker, 82, const Color(0xFF2496ED)), // Docker Blue
-      SkillData('Kubernetes', FontAwesomeIcons.dharmachakra, 78, const Color(0xFF326CE5)), // K8s Blue
-      SkillData('CI/CD', FontAwesomeIcons.infinity, 80, const Color(0xFF40C4FF)),
-      SkillData('Terraform', FontAwesomeIcons.cube, 70, const Color(0xFF7E3FF2)), // Terraform Purple
-      SkillData('Linux', FontAwesomeIcons.linux, 85, const Color(0xFFFCC624)), // Linux Yellow
-    ],
-    'AI INTEGRATION': [
-      SkillData('OpenAI API', FontAwesomeIcons.robot, 90, const Color(0xFF10A37F)), // OpenAI Green
-      SkillData('LangChain', FontAwesomeIcons.link, 80, const Color(0xFF1C3C3C)),
-      SkillData('TensorFlow', FontAwesomeIcons.brain, 75, const Color(0xFFFF6F00)), // TensorFlow Orange
-      SkillData('PyTorch', FontAwesomeIcons.fire, 70, const Color(0xFFEE4C2C)), // PyTorch Red
-      SkillData('Hugging Face', FontAwesomeIcons.faceSmile, 78, const Color(0xFFFFD21E)), // HF Yellow
-      SkillData('Vector DBs', FontAwesomeIcons.database, 76, const Color(0xFF5865F2)), // Pinecone Purple
-      SkillData('Prompt Engineering', FontAwesomeIcons.penToSquare, 88, const Color(0xFF412991)),
-      SkillData('RAG Systems', FontAwesomeIcons.magnifyingGlass, 82, const Color(0xFF0084FF)),
-    ],
-  };
-
   @override
   void initState() {
     super.initState();
@@ -88,6 +33,8 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
       duration: const Duration(seconds: 2),
       vsync: this,
     )..repeat(reverse: true);
+    
+    _loadSkillsFromJSON();
   }
 
   @override
@@ -97,77 +44,157 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
     super.dispose();
   }
 
+  Future<void> _loadSkillsFromJSON() async {
+    try {
+      await _contentService.loadSkillsContent();
+      final categories = _contentService.skillCategories;
+      
+      title = _contentService.skillsTitle;
+      subtitle = _contentService.skillsContent?['subtitle'] ?? '';
+      
+      setState(() {
+        skillCategories = categories;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error loading skills: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  IconData _getIconData(String iconName) {
+    switch (iconName) {
+      case 'language': return FontAwesomeIcons.globe;
+      case 'phone_iphone': return FontAwesomeIcons.mobileScreen;
+      case 'auto_awesome': return FontAwesomeIcons.wandMagicSparkles;
+      case 'dns': return FontAwesomeIcons.server;
+      case 'react': return FontAwesomeIcons.react;
+      case 'code': return FontAwesomeIcons.code;
+      case 'view_in_ar': return FontAwesomeIcons.cube;
+      case 'palette': return FontAwesomeIcons.palette;
+      case 'install_mobile': return FontAwesomeIcons.mobileScreenButton;
+      case 'sync': return FontAwesomeIcons.arrowsRotate;
+      case 'widgets': return FontAwesomeIcons.shapes;
+      case 'flutter_dash': return Icons.flutter_dash;
+      case 'phone_android': return FontAwesomeIcons.android;
+      case 'apple': return FontAwesomeIcons.apple;
+      case 'android': return FontAwesomeIcons.android;
+      case 'speed': return FontAwesomeIcons.gaugeHigh;
+      case 'trending_up': return FontAwesomeIcons.chartLine;
+      case 'notifications_active': return FontAwesomeIcons.bell;
+      case 'shopping_cart': return FontAwesomeIcons.cartShopping;
+      case 'psychology': return FontAwesomeIcons.brain;
+      case 'link': return FontAwesomeIcons.link;
+      case 'visibility': return FontAwesomeIcons.eye;
+      case 'translate': return FontAwesomeIcons.language;
+      case 'settings_suggest': return FontAwesomeIcons.gears;
+      case 'scatter_plot': return FontAwesomeIcons.chartLine;
+      case 'edit_note': return FontAwesomeIcons.penToSquare;
+      case 'smart_toy': return FontAwesomeIcons.robot;
+      case 'javascript': return FontAwesomeIcons.js;
+      case 'hub': return FontAwesomeIcons.hubspot;
+      case 'storage': return FontAwesomeIcons.database;
+      case 'cloud': return FontAwesomeIcons.cloud;
+      case 'sports_esports': return FontAwesomeIcons.gamepad;
+      case 'sports_soccer': return FontAwesomeIcons.baseball;
+      case 'group': return FontAwesomeIcons.users;
+      default: return FontAwesomeIcons.code;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    if (_isLoading) {
+      return Container(
+        height: 400,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF1A1A1D),
+              Color(0xFF0F0F11),
+            ],
+          ),
+        ),
+        child: const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFF007AFF),
+          ),
+        ),
+      );
+    }
+
+    final screenSize = MediaQuery.of(context).size;
+    final isDesktop = screenSize.width > 1200;
+    final isTablet = screenSize.width > 600 && screenSize.width <= 1200;
     
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: size.width > 1200 ? 100 : 50,
-        vertical: 80,
+        horizontal: isDesktop ? 100 : (isTablet ? 60 : 30),
+        vertical: 100,
       ),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
           colors: [
-            Color(0xFF2A2A2D), // Ferrari Primary Gray
-            Color(0xFF3C3C3F), // Metallic Gray
-            Color(0xFF1A1A1D), // Dark Gray
+            Color(0xFF1A1A1D), // Dark luxury black
+            Color(0xFF0F0F11), // Carbon fiber black
           ],
-          stops: [0.0, 0.5, 1.0],
         ),
       ),
       child: Column(
         children: [
-          _buildHeader(),
-          const SizedBox(height: 60),
-          _buildCategoryCards(),
+          _buildTitle(),
+          const SizedBox(height: 80),
+          _buildCategoryGrid(),
           if (selectedCategory != null) ...[
-            const SizedBox(height: 60),
-            _buildSkillsGrid(),
+            const SizedBox(height: 80),
+            _buildExpandedSkills(),
           ],
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 1000),
-      curve: Curves.easeOutBack,
-      builder: (context, double value, child) {
-        return Transform.scale(
-          scale: value,
+  Widget _buildTitle() {
+    return AnimatedBuilder(
+      animation: _floatingController,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, math.sin(_floatingController.value * math.pi) * 8),
           child: Column(
             children: [
               ShaderMask(
-                shaderCallback: (bounds) => const LinearGradient(
+                shaderCallback: (bounds) => LinearGradient(
                   colors: [
-                    Color(0xFF00D4FF),
-                    Color(0xFF0080FF),
-                    Color(0xFF4A90E2),
+                    const Color(0xFF8E8E93), // Silver accent
+                    const Color(0xFFFAFAFA), // Pure white
+                    const Color(0xFF8E8E93),
                   ],
+                  stops: const [0.0, 0.5, 1.0],
                 ).createShader(bounds),
-                child: const Text(
-                  'TECHNICAL EXPERTISE',
-                  style: TextStyle(
+                child: Text(
+                  title,
+                  style: const TextStyle(
                     fontSize: 48,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 2,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 2.0,
+                    height: 1.2,
                     color: Colors.white,
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Comprehensive skill set across modern technologies',
+              Text(
+                subtitle,
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.white70,
-                  letterSpacing: 0.5,
+                  color: Colors.white.withValues(alpha: 0.5),
+                  letterSpacing: 1.2,
                 ),
               ),
             ],
@@ -177,211 +204,228 @@ class _ModernSkillsSectionState extends State<ModernSkillsSection>
     );
   }
 
-  Widget _buildCategoryCards() {
-    return Wrap(
-      spacing: 20,
-      runSpacing: 20,
-      alignment: WrapAlignment.center,
-      children: skillsData.keys.map((category) {
-        final index = skillsData.keys.toList().indexOf(category);
-        return TweenAnimationBuilder(
-          tween: Tween<double>(begin: 0, end: 1),
-          duration: Duration(milliseconds: 500 + (index * 100)),
-          curve: Curves.easeOutBack,
-          builder: (context, double value, child) {
-            return Transform.scale(
-              scale: value,
-              child: _CategoryCard(
-                category: category,
-                isSelected: selectedCategory == category,
-                skillCount: skillsData[category]!.length,
-                color: _getCategoryColor(category),
-                icon: _getCategoryIcon(category),
-                onTap: () {
-                  setState(() {
-                    selectedCategory = selectedCategory == category ? null : category;
-                  });
-                },
-                floatingAnimation: _floatingController,
-              ),
-            );
-          },
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _buildSkillsGrid() {
-    final skills = skillsData[selectedCategory] ?? [];
-    
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 500),
-      child: Column(
-        children: [
-          ShaderMask(
-            shaderCallback: (bounds) => LinearGradient(
-              colors: [
-                _getCategoryColor(selectedCategory!),
-                _getCategoryColor(selectedCategory!).withOpacity(0.6),
-              ],
-            ).createShader(bounds),
-            child: Text(
-              selectedCategory!,
-              style: const TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 1.5,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          const SizedBox(height: 40),
-          Wrap(
-            spacing: 20,
-            runSpacing: 20,
-            alignment: WrapAlignment.center,
-            children: skills.asMap().entries.map((entry) {
-              return TweenAnimationBuilder(
-                tween: Tween<double>(begin: 0, end: 1),
-                duration: Duration(milliseconds: 300 + (entry.key * 50)),
-                curve: Curves.easeOutBack,
-                builder: (context, double value, child) {
-                  return Transform.scale(
-                    scale: value,
-                    child: _ModernSkillCard(
-                      skill: entry.value,
-                      index: entry.key,
-                      pulseAnimation: _pulseController,
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        ],
+  Widget _buildCategoryGrid() {
+    return Center(
+      child: Wrap(
+        spacing: 30,
+        runSpacing: 30,
+        alignment: WrapAlignment.center,
+        children: skillCategories.entries.map((entry) {
+          return UltraModernCategoryCard(
+            category: entry.key,
+            data: entry.value,
+            icon: _getIconData(entry.value['icon'] ?? 'code'),
+            onTap: () {
+              setState(() {
+                selectedCategory = selectedCategory == entry.key ? null : entry.key;
+              });
+            },
+            isExpanded: selectedCategory == entry.key,
+          );
+        }).toList(),
       ),
     );
   }
 
-  Color _getCategoryColor(String category) {
-    switch (category) {
-      case 'LANGUAGES': return const Color(0xFF0080FF);
-      case 'FRAMEWORKS': return const Color(0xFF00BFFF);
-      case 'DATABASES': return const Color(0xFF4A90E2);
-      case 'CLOUD & DEVOPS': return const Color(0xFF0066CC);
-      case 'AI INTEGRATION': return const Color(0xFF00CEC9);
-      default: return const Color(0xFF0080FF);
-    }
-  }
-
-  IconData _getCategoryIcon(String category) {
-    switch (category) {
-      case 'LANGUAGES': return FontAwesomeIcons.code;
-      case 'FRAMEWORKS': return FontAwesomeIcons.layerGroup;
-      case 'DATABASES': return FontAwesomeIcons.database;
-      case 'CLOUD & DEVOPS': return FontAwesomeIcons.cloud;
-      case 'AI INTEGRATION': return FontAwesomeIcons.robot;
-      default: return FontAwesomeIcons.code;
-    }
+  Widget _buildExpandedSkills() {
+    final skillsList = skillCategories[selectedCategory]?['skills'] ?? [];
+    
+    return Column(
+      children: [
+        ShaderMask(
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [
+              Color(0xFF8E8E93),
+              Color(0xFFFAFAFA),
+              Color(0xFF8E8E93),
+            ],
+          ).createShader(bounds),
+          child: Text(
+            selectedCategory!,
+            style: const TextStyle(
+              fontSize: 36,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.5,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        const SizedBox(height: 50),
+        Wrap(
+          spacing: 20,
+          runSpacing: 20,
+          alignment: WrapAlignment.center,
+          children: List<Widget>.from(skillsList.asMap().entries.map((entry) {
+            final skill = entry.value as Map<String, dynamic>;
+            return UltraModernSkillCard(
+              name: skill['name']?.toString() ?? '',
+              icon: _getIconData(skill['icon']?.toString() ?? 'code'),
+              percentage: (skill['percentage'] as num?)?.toInt() ?? 0,
+              description: skill['description']?.toString() ?? '',
+              gradient: skill['gradient']?.toString(),
+              index: entry.key,
+            );
+          })),
+        ),
+      ],
+    );
   }
 }
 
-class _CategoryCard extends StatefulWidget {
+class UltraModernCategoryCard extends StatefulWidget {
   final String category;
-  final bool isSelected;
-  final int skillCount;
-  final Color color;
+  final Map<String, dynamic> data;
   final IconData icon;
   final VoidCallback onTap;
-  final AnimationController floatingAnimation;
+  final bool isExpanded;
 
-  const _CategoryCard({
+  const UltraModernCategoryCard({
+    super.key,
     required this.category,
-    required this.isSelected,
-    required this.skillCount,
-    required this.color,
+    required this.data,
     required this.icon,
     required this.onTap,
-    required this.floatingAnimation,
+    required this.isExpanded,
   });
 
   @override
-  State<_CategoryCard> createState() => _CategoryCardState();
+  State<UltraModernCategoryCard> createState() => _UltraModernCategoryCardState();
 }
 
-class _CategoryCardState extends State<_CategoryCard> {
-  bool _isHovered = false;
+class _UltraModernCategoryCardState extends State<UltraModernCategoryCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _hoverController;
+  bool _isHovering = false;
+  double _mouseX = 0;
+  double _mouseY = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _hoverController = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _hoverController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final skillCount = (widget.data['skills'] as List?)?.length ?? 0;
+
     return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
+      onEnter: (_) {
+        setState(() => _isHovering = true);
+        _hoverController.forward();
+      },
+      onExit: (_) {
+        setState(() {
+          _isHovering = false;
+          _mouseX = 0;
+          _mouseY = 0;
+        });
+        _hoverController.reverse();
+      },
+      onHover: (event) {
+        final renderBox = context.findRenderObject() as RenderBox;
+        final size = renderBox.size;
+        setState(() {
+          _mouseX = (event.localPosition.dx - size.width / 2) / size.width;
+          _mouseY = (event.localPosition.dy - size.height / 2) / size.height;
+        });
+      },
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: widget.onTap,
         child: AnimatedBuilder(
-          animation: widget.floatingAnimation,
+          animation: _hoverController,
           builder: (context, child) {
-            final floatValue = widget.isSelected 
-                ? math.sin(widget.floatingAnimation.value * math.pi) * 5
-                : 0.0;
-            
-            return Transform.translate(
-              offset: Offset(0, floatValue),
+            final hoverValue = _hoverController.value;
+            return Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.002)
+                ..rotateY(_mouseX * 0.2 * hoverValue)
+                ..rotateX(-_mouseY * 0.2 * hoverValue)
+                ..translate(
+                  0.0,
+                  0.0,
+                  _isHovering ? 30.0 : -10.0,
+                ),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                width: 260,
+                width: 240,
                 height: 160,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.001)
-                  ..rotateX(_isHovered ? -0.03 : 0)
-                  ..rotateY(_isHovered ? 0.03 : 0)
-                  ..scale(_isHovered ? 1.05 : 1.0),
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: widget.isSelected || _isHovered ? [
-                      widget.color.withOpacity(0.9),
-                      widget.color.withOpacity(0.7),
-                    ] : [
-                      const Color(0xFF3C3C3F), // Metallic Gray
-                      const Color(0xFF2A2A2D), // Primary Gray
-                    ],
+                    colors: _isHovering
+                        ? [
+                            const Color(0xFF3C3C3F), // Metallic gray
+                            const Color(0xFF2A2A2D), // Primary gray
+                          ]
+                        : [
+                            const Color(0xFF2A2A2D),
+                            const Color(0xFF1A1A1D),
+                          ],
                   ),
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: widget.isSelected || _isHovered
-                          ? widget.color.withOpacity(0.4)
-                          : Colors.black.withOpacity(0.1),
-                      blurRadius: widget.isSelected || _isHovered ? 30 : 15,
-                      offset: Offset(0, widget.isSelected || _isHovered ? 15 : 8),
-                    ),
-                  ],
+                  boxShadow: _isHovering
+                      ? [
+                          // Outer glow when hovering
+                          BoxShadow(
+                            color: const Color(0xFF007AFF).withValues(alpha: 0.3),
+                            blurRadius: 30,
+                            spreadRadius: 5,
+                          ),
+                          const BoxShadow(
+                            color: Color(0xFF000000),
+                            blurRadius: 20,
+                            offset: Offset(0, 10),
+                          ),
+                        ]
+                      : [
+                          // Inner shadow when not hovering (embedded look)
+                          const BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 10,
+                            offset: Offset(0, 2),
+                            spreadRadius: -5,
+                          ),
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            blurRadius: 20,
+                            offset: const Offset(0, 5),
+                            spreadRadius: -10,
+                          ),
+                        ],
                   border: Border.all(
-                    color: widget.isSelected || _isHovered
-                        ? widget.color
-                        : Colors.transparent,
-                    width: 2,
+                    color: _isHovering
+                        ? const Color(0xFF8E8E93).withValues(alpha: 0.3)
+                        : const Color(0xFF2A2A2D),
+                    width: 1,
                   ),
                 ),
                 child: Stack(
                   children: [
-                    if (widget.isSelected || _isHovered)
-                      Positioned(
-                        top: -20,
-                        right: -20,
+                    // Gradient overlay for depth
+                    if (!_isHovering)
+                      Positioned.fill(
                         child: Container(
-                          width: 100,
-                          height: 100,
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: RadialGradient(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
                               colors: [
-                                widget.color.withOpacity(0.3),
-                                widget.color.withOpacity(0),
+                                Colors.transparent,
+                                Colors.black.withValues(alpha: 0.2),
                               ],
                             ),
                           ),
@@ -392,56 +436,110 @@ class _CategoryCardState extends State<_CategoryCard> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 56,
-                            height: 56,
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            width: 50,
+                            height: 50,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               gradient: LinearGradient(
-                                colors: [
-                                  widget.color,
-                                  widget.color.withOpacity(0.7),
-                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: _isHovering
+                                    ? [
+                                        const Color(0xFF007AFF),
+                                        const Color(0xFF0066CC),
+                                      ]
+                                    : [
+                                        const Color(0xFF3C3C3F),
+                                        const Color(0xFF2A2A2D),
+                                      ],
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: widget.color.withOpacity(0.5),
-                                  blurRadius: 20,
-                                  spreadRadius: 2,
-                                ),
-                              ],
+                              boxShadow: _isHovering
+                                  ? [
+                                      BoxShadow(
+                                        color: const Color(0xFF007AFF).withValues(alpha: 0.5),
+                                        blurRadius: 20,
+                                        spreadRadius: 2,
+                                      ),
+                                    ]
+                                  : [
+                                      const BoxShadow(
+                                        color: Colors.black,
+                                        blurRadius: 10,
+                                        offset: Offset(0, 2),
+                                        spreadRadius: -3,
+                                      ),
+                                    ],
                             ),
                             child: Icon(
                               widget.icon,
-                              color: Colors.white,
+                              color: _isHovering
+                                  ? Colors.white
+                                  : const Color(0xFF8E8E93),
                               size: 24,
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 12),
                           Text(
                             widget.category,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: widget.isSelected || _isHovered
+                              color: _isHovering
                                   ? Colors.white
-                                  : Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0.5,
+                                  : const Color(0xFF8E8E93),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.8,
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${widget.skillCount} Skills',
-                            style: TextStyle(
-                              color: widget.isSelected || _isHovered
-                                  ? Colors.white70
-                                  : Colors.white54,
-                              fontSize: 13,
+                          const SizedBox(height: 6),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: _isHovering
+                                  ? const Color(0xFF007AFF).withValues(alpha: 0.2)
+                                  : Colors.black.withValues(alpha: 0.3),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              '$skillCount Skills',
+                              style: TextStyle(
+                                color: _isHovering
+                                    ? const Color(0xFF007AFF)
+                                    : const Color(0xFF8E8E93).withValues(alpha: 0.6),
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
+                    if (widget.isExpanded)
+                      Positioned(
+                        top: 12,
+                        right: 12,
+                        child: Container(
+                          width: 6,
+                          height: 6,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFF007AFF),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xFF007AFF),
+                                blurRadius: 10,
+                                spreadRadius: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -453,174 +551,222 @@ class _CategoryCardState extends State<_CategoryCard> {
   }
 }
 
-class _ModernSkillCard extends StatefulWidget {
-  final SkillData skill;
+class UltraModernSkillCard extends StatefulWidget {
+  final String name;
+  final IconData icon;
+  final int percentage;
+  final String description;
+  final String? gradient;
   final int index;
-  final AnimationController pulseAnimation;
 
-  const _ModernSkillCard({
-    required this.skill,
+  const UltraModernSkillCard({
+    super.key,
+    required this.name,
+    required this.icon,
+    required this.percentage,
+    required this.description,
+    this.gradient,
     required this.index,
-    required this.pulseAnimation,
   });
 
   @override
-  State<_ModernSkillCard> createState() => _ModernSkillCardState();
+  State<UltraModernSkillCard> createState() => _UltraModernSkillCardState();
 }
 
-class _ModernSkillCardState extends State<_ModernSkillCard> 
+class _UltraModernSkillCardState extends State<UltraModernSkillCard>
     with SingleTickerProviderStateMixin {
-  bool _isHovered = false;
-  late AnimationController _progressController;
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
   late Animation<double> _progressAnimation;
+  bool _isHovering = false;
 
   @override
   void initState() {
     super.initState();
-    _progressController = AnimationController(
-      duration: Duration(milliseconds: 1000 + (widget.index * 100)),
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
     
-    _progressAnimation = Tween<double>(
-      begin: 0,
-      end: widget.skill.percentage / 100,
+    _scaleAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
     ).animate(CurvedAnimation(
-      parent: _progressController,
+      parent: _controller,
+      curve: Curves.easeOutBack,
+    ));
+    
+    _progressAnimation = Tween<double>(
+      begin: 0.0,
+      end: widget.percentage / 100,
+    ).animate(CurvedAnimation(
+      parent: _controller,
       curve: Curves.easeOutCubic,
     ));
     
-    _progressController.forward();
+    Future.delayed(Duration(milliseconds: widget.index * 50), () {
+      if (mounted) {
+        _controller.forward();
+      }
+    });
   }
 
   @override
   void dispose() {
-    _progressController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
+      onEnter: (_) => setState(() => _isHovering = true),
+      onExit: (_) => setState(() => _isHovering = false),
       cursor: SystemMouseCursors.click,
       child: AnimatedBuilder(
-        animation: widget.pulseAnimation,
+        animation: _controller,
         builder: (context, child) {
-          final pulseValue = _isHovered 
-              ? 1.0 + (widget.pulseAnimation.value * 0.05)
-              : 1.0;
-          
           return Transform.scale(
-            scale: pulseValue,
-            child: Container(
+            scale: _scaleAnimation.value,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
               width: 200,
               height: 240,
+              transform: Matrix4.identity()
+                ..translate(0.0, _isHovering ? -8.0 : 0.0)
+                ..scale(_isHovering ? 1.05 : 1.0),
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: _isHovered ? [
-                    widget.skill.color.withOpacity(0.9),
-                    widget.skill.color.withOpacity(0.6),
-                  ] : [
-                    const Color(0xFF3C3C3F), // Metallic Gray
-                    const Color(0xFF2A2A2D), // Primary Gray
-                  ],
+                  colors: _isHovering
+                      ? [
+                          const Color(0xFF2A2A2D),
+                          const Color(0xFF1A1A1D),
+                        ]
+                      : [
+                          const Color(0xFF1A1A1D),
+                          const Color(0xFF0F0F11),
+                        ],
                 ),
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: _isHovered 
-                        ? widget.skill.color.withOpacity(0.4)
-                        : Colors.black.withOpacity(0.1),
-                    blurRadius: _isHovered ? 25 : 15,
-                    offset: Offset(0, _isHovered ? 12 : 8),
-                  ),
-                ],
                 border: Border.all(
-                  color: _isHovered 
-                      ? widget.skill.color
-                      : Colors.transparent,
-                  width: 2,
+                  color: _isHovering
+                      ? const Color(0xFF007AFF).withValues(alpha: 0.3)
+                      : const Color(0xFF2A2A2D),
+                  width: 1,
                 ),
+                boxShadow: _isHovering
+                    ? [
+                        BoxShadow(
+                          color: const Color(0xFF007AFF).withValues(alpha: 0.2),
+                          blurRadius: 20,
+                          spreadRadius: 2,
+                        ),
+                      ]
+                    : [
+                        const BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
               ),
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      widget.skill.icon,
-                      size: 40,
-                      color: _isHovered 
-                          ? Colors.white
-                          : widget.skill.color,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      widget.skill.name,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: _isHovered 
-                            ? Colors.white
-                            : Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                    Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            const Color(0xFF007AFF).withValues(alpha: 0.8),
+                            const Color(0xFF0066CC).withValues(alpha: 0.8),
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF007AFF).withValues(alpha: 0.3),
+                            blurRadius: 15,
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        widget.icon,
+                        color: Colors.white,
+                        size: 22,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    AnimatedBuilder(
-                      animation: _progressAnimation,
-                      builder: (context, child) {
-                        return Column(
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  width: 160,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
+                    const SizedBox(height: 14),
+                    Text(
+                      widget.name,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.3,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      widget.description,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: const Color(0xFF8E8E93).withValues(alpha: 0.8),
+                        fontSize: 10,
+                        height: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Progress bar
+                    Container(
+                      height: 4,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2),
+                        color: const Color(0xFF2A2A2D),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(2),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 1500),
+                          width: double.infinity,
+                          child: FractionallySizedBox(
+                            alignment: Alignment.centerLeft,
+                            widthFactor: _progressAnimation.value,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xFF007AFF),
+                                    Color(0xFF00C7BE),
+                                  ],
                                 ),
-                                Container(
-                                  width: 160 * _progressAnimation.value,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        widget.skill.color,
-                                        widget.skill.color.withOpacity(0.6),
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(4),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: widget.skill.color.withOpacity(0.5),
-                                        blurRadius: 10,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              '${(_progressAnimation.value * 100).toInt()}%',
-                              style: TextStyle(
-                                color: _isHovered 
-                                    ? Colors.white
-                                    : widget.skill.color,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ],
-                        );
-                      },
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${widget.percentage}%',
+                      style: TextStyle(
+                        color: const Color(0xFF007AFF),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        shadows: [
+                          Shadow(
+                            color: const Color(0xFF007AFF).withValues(alpha: 0.5),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -631,13 +777,4 @@ class _ModernSkillCardState extends State<_ModernSkillCard>
       ),
     );
   }
-}
-
-class SkillData {
-  final String name;
-  final IconData icon;
-  final int percentage;
-  final Color color;
-
-  SkillData(this.name, this.icon, this.percentage, this.color);
 }

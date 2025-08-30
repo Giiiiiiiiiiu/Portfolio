@@ -34,8 +34,7 @@ class ContentService {
   }
 
   Future<Map<String, dynamic>> loadSkillsContent() async {
-    if (_skillsContent != null) return _skillsContent!;
-    
+    // Always reload to get latest content
     try {
       final String jsonString = await rootBundle.loadString(
         'lib/resources/skills_content.json'
