@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:glassmorphism/glassmorphism.dart';
-import '../modern_skill_card.dart';
-import '../ultra_modern_skill_card.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import '../ferrari_luxury_skill_card.dart';
 import '../../services/content_service.dart';
+import '../../utils/ferrari_theme.dart';
 
 class SkillsSection extends StatefulWidget {
   const SkillsSection({Key? key}) : super(key: key);
@@ -90,44 +91,97 @@ class _SkillsSectionState extends State<SkillsSection> {
 
   IconData _getIconData(String iconName) {
     switch (iconName) {
-      case 'javascript': return Icons.javascript;
-      case 'code': return Icons.code;
-      case 'terminal': return Icons.terminal;
-      case 'phone_android': return Icons.phone_android;
-      case 'coffee': return Icons.coffee;
-      case 'window': return Icons.window;
-      case 'php': return Icons.code;
-      case 'storage': return Icons.storage;
-      case 'web': return Icons.web;
-      case 'layers': return Icons.layers;
-      case 'web_asset': return Icons.web_asset;
-      case 'mobile_friendly': return Icons.mobile_friendly;
-      case 'dns': return Icons.dns;
-      case 'api': return Icons.api;
-      case 'security': return Icons.security;
-      case 'settings_applications': return Icons.settings_applications;
-      case 'view_agenda': return Icons.view_agenda;
-      case 'data_object': return Icons.data_object;
-      case 'speed': return Icons.speed;
-      case 'search': return Icons.search;
-      case 'cloud': return Icons.cloud;
-      case 'table_chart': return Icons.table_chart;
-      case 'cloud_queue': return Icons.cloud_queue;
-      case 'cloud_circle': return Icons.cloud_circle;
-      case 'hub': return Icons.hub;
-      case 'hub_outlined': return Icons.hub_outlined;
-      case 'autorenew': return Icons.autorenew;
-      case 'build': return Icons.build;
-      case 'computer': return Icons.computer;
-      case 'auto_awesome': return Icons.auto_awesome;
-      case 'link': return Icons.link;
-      case 'psychology': return Icons.psychology;
-      case 'psychology_alt': return Icons.psychology_alt;
-      case 'face': return Icons.face;
-      case 'scatter_plot': return Icons.scatter_plot;
-      case 'edit_note': return Icons.edit_note;
-      case 'find_in_page': return Icons.find_in_page;
-      default: return Icons.code;
+      // Programming Languages
+      case 'javascript': return FontAwesomeIcons.js;
+      case 'typescript': return FontAwesomeIcons.js; // TypeScript uses JS icon variant
+      case 'python': return FontAwesomeIcons.python;
+      case 'java': return FontAwesomeIcons.java;
+      case 'php': return FontAwesomeIcons.php;
+      case 'dart': return Icons.flutter_dash; // Use Flutter Dash icon for Dart
+      case 'c': return FontAwesomeIcons.c;
+      case 'terminal': return FontAwesomeIcons.c; // For C/C++/C#
+      case 'sql': return FontAwesomeIcons.database;
+      case 'html': return FontAwesomeIcons.html5;
+      case 'css': return FontAwesomeIcons.css3Alt;
+      case 'web': return FontAwesomeIcons.html5; // For HTML/CSS combo
+      
+      // Frameworks & Libraries
+      case 'react': return FontAwesomeIcons.react;
+      case 'angular': return FontAwesomeIcons.angular;
+      case 'vuejs': return FontAwesomeIcons.vuejs;
+      case 'node': return FontAwesomeIcons.nodeJs;
+      case 'nodejs': return FontAwesomeIcons.nodeJs;
+      case 'flutter': return Icons.flutter_dash; // Use Flutter Dash icon
+      case 'django': return FontAwesomeIcons.python;
+      case 'laravel': return FontAwesomeIcons.laravel;
+      case 'bootstrap': return FontAwesomeIcons.bootstrap;
+      
+      // Databases
+      case 'storage': return FontAwesomeIcons.database;
+      case 'mongodb': return FontAwesomeIcons.database;
+      case 'postgresql': return FontAwesomeIcons.database;
+      case 'mysql': return FontAwesomeIcons.database;
+      case 'redis': return FontAwesomeIcons.memory;
+      case 'firebase': return FontAwesomeIcons.fire;
+      
+      // Cloud & DevOps
+      case 'aws': return FontAwesomeIcons.aws;
+      case 'cloud': return FontAwesomeIcons.cloud;
+      case 'cloud_queue': return FontAwesomeIcons.aws;
+      case 'cloud_circle': return FontAwesomeIcons.microsoft; // For Azure
+      case 'docker': return FontAwesomeIcons.docker;
+      case 'kubernetes': return FontAwesomeIcons.dharmachakra;
+      case 'git': return FontAwesomeIcons.gitAlt;
+      case 'github': return FontAwesomeIcons.github;
+      case 'gitlab': return FontAwesomeIcons.gitlab;
+      case 'linux': return FontAwesomeIcons.linux;
+      case 'ubuntu': return FontAwesomeIcons.ubuntu;
+      case 'windows': return FontAwesomeIcons.windows;
+      case 'apple': return FontAwesomeIcons.apple;
+      
+      // Tools & Others
+      case 'vscode': return FontAwesomeIcons.code;
+      case 'npm': return FontAwesomeIcons.npm;
+      case 'yarn': return FontAwesomeIcons.yarn;
+      case 'webpack': return FontAwesomeIcons.cube;
+      
+      // AI & Machine Learning
+      case 'auto_awesome': return FontAwesomeIcons.robot;
+      case 'brain': return FontAwesomeIcons.brain;
+      case 'psychology': return FontAwesomeIcons.brain;
+      case 'link': return FontAwesomeIcons.link;
+      
+      // Mobile
+      case 'phone_android': return FontAwesomeIcons.android;
+      case 'mobile_friendly': return FontAwesomeIcons.mobileScreen;
+      case 'apple_mobile': return FontAwesomeIcons.apple;
+      
+      // General/Default icons
+      case 'code': return FontAwesomeIcons.code;
+      case 'layers': return FontAwesomeIcons.layerGroup;
+      case 'api': return FontAwesomeIcons.plug;
+      case 'security': return FontAwesomeIcons.shield;
+      case 'web_asset': return FontAwesomeIcons.globe;
+      case 'dns': return FontAwesomeIcons.server;
+      case 'build': return FontAwesomeIcons.hammer;
+      case 'hub': return FontAwesomeIcons.codeBranch;
+      case 'hub_outlined': return FontAwesomeIcons.codeBranch;
+      case 'autorenew': return FontAwesomeIcons.rotate;
+      case 'computer': return FontAwesomeIcons.desktop;
+      case 'settings_applications': return FontAwesomeIcons.gear;
+      case 'view_agenda': return FontAwesomeIcons.tableColumns;
+      case 'data_object': return FontAwesomeIcons.database;
+      case 'speed': return FontAwesomeIcons.gaugeHigh;
+      case 'search': return FontAwesomeIcons.magnifyingGlass;
+      case 'table_chart': return FontAwesomeIcons.table;
+      case 'face': return FontAwesomeIcons.faceSmile;
+      case 'scatter_plot': return FontAwesomeIcons.chartLine;
+      case 'edit_note': return FontAwesomeIcons.penToSquare;
+      case 'find_in_page': return FontAwesomeIcons.fileLines;
+      case 'window': return FontAwesomeIcons.microsoft; // For C#/.NET
+      case 'coffee': return FontAwesomeIcons.java; // Java
+      
+      default: return FontAwesomeIcons.code;
     }
   }
 
@@ -137,74 +191,77 @@ class _SkillsSectionState extends State<SkillsSection> {
       return Container(
         height: 400,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF0A0A0A),
-              Color(0xFF121216),
-              Color(0xFF1C1C24),
-              Color(0xFF2C2C34),
-            ],
-            stops: [0.0, 0.3, 0.7, 1.0],
-          ),
+          gradient: FerrariTheme.luxuryGradient,
         ),
         child: const Center(
           child: CircularProgressIndicator(
-            color: Color(0xFF0080FF),
+            color: FerrariTheme.ferrariBlue,
           ),
         ),
       );
     }
 
+    final screenSize = MediaQuery.of(context).size;
+    final isDesktop = screenSize.width > 1200;
+    final isTablet = screenSize.width > 600 && screenSize.width <= 1200;
+    
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 20),
+      padding: EdgeInsets.symmetric(
+        horizontal: isDesktop ? 140 : (isTablet ? 80 : 40),
+        vertical: 100,
+      ),
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF0A0A0A),
-            Color(0xFF121216),
-            Color(0xFF1C1C24),
-            Color(0xFF2C2C34),
-          ],
-          stops: [0.0, 0.3, 0.7, 1.0],
-        ),
+        gradient: FerrariTheme.ferrariGradient,
       ),
       child: Column(
         children: [
-          ShaderMask(
-            shaderCallback: (bounds) => const LinearGradient(
-              colors: [
-                Color(0xFF0080FF),
-                Color(0xFF00BFFF),
-                Color(0xFF4A90E2),
-              ],
-            ).createShader(bounds),
-            child: Text(
-              title.isNotEmpty ? title : 'TECHNICAL EXPERTISE',
-              style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 4,
-                shadows: [
-                  const Shadow(
-                    color: Color(0xFF0080FF),
-                    blurRadius: 30,
-                    offset: Offset(0, 5),
+          AnimationConfiguration.synchronized(
+            child: SlideAnimation(
+              duration: FerrariTheme.elegantAnimation,
+              verticalOffset: -60,
+              curve: FerrariTheme.luxuryCurve,
+              child: FadeInAnimation(
+                duration: FerrariTheme.elegantAnimation,
+                child: ShaderMask(
+                  shaderCallback: (bounds) => const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      FerrariTheme.electricBlue,
+                      FerrariTheme.pureWhite,
+                      FerrariTheme.ferrariBlue,
+                      FerrariTheme.electricBlue,
+                    ],
+                    stops: [0.0, 0.3, 0.7, 1.0],
+                  ).createShader(bounds),
+                  child: Text(
+                    title.isNotEmpty ? title : 'TECHNICAL EXPERTISE',
+                    style: FerrariTheme.ferrariHeadline.copyWith(
+                      fontSize: 52,
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
-          const SizedBox(height: 10),
-          Text(
-            subtitle.isNotEmpty ? subtitle : 'Comprehensive skill set across modern technologies',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white.withOpacity(0.7),
-              fontWeight: FontWeight.w300,
-              letterSpacing: 2,
+          const SizedBox(height: 16),
+          AnimationConfiguration.synchronized(
+            child: SlideAnimation(
+              duration: FerrariTheme.smoothAnimation,
+              verticalOffset: -40,
+              curve: FerrariTheme.luxuryCurve,
+              child: FadeInAnimation(
+                child: Text(
+                  subtitle.isNotEmpty ? subtitle : 'Comprehensive skill set across modern technologies',
+                  style: FerrariTheme.elegantSubtitle.copyWith(
+                    fontSize: 20,
+                    letterSpacing: 1.2,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 60),
@@ -227,21 +284,113 @@ class _SkillsSectionState extends State<SkillsSection> {
 
   Widget _buildCategoryCard(BuildContext context, String category) {
     final isExpanded = expandedCategory == category;
-    final color = categoryColors[category] ?? const Color(0xFF0080FF);
+    final color = categoryColors[category] ?? FerrariTheme.ferrariBlue;
     final icon = categoryIcons[category] ?? Icons.code;
     final skillCount = skillCategories[category]?.length ?? 0;
 
-    return ModernSkillCard(
-      category: category,
-      icon: icon,
-      color: color,
-      skillCount: skillCount,
-      isExpanded: isExpanded,
-      onTap: () {
-        setState(() {
-          expandedCategory = isExpanded ? null : category;
-        });
-      },
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            expandedCategory = isExpanded ? null : category;
+          });
+        },
+        child: AnimatedContainer(
+          duration: FerrariTheme.quickAnimation,
+          width: 280,
+          height: 180,
+          transform: Matrix4.identity()
+            ..translate(0.0, isExpanded ? -10.0 : 0.0)
+            ..scale(isExpanded ? 1.05 : 1.0),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: isExpanded
+                  ? [
+                      color.withValues(alpha: 0.3),
+                      FerrariTheme.primaryGray,
+                      FerrariTheme.darkGray,
+                    ]
+                  : [
+                      FerrariTheme.metallicGray,
+                      FerrariTheme.primaryGray,
+                      FerrariTheme.darkGray,
+                    ],
+              stops: const [0.0, 0.5, 1.0],
+            ),
+            borderRadius: FerrariTheme.luxuryRadius,
+            boxShadow: isExpanded
+                ? [
+                    ...FerrariTheme.luxuryShadow,
+                    BoxShadow(
+                      color: color.withValues(alpha: 0.3),
+                      blurRadius: 25,
+                      offset: const Offset(0, 12),
+                    ),
+                  ]
+                : FerrariTheme.subtleShadow,
+            border: Border.all(
+              width: 1.5,
+              color: isExpanded
+                  ? color.withValues(alpha: 0.6)
+                  : FerrariTheme.silverAccent.withValues(alpha: 0.3),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [
+                        color,
+                        color.withValues(alpha: 0.7),
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.withValues(alpha: 0.4),
+                        blurRadius: 15,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    icon,
+                    color: FerrariTheme.pureWhite,
+                    size: 28,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  category,
+                  style: FerrariTheme.luxuryTitle.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '$skillCount Skills',
+                  style: TextStyle(
+                    color: FerrariTheme.silverAccent.withValues(alpha: 0.8),
+                    fontSize: 14,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -258,7 +407,7 @@ class _SkillsSectionState extends State<SkillsSection> {
             shaderCallback: (bounds) => LinearGradient(
               colors: [
                 color,
-                color.withOpacity(0.6),
+                color.withValues(alpha: 0.6),
               ],
             ).createShader(bounds),
             child: Text(
@@ -292,75 +441,16 @@ class _SkillsSectionState extends State<SkillsSection> {
   }
 
   Widget _buildSkillCard(BuildContext context, SkillItem skill, Color color, int index) {
-    return UltraModernSkillCard(
+    return FerrariLuxurySkillCard(
       skillName: skill.name,
       icon: skill.icon,
       percentage: skill.percentage,
       description: skill.description,
-      primaryColor: color,
+      accentColor: color,
       index: index,
     );
   }
 
-  Widget _buildProgressBar(int percentage, Color color) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Proficiency',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-                fontSize: 11,
-              ),
-            ),
-            Text(
-              '$percentage%',
-              style: TextStyle(
-                color: color,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 5),
-        Container(
-          height: 6,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(3),
-            color: Colors.white.withOpacity(0.1),
-          ),
-          child: Row(
-            children: [
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 1000),
-                curve: Curves.easeOutCubic,
-                width: (200 - 40) * (percentage / 100),
-                height: 6,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
-                  gradient: LinearGradient(
-                    colors: [
-                      color,
-                      color.withOpacity(0.6),
-                    ],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: color.withOpacity(0.5),
-                      blurRadius: 8,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 class SkillItem {

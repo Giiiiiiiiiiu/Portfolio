@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import '../providers/navigation_provider.dart';
 import '../widgets/navigation_bar.dart';
 import '../widgets/hero_section.dart';
-import '../widgets/skills_section.dart';
+import '../widgets/modern_skills_section.dart';
 import '../widgets/education_section.dart';
 import '../widgets/company_section.dart';
-import '../widgets/contact_section.dart';
+import '../widgets/ferrari_contact_section.dart';
 import '../widgets/floating_action_buttons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,10 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: const [
                 HeroSection(),
-                SkillsSection(),
+                ModernSkillsSection(),
                 EducationSection(),
                 CompanySection(),
-                ContactSection(),
+                FerrariContactSection(),
               ],
             ),
           ),

@@ -7,32 +7,50 @@
       "color": "#0080FF",
       "skills": [
         {
-          "name": "C/C++/C#",
-          "icon": "terminal",
-          "percentage": 75,
-          "description": "Systems & .NET Development"
+          "name": "C",
+          "icon": "c",
+          "percentage": 70,
+          "description": "Systems Programming"
         },
         {
-          "name": "JavaScript/TypeScript",
+          "name": "C++",
+          "icon": "c",
+          "percentage": 75,
+          "description": "Object-Oriented Systems"
+        },
+        {
+          "name": "C#",
+          "icon": "window",
+          "percentage": 75,
+          "description": ".NET Development"
+        },
+        {
+          "name": "JavaScript",
           "icon": "javascript",
           "percentage": 90,
-          "description": "Full-Stack Web Development"
+          "description": "Web Development"
+        },
+        {
+          "name": "TypeScript",
+          "icon": "javascript",
+          "percentage": 88,
+          "description": "Type-Safe JavaScript"
         },
         {
           "name": "Python",
-          "icon": "code",
+          "icon": "python",
           "percentage": 95,
           "description": "Backend & AI Development"
         },
         {
           "name": "Dart",
-          "icon": "phone_android",
+          "icon": "dart",
           "percentage": 85,
           "description": "Flutter Development"
         },
         {
           "name": "Java",
-          "icon": "coffee",
+          "icon": "java",
           "percentage": 80,
           "description": "Enterprise Applications"
         },
@@ -44,15 +62,27 @@
         },
         {
           "name": "SQL",
-          "icon": "storage",
+          "icon": "sql",
           "percentage": 85,
           "description": "Database Queries"
         },
         {
-          "name": "HTML/CSS/Tailwind",
-          "icon": "web",
+          "name": "HTML",
+          "icon": "html",
           "percentage": 95,
-          "description": "Web Markup & Styling"
+          "description": "Web Markup"
+        },
+        {
+          "name": "CSS",
+          "icon": "css",
+          "percentage": 93,
+          "description": "Styling & Layout"
+        },
+        {
+          "name": "SCSS",
+          "icon": "css",
+          "percentage": 85,
+          "description": "CSS Preprocessor"
         }
       ]
     },
@@ -62,51 +92,69 @@
       "skills": [
         {
           "name": "React",
-          "icon": "web",
+          "icon": "react",
           "percentage": 90,
           "description": "SPA Development"
         },
         {
+          "name": "React Native",
+          "icon": "react",
+          "percentage": 82,
+          "description": "Mobile Apps"
+        },
+        {
           "name": "Next.js",
-          "icon": "web_asset",
+          "icon": "react",
           "percentage": 88,
           "description": "Full-Stack React"
         },
         {
           "name": "Flutter",
-          "icon": "mobile_friendly",
+          "icon": "flutter",
           "percentage": 85,
           "description": "Cross-Platform Apps"
         },
         {
           "name": "Node.js",
-          "icon": "dns",
+          "icon": "nodejs",
           "percentage": 85,
           "description": "Server-Side JavaScript"
         },
         {
           "name": "Express.js",
-          "icon": "api",
+          "icon": "nodejs",
           "percentage": 83,
           "description": "REST APIs"
         },
         {
           "name": "Django",
-          "icon": "security",
+          "icon": "django",
           "percentage": 75,
           "description": "Python Web Framework"
         },
         {
           "name": "Spring Boot",
-          "icon": "settings_applications",
+          "icon": "java",
           "percentage": 70,
           "description": "Java Framework"
         },
         {
           "name": "Vue.js",
-          "icon": "view_agenda",
+          "icon": "vuejs",
           "percentage": 72,
           "description": "Progressive Framework"
+        },
+        {
+          "name": "Tailwind CSS",
+          "icon": "css",
+          "percentage": 90,
+          "description": "Utility-First CSS"
+        },
+        {
+          "name": "NativeWind",
+          "icon": "css",
+          "percentage": 80,
+          "description": "Tailwind for React Native"
         }
       ]
     },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:glassmorphism/glassmorphism.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../utils/ferrari_theme.dart';
 
 class CompanySection extends StatefulWidget {
   const CompanySection({Key? key}) : super(key: key);
@@ -22,25 +22,17 @@ class _CompanySectionState extends State<CompanySection> {
     
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 120 : (isTablet ? 60 : 30),
-        vertical: 80,
+        horizontal: isDesktop ? 140 : (isTablet ? 80 : 40),
+        vertical: 100,
       ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            const Color(0xFF0f3460),
-            const Color(0xFF16213e),
-            const Color(0xFF1a1a2e),
-          ],
-        ),
+      decoration: const BoxDecoration(
+        gradient: FerrariTheme.ferrariGradient,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildSectionTitle(context),
-          const SizedBox(height: 60),
+          const SizedBox(height: 80),
           _buildCompanyGrid(context),
         ],
       ),
@@ -50,34 +42,47 @@ class _CompanySectionState extends State<CompanySection> {
   Widget _buildSectionTitle(BuildContext context) {
     return AnimationConfiguration.synchronized(
       child: SlideAnimation(
-        duration: const Duration(milliseconds: 800),
-        verticalOffset: -50,
+        duration: FerrariTheme.elegantAnimation,
+        verticalOffset: -60,
+        curve: FerrariTheme.luxuryCurve,
         child: FadeInAnimation(
+          duration: FerrariTheme.elegantAnimation,
           child: Column(
             children: [
-              ShaderMask(
-                shaderCallback: (bounds) => LinearGradient(
-                  colors: [
-                    const Color(0xFF3A7BD5),
-                    const Color(0xFF00D2FF),
-                    const Color(0xFF3A7BD5),
-                  ],
-                ).createShader(bounds),
-                child: const Text(
-                  'MY COMPANY',
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: ShaderMask(
+                  shaderCallback: (bounds) => const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      FerrariTheme.silverAccent,
+                      FerrariTheme.pureWhite,
+                      FerrariTheme.metallicGray,
+                      FerrariTheme.silverAccent,
+                    ],
+                    stops: [0.0, 0.3, 0.7, 1.0],
+                  ).createShader(bounds),
+                  child: Text(
+                    'MY COMPANY',
+                    style: FerrariTheme.ferrariHeadline.copyWith(
+                      fontSize: 52,
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
-              Text(
-                'Building the Future of Digital Solutions',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white.withOpacity(0.7),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Text(
+                  'Building the Future of Digital Solutions',
+                  style: FerrariTheme.elegantSubtitle.copyWith(
+                    fontSize: 20,
+                    letterSpacing: 1.2,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
@@ -95,7 +100,8 @@ class _CompanySectionState extends State<CompanySection> {
         'period': 'Seit 2024',
         'description': 'Gründer und Hauptentwickler - Innovative Softwarelösungen und digitale Produkte für moderne Unternehmen',
         'logo': FontAwesomeIcons.rocket,
-        'color': const Color(0xFF0080FF),
+        'color': FerrariTheme.silverAccent,
+        'accentColor': FerrariTheme.pureWhite,
         'technologies': ['React', 'Next.js', 'Flutter', 'TypeScript', 'Node.js', 'AWS', 'PostgreSQL', 'Docker'],
         'website': 'https://festuscode.com',
       },
@@ -110,18 +116,20 @@ class _CompanySectionState extends State<CompanySection> {
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
-          crossAxisSpacing: 30,
-          mainAxisSpacing: 30,
-          childAspectRatio: screenSize.width > 600 ? 1.8 : 1.4,
+          crossAxisSpacing: 40,
+          mainAxisSpacing: 40,
+          childAspectRatio: screenSize.width > 600 ? 1.6 : 1.2,
         ),
         itemCount: companies.length,
         itemBuilder: (context, index) {
           return AnimationConfiguration.staggeredGrid(
             position: index,
-            duration: const Duration(milliseconds: 600),
+            duration: FerrariTheme.elegantAnimation,
             columnCount: crossAxisCount,
             child: ScaleAnimation(
+              curve: FerrariTheme.luxuryCurve,
               child: FadeInAnimation(
+                duration: FerrariTheme.smoothAnimation,
                 child: _buildCompanyCard(context, companies[index], index),
               ),
             ),
@@ -139,174 +147,245 @@ class _CompanySectionState extends State<CompanySection> {
       onEnter: (_) => setState(() => hoveredIndex = index),
       onExit: (_) => setState(() => hoveredIndex = null),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        duration: FerrariTheme.quickAnimation,
+        curve: FerrariTheme.luxuryCurve,
         transform: Matrix4.identity()
-          ..translate(0, isHovered ? -10.0 : 0.0)
-          ..scale(isHovered ? 1.02 : 1.0),
-        child: GlassmorphicContainer(
+          ..translate(0.0, isHovered ? -12.0 : 0.0)
+          ..scale(isHovered ? 1.03 : 1.0),
+        child: Container(
           width: double.infinity,
           height: double.infinity,
-          borderRadius: 25,
-          blur: 20,
-          alignment: Alignment.center,
-          border: 2,
-          linearGradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.white.withOpacity(isHovered ? 0.15 : 0.1),
-              Colors.white.withOpacity(isHovered ? 0.08 : 0.05),
-            ],
+          padding: const EdgeInsets.all(32),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                FerrariTheme.metallicGray,
+                FerrariTheme.primaryGray,
+                FerrariTheme.darkGray,
+              ],
+              stops: [0.0, 0.5, 1.0],
+            ),
+            borderRadius: FerrariTheme.luxuryRadius,
+            boxShadow: isHovered ? [
+              ...FerrariTheme.luxuryShadow,
+              BoxShadow(
+                color: FerrariTheme.silverAccent.withValues(alpha: 0.2),
+                blurRadius: 30,
+                offset: const Offset(0, 15),
+              ),
+            ] : FerrariTheme.subtleShadow,
+            border: Border.all(
+              width: 1.5,
+              color: isHovered 
+                ? FerrariTheme.silverAccent.withValues(alpha: 0.6)
+                : FerrariTheme.silverAccent.withValues(alpha: 0.3),
+            ),
           ),
-          borderGradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              (company['color'] as Color).withOpacity(isHovered ? 0.8 : 0.5),
-              Colors.white.withOpacity(0.2),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(25),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            (company['color'] as Color).withOpacity(0.8),
-                            company['color'] as Color,
-                          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header with logo and company info
+              Row(
+                children: [
+                  Container(
+                    width: 72,
+                    height: 72,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          FerrariTheme.silverAccent,
+                          FerrariTheme.metallicGray,
+                          FerrariTheme.primaryGray,
+                        ],
+                        stops: [0.0, 0.5, 1.0],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: FerrariTheme.carbonFiber.withValues(alpha: 0.8),
+                          blurRadius: 20,
+                          spreadRadius: 2,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: (company['color'] as Color).withOpacity(0.5),
-                            blurRadius: 15,
-                            spreadRadius: 1,
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        company['logo'] as IconData,
-                        color: Colors.white,
-                        size: 28,
+                      ],
+                      border: Border.all(
+                        width: 2,
+                        color: FerrariTheme.carbonFiber,
                       ),
                     ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            company['name'] as String,
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: company['color'] as Color,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            company['position'] as String,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white.withOpacity(0.9),
-                            ),
-                          ),
-                        ],
-                      ),
+                    child: Icon(
+                      company['logo'] as IconData,
+                      color: FerrariTheme.pureWhite,
+                      size: 32,
                     ),
-                  ],
+                  ),
+                  const SizedBox(width: 24),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          company['name'] as String,
+                          style: FerrariTheme.luxuryTitle.copyWith(
+                            fontSize: 26,
+                            fontWeight: FontWeight.w700,
+                            color: company['color'] as Color,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          company['position'] as String,
+                          style: FerrariTheme.elegantSubtitle.copyWith(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                            color: FerrariTheme.pureWhite,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              
+              // Period badge
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [
+                      FerrariTheme.carbonFiber,
+                      FerrariTheme.primaryGray,
+                    ],
+                    stops: [0.0, 1.0],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: FerrariTheme.silverAccent.withValues(alpha: 0.3),
+                  ),
                 ),
-                const SizedBox(height: 15),
-                Row(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
                       FontAwesomeIcons.calendar,
                       size: 14,
-                      color: Colors.white.withOpacity(0.5),
+                      color: FerrariTheme.silverAccent,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       company['period'] as String,
-                      style: TextStyle(
+                      style: FerrariTheme.premiumBody.copyWith(
                         fontSize: 14,
-                        color: Colors.white.withOpacity(0.6),
+                        fontWeight: FontWeight.w500,
+                        color: FerrariTheme.silverAccent,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 15),
-                Text(
-                  company['description'] as String,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white.withOpacity(0.7),
-                    height: 1.5,
+              ),
+              const SizedBox(height: 20),
+              
+              // Description
+              Text(
+                company['description'] as String,
+                style: FerrariTheme.premiumBody.copyWith(
+                  fontSize: 16,
+                  height: 1.6,
+                  color: FerrariTheme.silverAccent.withValues(alpha: 0.9),
+                ),
+              ),
+              const Spacer(),
+              
+              // Technologies
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: (company['technologies'] as List<String>).map((tech) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        colors: [
+                          FerrariTheme.darkGray,
+                          FerrariTheme.carbonFiber,
+                        ],
+                        stops: [0.0, 1.0],
+                      ),
+                      border: Border.all(
+                        color: FerrariTheme.lightGray.withValues(alpha: 0.4),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: FerrariTheme.carbonFiber.withValues(alpha: 0.3),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      tech,
+                      style: FerrariTheme.premiumBody.copyWith(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: FerrariTheme.pureWhite.withValues(alpha: 0.9),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 24),
+              
+              // Website link
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      FerrariTheme.silverAccent.withValues(alpha: 0.1),
+                      Colors.transparent,
+                    ],
+                    stops: [0.0, 1.0],
                   ),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                const Spacer(),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: (company['technologies'] as List<String>).map((tech) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: (company['color'] as Color).withOpacity(0.2),
-                        border: Border.all(
-                          color: (company['color'] as Color).withOpacity(0.5),
-                        ),
-                      ),
-                      child: Text(
-                        tech,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white.withOpacity(0.9),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 20),
-                InkWell(
+                child: InkWell(
                   onTap: () async {
                     final url = Uri.parse(company['website'] as String);
                     if (await canLaunchUrl(url)) {
                       await launchUrl(url);
                     }
                   },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'VISIT WEBSITE',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: company['color'] as Color,
-                          fontWeight: FontWeight.bold,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'VISIT WEBSITE',
+                          style: FerrariTheme.premiumBody.copyWith(
+                            fontSize: 15,
+                            color: company['color'] as Color,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1.0,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(
-                        FontAwesomeIcons.arrowRight,
-                        size: 14,
-                        color: company['color'] as Color,
-                      ),
-                    ],
+                        const SizedBox(width: 12),
+                        Icon(
+                          FontAwesomeIcons.arrowRight,
+                          size: 16,
+                          color: company['color'] as Color,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:glassmorphism/glassmorphism.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../utils/ferrari_theme.dart';
 
 class EducationSection extends StatelessWidget {
   const EducationSection({Key? key}) : super(key: key);
@@ -14,25 +14,17 @@ class EducationSection extends StatelessWidget {
     
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 120 : (isTablet ? 60 : 30),
-        vertical: 80,
+        horizontal: isDesktop ? 140 : (isTablet ? 80 : 40),
+        vertical: 100,
       ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            const Color(0xFF1a1a2e),
-            const Color(0xFF16213e),
-            const Color(0xFF0f3460),
-          ],
-        ),
+      decoration: const BoxDecoration(
+        gradient: FerrariTheme.luxuryGradient,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildSectionTitle(context),
-          const SizedBox(height: 60),
+          const SizedBox(height: 80),
           _buildEducationTimeline(context),
         ],
       ),
@@ -42,34 +34,47 @@ class EducationSection extends StatelessWidget {
   Widget _buildSectionTitle(BuildContext context) {
     return AnimationConfiguration.synchronized(
       child: SlideAnimation(
-        duration: const Duration(milliseconds: 800),
-        verticalOffset: -50,
+        duration: FerrariTheme.elegantAnimation,
+        verticalOffset: -60,
+        curve: FerrariTheme.luxuryCurve,
         child: FadeInAnimation(
+          duration: FerrariTheme.elegantAnimation,
           child: Column(
             children: [
-              ShaderMask(
-                shaderCallback: (bounds) => LinearGradient(
-                  colors: [
-                    const Color(0xFF00D2FF),
-                    const Color(0xFF3A7BD5),
-                    const Color(0xFF00D2FF),
-                  ],
-                ).createShader(bounds),
-                child: const Text(
-                  'Bildungsweg',
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: ShaderMask(
+                  shaderCallback: (bounds) => const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      FerrariTheme.silverAccent,
+                      FerrariTheme.pureWhite,
+                      FerrariTheme.metallicGray,
+                      FerrariTheme.silverAccent,
+                    ],
+                    stops: [0.0, 0.3, 0.7, 1.0],
+                  ).createShader(bounds),
+                  child: Text(
+                    'BILDUNGSWEG',
+                    style: FerrariTheme.ferrariHeadline.copyWith(
+                      fontSize: 52,
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
-              Text(
-                'Meine akademische und berufliche Entwicklung',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white.withOpacity(0.7),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Text(
+                  'Meine akademische und berufliche Entwicklung',
+                  style: FerrariTheme.elegantSubtitle.copyWith(
+                    fontSize: 20,
+                    letterSpacing: 1.2,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
@@ -87,7 +92,8 @@ class EducationSection extends StatelessWidget {
         'period': 'Seit 2024',
         'description': 'Aktuell im Studium - Software Engineering, Web Development, KI-Integration',
         'icon': FontAwesomeIcons.graduationCap,
-        'color': const Color(0xFF0080FF),
+        'color': FerrariTheme.silverAccent,
+        'accentColor': FerrariTheme.pureWhite,
       },
       {
         'title': 'Fachhochschulreife',
@@ -95,17 +101,20 @@ class EducationSection extends StatelessWidget {
         'period': '2022 - 2024',
         'description': 'Schwerpunkt Informatik - Programmierung, Datenbanken, Netzwerktechnik',
         'icon': FontAwesomeIcons.school,
-        'color': const Color(0xFF00BFFF),
+        'color': FerrariTheme.lightGray,
+        'accentColor': FerrariTheme.silverAccent,
       },
     ];
 
     return AnimationLimiter(
       child: Column(
         children: AnimationConfiguration.toStaggeredList(
-          duration: const Duration(milliseconds: 600),
+          duration: FerrariTheme.smoothAnimation,
           childAnimationBuilder: (widget) => SlideAnimation(
-            horizontalOffset: 100,
+            horizontalOffset: 120,
+            curve: FerrariTheme.luxuryCurve,
             child: FadeInAnimation(
+              duration: FerrariTheme.elegantAnimation,
               child: widget,
             ),
           ),
@@ -158,17 +167,27 @@ class EducationSection extends StatelessWidget {
                 _buildTimelineNode(education['color'] as Color, education['icon'] as IconData),
                 if (!isLast)
                   Container(
-                    width: 2,
-                    height: 120,
-                    decoration: BoxDecoration(
+                    width: 3,
+                    height: 140,
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          education['color'] as Color,
-                          Colors.white.withOpacity(0.2),
+                          FerrariTheme.silverAccent,
+                          FerrariTheme.metallicGray,
+                          FerrariTheme.lightGray,
                         ],
+                        stops: [0.0, 0.5, 1.0],
                       ),
+                      borderRadius: BorderRadius.all(Radius.circular(2)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: FerrariTheme.carbonFiber,
+                          blurRadius: 4,
+                          offset: Offset(1, 0),
+                        ),
+                      ],
                     ),
                   ),
               ],
@@ -200,17 +219,27 @@ class EducationSection extends StatelessWidget {
             _buildTimelineNode(education['color'] as Color, education['icon'] as IconData),
             if (!isLast)
               Container(
-                width: 2,
-                height: 150,
-                decoration: BoxDecoration(
+                width: 3,
+                height: 170,
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      education['color'] as Color,
-                      Colors.white.withOpacity(0.2),
+                      FerrariTheme.silverAccent,
+                      FerrariTheme.metallicGray,
+                      FerrariTheme.lightGray,
                     ],
+                    stops: [0.0, 0.5, 1.0],
                   ),
+                  borderRadius: BorderRadius.all(Radius.circular(2)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: FerrariTheme.carbonFiber,
+                      blurRadius: 4,
+                      offset: Offset(1, 0),
+                    ),
+                  ],
                 ),
               ),
           ],
@@ -229,30 +258,43 @@ class EducationSection extends StatelessWidget {
 
   Widget _buildTimelineNode(Color color, IconData icon) {
     return Container(
-      width: 60,
-      height: 60,
+      width: 72,
+      height: 72,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            color.withOpacity(0.8),
-            color,
+            FerrariTheme.silverAccent,
+            FerrariTheme.metallicGray,
+            FerrariTheme.primaryGray,
           ],
+          stops: [0.0, 0.5, 1.0],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.5),
-            blurRadius: 20,
-            spreadRadius: 2,
-          ),
-        ],
+        boxShadow: FerrariTheme.luxuryShadow,
+        border: Border.all(
+          width: 2,
+          color: FerrariTheme.carbonFiber,
+        ),
       ),
-      child: Icon(
-        icon,
-        color: Colors.white,
-        size: 24,
+      child: Container(
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              FerrariTheme.metallicGray,
+              FerrariTheme.primaryGray,
+            ],
+          ),
+        ),
+        child: Icon(
+          icon,
+          color: FerrariTheme.pureWhite,
+          size: 28,
+        ),
       ),
     );
   }
@@ -261,75 +303,113 @@ class EducationSection extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: GlassmorphicContainer(
+        duration: FerrariTheme.quickAnimation,
+        curve: FerrariTheme.luxuryCurve,
+        margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        child: Container(
           width: double.infinity,
-          height: 140,
-          borderRadius: 20,
-          blur: 20,
-          alignment: Alignment.center,
-          border: 2,
-          linearGradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.white.withOpacity(0.1),
-              Colors.white.withOpacity(0.05),
-            ],
+          padding: const EdgeInsets.all(28),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                FerrariTheme.metallicGray,
+                FerrariTheme.primaryGray,
+                FerrariTheme.darkGray,
+              ],
+              stops: [0.0, 0.5, 1.0],
+            ),
+            borderRadius: FerrariTheme.luxuryRadius,
+            boxShadow: FerrariTheme.luxuryShadow,
+            border: Border.all(
+              width: 1,
+              color: FerrariTheme.silverAccent.withValues(alpha: 0.3),
+            ),
           ),
-          borderGradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              (education['color'] as Color).withOpacity(0.5),
-              Colors.white.withOpacity(0.2),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header with title and period
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
                       education['title'] as String,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                      style: FerrariTheme.luxuryTitle.copyWith(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
                         color: education['color'] as Color,
                       ),
                     ),
-                    Text(
-                      education['period'] as String,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white.withOpacity(0.6),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          FerrariTheme.carbonFiber,
+                          FerrariTheme.primaryGray,
+                        ],
+                        stops: [0.0, 1.0],
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: FerrariTheme.silverAccent.withValues(alpha: 0.2),
                       ),
                     ),
-                  ],
+                    child: Text(
+                      education['period'] as String,
+                      style: FerrariTheme.premiumBody.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: FerrariTheme.silverAccent,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              
+              // Institution
+              Text(
+                education['institution'] as String,
+                style: FerrariTheme.elegantSubtitle.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: FerrariTheme.pureWhite,
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  education['institution'] as String,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white.withOpacity(0.8),
+              ),
+              const SizedBox(height: 12),
+              
+              // Description
+              Text(
+                education['description'] as String,
+                style: FerrariTheme.premiumBody.copyWith(
+                  fontSize: 15,
+                  height: 1.6,
+                  color: FerrariTheme.silverAccent.withValues(alpha: 0.9),
+                ),
+              ),
+              
+              const SizedBox(height: 16),
+              
+              // Decorative metallic line
+              Container(
+                height: 2,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.transparent,
+                      FerrariTheme.silverAccent,
+                      Colors.transparent,
+                    ],
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  education['description'] as String,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white.withOpacity(0.6),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
