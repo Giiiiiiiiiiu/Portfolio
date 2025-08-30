@@ -57,14 +57,14 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
           end: Alignment.bottomRight,
           colors: Theme.of(context).brightness == Brightness.dark
               ? [
-                  const Color(0xFF0A0E27),
-                  const Color(0xFF1A1F36),
-                  const Color(0xFF2A2F46),
+                  const Color(0xFF000000),
+                  const Color(0xFF0A0A0A),
+                  const Color(0xFF1A1A1A),
                 ]
               : [
-                  const Color(0xFFF8F9FA),
-                  const Color(0xFFE9ECEF),
-                  const Color(0xFFDEE2E6),
+                  const Color(0xFFFAFAFA),
+                  const Color(0xFFF5F5F5),
+                  const Color(0xFFEEEEEE),
                 ],
         ),
       ),

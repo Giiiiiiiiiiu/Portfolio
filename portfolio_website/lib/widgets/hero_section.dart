@@ -27,24 +27,24 @@ class HeroSection extends StatelessWidget {
                   child: GlassmorphicContainer(
                     width: size.width * 0.8,
                     height: size.height * 0.6,
-                    borderRadius: 40,
-                    blur: 20,
+                    borderRadius: 20,
+                    blur: 10,
                     alignment: Alignment.center,
                     border: 2,
                     linearGradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Colors.white.withOpacity(0.1),
-                        Colors.white.withOpacity(0.05),
+                        Colors.black.withOpacity(0.2),
+                        Colors.black.withOpacity(0.1),
                       ],
                     ),
                     borderGradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Colors.white.withOpacity(0.5),
-                        Colors.white.withOpacity(0.2),
+                        const Color(0xFF00F0FF).withOpacity(0.3),
+                        const Color(0xFF00F0FF).withOpacity(0.1),
                       ],
                     ),
                     child: Padding(
@@ -88,11 +88,11 @@ class HeroSection extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: const LinearGradient(
-                colors: [Color(0xFF6B5B95), Color(0xFF88B0D3)],
+                colors: [Color(0xFF1A1A1A), Color(0xFF2C2C2C)],
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF6B5B95).withOpacity(0.5),
+                  color: const Color(0xFF00F0FF).withOpacity(0.3),
                   blurRadius: 30,
                   spreadRadius: 5,
                 ),

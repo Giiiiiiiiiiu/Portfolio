@@ -12,8 +12,9 @@ class SkillsSection extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.black,
-            Colors.grey.shade900,
+            const Color(0xFF000000),
+            const Color(0xFF0A0A0A),
+            const Color(0xFF1A1A1A),
           ],
         ),
       ),
@@ -36,7 +37,7 @@ class SkillsSection extends StatelessWidget {
                 context,
                 'Flutter',
                 Icons.phone_android,
-                Colors.blue,
+                const Color(0xFF00F0FF),
                 'Cross-Platform Development',
                 90,
               ),
@@ -44,7 +45,7 @@ class SkillsSection extends StatelessWidget {
                 context,
                 'React',
                 Icons.web,
-                Colors.cyan,
+                const Color(0xFF00CEC9),
                 'Web Development',
                 85,
               ),
@@ -52,7 +53,7 @@ class SkillsSection extends StatelessWidget {
                 context,
                 'Node.js',
                 Icons.code,
-                Colors.green,
+                const Color(0xFF00FF88),
                 'Backend Development',
                 80,
               ),
@@ -60,7 +61,7 @@ class SkillsSection extends StatelessWidget {
                 context,
                 'Python',
                 Icons.auto_awesome,
-                Colors.yellow,
+                const Color(0xFFFFD700),
                 'AI & Automation',
                 85,
               ),
@@ -68,7 +69,7 @@ class SkillsSection extends StatelessWidget {
                 context,
                 'Docker',
                 Icons.cloud,
-                Colors.blue.shade300,
+                const Color(0xFF4FC3F7),
                 'DevOps & Container',
                 75,
               ),
@@ -76,7 +77,7 @@ class SkillsSection extends StatelessWidget {
                 context,
                 'Firebase',
                 Icons.storage,
-                Colors.orange,
+                const Color(0xFFFF6B35),
                 'Cloud & Database',
                 80,
               ),
@@ -135,15 +136,15 @@ class _Skill3DCardState extends State<Skill3DCard>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
     _rotationAnimation = Tween<double>(
       begin: 0,
-      end: 0.05,
+      end: 0.1,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeInOut,
+      curve: Curves.elasticOut,
     ));
   }
 

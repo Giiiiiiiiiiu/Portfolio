@@ -24,24 +24,24 @@ class CustomNavigationBar extends StatelessWidget implements PreferredSizeWidget
       child: GlassmorphicContainer(
         width: size.width * 0.9,
         height: 60,
-        borderRadius: 30,
-        blur: 20,
+        borderRadius: 15,
+        blur: 10,
         alignment: Alignment.center,
         border: 2,
         linearGradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.white.withOpacity(0.1),
-            Colors.white.withOpacity(0.05),
+            Colors.black.withOpacity(0.3),
+            Colors.black.withOpacity(0.1),
           ],
         ),
         borderGradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.white.withOpacity(0.5),
-            Colors.white.withOpacity(0.2),
+            const Color(0xFF00F0FF).withOpacity(0.2),
+            const Color(0xFF00F0FF).withOpacity(0.05),
           ],
         ),
         child: Padding(
@@ -69,7 +69,7 @@ class CustomNavigationBar extends StatelessWidget implements PreferredSizeWidget
           scale: value,
           child: ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
-              colors: [Color(0xFF6B5B95), Color(0xFF88B0D3)],
+              colors: [Color(0xFF00F0FF), Color(0xFF00CEC9)],
             ).createShader(bounds),
             child: const Text(
               'Portfolio',
