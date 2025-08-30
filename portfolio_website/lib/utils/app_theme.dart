@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color primaryColor = Color(0xFF1A1A1A);
-  static const Color secondaryColor = Color(0xFF2C2C2C);
-  static const Color accentColor = Color(0xFF00F0FF);
-  static const Color darkBackground = Color(0xFF000000);
-  static const Color lightBackground = Color(0xFFFAFAFA);
-  static const Color gradientStart = Color(0xFF1A1A1A);
-  static const Color gradientEnd = Color(0xFF2C2C2C);
-  static const Color neonAccent = Color(0xFF00F0FF);
+  static const Color primaryColor = Color(0xFF2C2C34);
+  static const Color secondaryColor = Color(0xFF3E3E46);
+  static const Color accentColor = Color(0xFFFF0000);
+  static const Color darkBackground = Color(0xFF0A0A0A);
+  static const Color lightBackground = Color(0xFFF7F7F7);
+  static const Color gradientStart = Color(0xFF1C1C24);
+  static const Color gradientEnd = Color(0xFF3E3E46);
+  static const Color neonAccent = Color(0xFFFF0000);
+  static const Color metallicSilver = Color(0xFFB8B8C0);
+  static const Color ferrariGray = Color(0xFF4A4A52);
+  static const Color premiumDark = Color(0xFF121216);
+  static const Color glossyWhite = Color(0xFFFEFEFE);
   
   static ThemeData get lightTheme {
     return ThemeData(
@@ -24,18 +28,21 @@ class AppTheme {
       textTheme: GoogleFonts.interTextTheme(
         const TextTheme(
           displayLarge: TextStyle(
-            fontSize: 72,
-            fontWeight: FontWeight.bold,
-            letterSpacing: -1.5,
+            fontSize: 86,
+            fontWeight: FontWeight.w900,
+            letterSpacing: -2.5,
+            height: 0.9,
           ),
           displayMedium: TextStyle(
-            fontSize: 56,
-            fontWeight: FontWeight.bold,
-            letterSpacing: -0.5,
+            fontSize: 64,
+            fontWeight: FontWeight.w800,
+            letterSpacing: -1.5,
+            height: 1.0,
           ),
           displaySmall: TextStyle(
-            fontSize: 45,
-            fontWeight: FontWeight.bold,
+            fontSize: 48,
+            fontWeight: FontWeight.w700,
+            letterSpacing: -1.0,
           ),
           headlineMedium: TextStyle(
             fontSize: 34,
@@ -65,13 +72,14 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: primaryColor,
+          backgroundColor: accentColor,
           foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 24),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
-          elevation: 0,
+          elevation: 12,
+          shadowColor: accentColor.withOpacity(0.4),
         ),
       ),
       cardTheme: CardThemeData(
@@ -147,12 +155,13 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: accentColor,
-          foregroundColor: darkBackground,
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 24),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
-          elevation: 0,
+          elevation: 20,
+          shadowColor: accentColor.withOpacity(0.6),
         ),
       ),
       cardTheme: CardThemeData(

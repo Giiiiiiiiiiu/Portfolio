@@ -12,7 +12,7 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     with TickerProviderStateMixin {
   late List<AnimationController> _controllers;
   late List<Animation<double>> _animations;
-  final int particleCount = 50;
+  final int particleCount = 80;
   
   @override
   void initState() {
@@ -57,14 +57,16 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
           end: Alignment.bottomRight,
           colors: Theme.of(context).brightness == Brightness.dark
               ? [
-                  const Color(0xFF000000),
                   const Color(0xFF0A0A0A),
-                  const Color(0xFF1A1A1A),
+                  const Color(0xFF121216),
+                  const Color(0xFF1C1C24),
+                  const Color(0xFF2C2C34),
                 ]
               : [
-                  const Color(0xFFFAFAFA),
-                  const Color(0xFFF5F5F5),
-                  const Color(0xFFEEEEEE),
+                  const Color(0xFFF7F7F7),
+                  const Color(0xFFE8E8E8),
+                  const Color(0xFFD9D9D9),
+                  const Color(0xFFCACACA),
                 ],
         ),
       ),
@@ -88,20 +90,31 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
   
   Widget _buildParticle(int index) {
     final random = math.Random(index);
-    final size = 2.0 + random.nextDouble() * 4;
-    final opacity = 0.1 + random.nextDouble() * 0.4;
+    final size = 1.0 + random.nextDouble() * 3;
+    final opacity = 0.05 + random.nextDouble() * 0.2;
+    final isRed = random.nextBool();
     
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Theme.of(context).primaryColor.withOpacity(opacity),
+        gradient: RadialGradient(
+          colors: isRed ? [
+            const Color(0xFFFF0000).withOpacity(opacity),
+            const Color(0xFFFF0000).withOpacity(0),
+          ] : [
+            const Color(0xFFB8B8C0).withOpacity(opacity * 0.5),
+            const Color(0xFFB8B8C0).withOpacity(0),
+          ],
+        ),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).primaryColor.withOpacity(opacity * 0.5),
-            blurRadius: size * 2,
-            spreadRadius: size,
+            color: isRed 
+              ? const Color(0xFFFF0000).withOpacity(opacity * 0.3)
+              : const Color(0xFFB8B8C0).withOpacity(opacity * 0.2),
+            blurRadius: size * 4,
+            spreadRadius: size * 2,
           ),
         ],
       ),

@@ -24,24 +24,24 @@ class CustomNavigationBar extends StatelessWidget implements PreferredSizeWidget
       child: GlassmorphicContainer(
         width: size.width * 0.9,
         height: 60,
-        borderRadius: 15,
-        blur: 10,
+        borderRadius: 0,
+        blur: 40,
         alignment: Alignment.center,
         border: 2,
         linearGradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.black.withOpacity(0.3),
-            Colors.black.withOpacity(0.1),
+            const Color(0xFF2C2C34).withOpacity(0.6),
+            const Color(0xFF1C1C24).withOpacity(0.3),
           ],
         ),
         borderGradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFF00F0FF).withOpacity(0.2),
-            const Color(0xFF00F0FF).withOpacity(0.05),
+            const Color(0xFFFF0000).withOpacity(0.15),
+            const Color(0xFFB8B8C0).withOpacity(0.08),
           ],
         ),
         child: Padding(
@@ -69,10 +69,10 @@ class CustomNavigationBar extends StatelessWidget implements PreferredSizeWidget
           scale: value,
           child: ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
-              colors: [Color(0xFF00F0FF), Color(0xFF00CEC9)],
+              colors: [Color(0xFFFF0000), Color(0xFFB8B8C0), Color(0xFF4A4A52)],
             ).createShader(bounds),
             child: const Text(
-              'Portfolio',
+              'FERRARI PORTFOLIO',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

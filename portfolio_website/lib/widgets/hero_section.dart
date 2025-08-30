@@ -3,6 +3,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'animated_background.dart';
+import 'premium_button.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -27,24 +28,24 @@ class HeroSection extends StatelessWidget {
                   child: GlassmorphicContainer(
                     width: size.width * 0.8,
                     height: size.height * 0.6,
-                    borderRadius: 20,
-                    blur: 10,
+                    borderRadius: 0,
+                    blur: 30,
                     alignment: Alignment.center,
                     border: 2,
                     linearGradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Colors.black.withOpacity(0.2),
-                        Colors.black.withOpacity(0.1),
+                        const Color(0xFF2C2C34).withOpacity(0.4),
+                        const Color(0xFF1C1C24).withOpacity(0.2),
                       ],
                     ),
                     borderGradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        const Color(0xFF00F0FF).withOpacity(0.3),
-                        const Color(0xFF00F0FF).withOpacity(0.1),
+                        const Color(0xFFFF0000).withOpacity(0.2),
+                        const Color(0xFFB8B8C0).withOpacity(0.1),
                       ],
                     ),
                     child: Padding(
@@ -88,13 +89,15 @@ class HeroSection extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: const LinearGradient(
-                colors: [Color(0xFF1A1A1A), Color(0xFF2C2C2C)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF2C2C34), Color(0xFF4A4A52), Color(0xFF3E3E46)],
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF00F0FF).withOpacity(0.3),
-                  blurRadius: 30,
-                  spreadRadius: 5,
+                  color: const Color(0xFFFF0000).withOpacity(0.5),
+                  blurRadius: 50,
+                  spreadRadius: 10,
                 ),
               ],
             ),
@@ -114,10 +117,12 @@ class HeroSection extends StatelessWidget {
   Widget _buildName(BuildContext context) {
     return ShaderMask(
       shaderCallback: (bounds) => const LinearGradient(
-        colors: [Color(0xFF6B5B95), Color(0xFF88B0D3)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFFB8B8C0), Color(0xFFFEFEFE), Color(0xFF4A4A52)],
       ).createShader(bounds),
       child: Text(
-        'Ihr Name',
+        'SERGEJ DAVID',
         style: Theme.of(context).textTheme.displaySmall?.copyWith(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -136,10 +141,10 @@ class HeroSection extends StatelessWidget {
         child: AnimatedTextKit(
           repeatForever: true,
           animatedTexts: [
-            TypewriterAnimatedText('Full Stack Developer'),
-            TypewriterAnimatedText('UI/UX Designer'),
-            TypewriterAnimatedText('Software Engineer'),
-            TypewriterAnimatedText('Problem Solver'),
+            TypewriterAnimatedText('LUXURY DEVELOPER'),
+            TypewriterAnimatedText('PREMIUM DESIGNER'),
+            TypewriterAnimatedText('DIGITAL ARCHITECT'),
+            TypewriterAnimatedText('CODE ARTIST'),
           ],
         ),
       ),
@@ -160,59 +165,20 @@ class HeroSection extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildNeumorphicButton(
-          context,
-          'Projekte ansehen',
-          Icons.work,
-          () {},
+        PremiumButton(
+          text: 'VIEW PROJECTS',
+          icon: Icons.speed,
+          onPressed: () {},
+          isPrimary: true,
         ),
-        const SizedBox(width: 20),
-        _buildNeumorphicButton(
-          context,
-          'Kontakt',
-          Icons.email,
-          () {},
+        const SizedBox(width: 30),
+        PremiumButton(
+          text: 'CONTACT',
+          icon: Icons.send,
+          onPressed: () {},
+          isPrimary: false,
         ),
       ],
-    );
-  }
-  
-  Widget _buildNeumorphicButton(
-    BuildContext context,
-    String text,
-    IconData icon,
-    VoidCallback onPressed,
-  ) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(30),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              offset: const Offset(5, 5),
-              blurRadius: 15,
-            ),
-            BoxShadow(
-              color: Colors.white.withOpacity(0.7),
-              offset: const Offset(-5, -5),
-              blurRadius: 15,
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Icon(icon, size: 20),
-            const SizedBox(width: 10),
-            Text(text),
-          ],
-        ),
-      ),
     );
   }
   

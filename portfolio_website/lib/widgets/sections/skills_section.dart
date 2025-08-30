@@ -8,20 +8,22 @@ class SkillsSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFF000000),
-            const Color(0xFF0A0A0A),
-            const Color(0xFF1A1A1A),
+            Color(0xFF0A0A0A),
+            Color(0xFF121216),
+            Color(0xFF1C1C24),
+            Color(0xFF2C2C34),
           ],
+          stops: [0.0, 0.3, 0.7, 1.0],
         ),
       ),
       child: Column(
         children: [
           Text(
-            'IT-Fähigkeiten',
+            'PREMIUM SKILLS',
             style: Theme.of(context).textTheme.displayLarge?.copyWith(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -37,24 +39,24 @@ class SkillsSection extends StatelessWidget {
                 context,
                 'Flutter',
                 Icons.phone_android,
-                const Color(0xFF00F0FF),
-                'Cross-Platform Development',
+                const Color(0xFFFF0000),
+                'LUXURY DEVELOPMENT',
                 90,
               ),
               _build3DSkillCard(
                 context,
                 'React',
                 Icons.web,
-                const Color(0xFF00CEC9),
-                'Web Development',
+                const Color(0xFFB8B8C0),
+                'PREMIUM WEB',
                 85,
               ),
               _build3DSkillCard(
                 context,
                 'Node.js',
                 Icons.code,
-                const Color(0xFF00FF88),
-                'Backend Development',
+                const Color(0xFF4A4A52),
+                'ENGINE SYSTEMS',
                 80,
               ),
               _build3DSkillCard(
@@ -62,7 +64,7 @@ class SkillsSection extends StatelessWidget {
                 'Python',
                 Icons.auto_awesome,
                 const Color(0xFFFFD700),
-                'AI & Automation',
+                'AI INTELLIGENCE',
                 85,
               ),
               _build3DSkillCard(
@@ -70,7 +72,7 @@ class SkillsSection extends StatelessWidget {
                 'Docker',
                 Icons.cloud,
                 const Color(0xFF4FC3F7),
-                'DevOps & Container',
+                'PERFORMANCE OPS',
                 75,
               ),
               _build3DSkillCard(
@@ -78,7 +80,7 @@ class SkillsSection extends StatelessWidget {
                 'Firebase',
                 Icons.storage,
                 const Color(0xFFFF6B35),
-                'Cloud & Database',
+                'CLOUD POWER',
                 80,
               ),
             ],
@@ -141,7 +143,7 @@ class _Skill3DCardState extends State<Skill3DCard>
     );
     _rotationAnimation = Tween<double>(
       begin: 0,
-      end: 0.1,
+      end: 0.15,
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.elasticOut,
