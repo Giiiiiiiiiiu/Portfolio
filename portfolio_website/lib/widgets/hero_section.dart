@@ -1,11 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import '../utils/ferrari_theme.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:math' as math;
+import '../services/content_service.dart';
 
-class HeroSection extends StatelessWidget {
+class HeroSection extends StatefulWidget {
   const HeroSection({super.key});
-  
+
+  @override
+  State<HeroSection> createState() => _HeroSectionState();
+}
+
+class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin {
+  late AnimationController _scrollButtonController;
+  late AnimationController _floatingController;
+  late AnimationController _shimmerController;
+  final ContentService _contentService = ContentService();
+  String heroName = '';
+  List<String> heroTitles = [];
+  String heroDescription = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollButtonController = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..repeat();
+    
+    _floatingController = AnimationController(
+      duration: const Duration(seconds: 6),
+      vsync: this,
+    )..repeat(reverse: true);
+    
+    _shimmerController = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
+    
+    _loadHeroContent();
+  }
+
+  Future<void> _loadHeroContent() async {
+    await _contentService.loadHomeContent();
+    setState(() {
+      heroName = _contentService.heroName;
+      heroTitles = _contentService.heroTitles;
+      heroDescription = _contentService.heroDescription;
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollButtonController.dispose();
+    _floatingController.dispose();
+    _shimmerController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToNext() {
+    Scrollable.ensureVisible(
+      context,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -14,508 +75,483 @@ class HeroSection extends StatelessWidget {
       height: size.height,
       width: size.width,
       decoration: const BoxDecoration(
-        gradient: FerrariTheme.luxuryGradient,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF0A0A0B), // Ultra dark
+            Color(0xFF141417), // Dark gray
+            Color(0xFF1A1A1D), // Slightly lighter
+          ],
+        ),
       ),
       child: Stack(
         children: [
-          // Subtle carbon fiber pattern background
-          _buildCarbonFiberPattern(),
+          // Animated background particles
+          _buildParticleBackground(),
           
-          // Animated metallic shimmer overlay
-          _buildMetallicShimmer(),
+          // Grid pattern overlay
+          _buildGridPattern(),
           
-          // Main content
-          Center(
-            child: AnimationConfiguration.synchronized(
-              duration: FerrariTheme.elegantAnimation,
-              child: SlideAnimation(
-                verticalOffset: 50.0,
-                curve: FerrariTheme.luxuryCurve,
-                child: FadeInAnimation(
-                  curve: FerrariTheme.smoothCurve,
-                  child: _buildLuxuryContainer(context, size),
+          // Animated shimmer effect
+          AnimatedBuilder(
+            animation: _shimmerController,
+            builder: (context, child) {
+              return Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment(-1.5 + 3 * _shimmerController.value, -1.5),
+                    end: Alignment(-0.5 + 3 * _shimmerController.value, -0.5),
+                    colors: [
+                      Colors.transparent,
+                      Colors.white.withValues(alpha: 0.03),
+                      Colors.transparent,
+                    ],
+                  ),
                 ),
-              ),
+              );
+            },
+          ),
+          
+          // Main content with full width
+          Positioned.fill(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 80), // Space for navigation
+                Expanded(
+                  child: Center(
+                    child: _buildMainContent(context, size),
+                  ),
+                ),
+                const SizedBox(height: 120), // Space for scroll button
+              ],
             ),
           ),
           
-          // Floating elements for depth
-          _buildFloatingElements(context),
+          // Floating geometric shapes
+          _buildFloatingShapes(),
           
-          // Scroll indicator with luxury style
-          _buildLuxuryScrollIndicator(context),
+          // Premium scroll down button
+          _buildPremiumScrollButton(context),
         ],
       ),
     );
   }
-  
-  // Carbon fiber texture background
-  Widget _buildCarbonFiberPattern() {
-    return Positioned.fill(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            center: Alignment.center,
-            radius: 1.2,
-            colors: [
-              FerrariTheme.carbonFiber.withValues(alpha: 0.1),
-              FerrariTheme.darkGray.withValues(alpha: 0.05),
-              Colors.transparent,
-            ],
-          ),
-        ),
-        child: CustomPaint(
-          painter: CarbonFiberPainter(),
-        ),
-      ),
-    );
-  }
-  
-  // Animated metallic shimmer effect
-  Widget _buildMetallicShimmer() {
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: const Duration(seconds: 4),
-      builder: (context, value, child) {
-        return AnimatedContainer(
-          duration: const Duration(seconds: 4),
-          child: Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment(-1.0 + 2.0 * value, -1.0),
-                  end: Alignment(1.0 + 2.0 * value, 1.0),
-                  colors: [
-                    Colors.transparent,
-                    FerrariTheme.silverAccent.withValues(alpha: 0.08),
-                    Colors.transparent,
-                  ],
-                  stops: const [0.0, 0.5, 1.0],
-                ),
-              ),
-            ),
-          ),
+
+  Widget _buildParticleBackground() {
+    return AnimatedBuilder(
+      animation: _floatingController,
+      builder: (context, child) {
+        return CustomPaint(
+          painter: ParticlePainter(_floatingController.value),
+          child: Container(),
         );
       },
     );
   }
-  
-  // Main luxury container
-  Widget _buildLuxuryContainer(BuildContext context, Size size) {
+
+  Widget _buildGridPattern() {
+    return Positioned.fill(
+      child: CustomPaint(
+        painter: GridPatternPainter(),
+        child: Container(),
+      ),
+    );
+  }
+
+  Widget _buildFloatingShapes() {
+    return Stack(
+      children: [
+        ...List.generate(5, (index) {
+          return AnimatedBuilder(
+            animation: _floatingController,
+            builder: (context, child) {
+              final offset = math.sin(_floatingController.value * math.pi + index) * 20;
+              return Positioned(
+                top: 100.0 + index * 120 + offset,
+                left: index.isEven ? 50.0 + offset : null,
+                right: index.isOdd ? 50.0 - offset : null,
+                child: Transform.rotate(
+                  angle: _floatingController.value * 2 * math.pi + index,
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        colors: [
+                          const Color(0xFF007AFF).withValues(alpha: 0.1),
+                          const Color(0xFF0066CC).withValues(alpha: 0.05),
+                        ],
+                      ),
+                      border: Border.all(
+                        color: const Color(0xFF007AFF).withValues(alpha: 0.2),
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }),
+      ],
+    );
+  }
+
+  Widget _buildMainContent(BuildContext context, Size size) {
     return Container(
-      width: size.width * 0.85,
-      constraints: const BoxConstraints(maxWidth: 1200),
-      padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 80),
-      decoration: BoxDecoration(
-        gradient: FerrariTheme.metallicSheen,
-        borderRadius: FerrariTheme.luxuryRadius,
-        border: Border.all(
-          color: FerrariTheme.silverAccent.withValues(alpha: 0.2),
-          width: 1,
-        ),
-        boxShadow: [
-          ...FerrariTheme.luxuryShadow,
-          BoxShadow(
-            color: FerrariTheme.silverAccent.withValues(alpha: 0.1),
-            blurRadius: 60,
-            offset: const Offset(0, -10),
-          ),
-        ],
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(
+        horizontal: size.width > 1200 ? 100 : (size.width > 600 ? 60 : 30),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildLuxuryAvatar(context),
-          const SizedBox(height: 40),
-          _buildFerrariName(context),
-          const SizedBox(height: 25),
-          _buildLuxuryAnimatedTitle(context),
-          const SizedBox(height: 50),
-          _buildElegantDescription(context),
-          const SizedBox(height: 60),
-          _buildFerrariActionButtons(context),
-        ],
-      ),
-    );
-  }
-  
-  // Luxury avatar with Ferrari styling
-  Widget _buildLuxuryAvatar(BuildContext context) {
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: FerrariTheme.elegantAnimation,
-      curve: FerrariTheme.luxuryCurve,
-      builder: (context, value, child) {
-        return Transform.scale(
-          scale: 0.8 + 0.2 * value,
-          child: Container(
-            width: 180,
-            height: 180,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: FerrariTheme.ferrariGradient,
-              border: Border.all(
-                color: FerrariTheme.silverAccent.withValues(alpha: 0.3),
-                width: 2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: FerrariTheme.carbonFiber.withValues(alpha: 0.4),
-                  blurRadius: 30,
-                  offset: const Offset(0, 15),
-                ),
-                BoxShadow(
-                  color: FerrariTheme.silverAccent.withValues(alpha: 0.2),
-                  blurRadius: 60,
-                  spreadRadius: 5,
-                ),
-              ],
-            ),
-            child: ClipOval(
-              child: Stack(
-                children: [
-                  Image.asset(
-                    'assets/images/profile.jpg',
-                    width: 180,
-                    height: 180,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        decoration: const BoxDecoration(
-                          gradient: FerrariTheme.metallicSheen,
-                        ),
-                        child: const Icon(
-                          Icons.person,
-                          size: 90,
-                          color: FerrariTheme.pureWhite,
-                        ),
-                      );
-                    },
-                  ),
-                  // Metallic overlay
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          FerrariTheme.silverAccent.withValues(alpha: 0.1),
-                          Colors.transparent,
-                          FerrariTheme.metallicGray.withValues(alpha: 0.1),
-                        ],
-                      ),
+          // Animated name with gradient
+          AnimationConfiguration.synchronized(
+            duration: const Duration(milliseconds: 1200),
+            child: SlideAnimation(
+              verticalOffset: -30,
+              curve: Curves.easeOutQuart,
+              child: FadeInAnimation(
+                child: ShaderMask(
+                  shaderCallback: (bounds) => const LinearGradient(
+                    colors: [
+                      Color(0xFF8E8E93),
+                      Color(0xFFFAFAFA),
+                      Color(0xFF8E8E93),
+                    ],
+                  ).createShader(bounds),
+                  child: Text(
+                    heroName,
+                    style: TextStyle(
+                      fontSize: size.width > 1200 ? 80 : (size.width > 600 ? 60 : 40),
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 3.0,
+                      height: 1.2,
+                      color: Colors.white,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                ],
+                ),
               ),
             ),
           ),
-        );
-      },
-    );
-  }
-  
-  // Ferrari-styled name with metallic gradient
-  Widget _buildFerrariName(BuildContext context) {
-    return ShaderMask(
-      shaderCallback: (bounds) => const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          FerrariTheme.pureWhite,
-          FerrariTheme.silverAccent,
-          FerrariTheme.pureWhite,
-        ],
-        stops: [0.0, 0.5, 1.0],
-      ).createShader(bounds),
-      child: Text(
-        'SERGEY KOTENKOV',
-        style: FerrariTheme.ferrariHeadline.copyWith(
-          fontSize: MediaQuery.of(context).size.width < 768 ? 36 : 56,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-  
-  // Luxury animated title
-  Widget _buildLuxuryAnimatedTitle(BuildContext context) {
-    return SizedBox(
-      height: 60,
-      child: DefaultTextStyle(
-        style: FerrariTheme.luxuryTitle.copyWith(
-          color: FerrariTheme.silverAccent,
-        ),
-        child: AnimatedTextKit(
-          repeatForever: true,
-          pause: const Duration(milliseconds: 2000),
-          animatedTexts: [
-            TypewriterAnimatedText(
-              'LUXURY DEVELOPER',
-              speed: const Duration(milliseconds: 100),
-            ),
-            TypewriterAnimatedText(
-              'PREMIUM DESIGNER',
-              speed: const Duration(milliseconds: 100),
-            ),
-            TypewriterAnimatedText(
-              'DIGITAL ARCHITECT',
-              speed: const Duration(milliseconds: 100),
-            ),
-            TypewriterAnimatedText(
-              'CODE ARTISAN',
-              speed: const Duration(milliseconds: 100),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-  
-  // Elegant description
-  Widget _buildElegantDescription(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(maxWidth: 600),
-      child: Text(
-        'Crafting premium digital experiences with Ferrari-level precision and luxury. Where code meets artistry in the pursuit of technological excellence.',
-        textAlign: TextAlign.center,
-        style: FerrariTheme.elegantSubtitle.copyWith(
-          fontSize: MediaQuery.of(context).size.width < 768 ? 16 : 18,
-        ),
-      ),
-    );
-  }
-  
-  // Ferrari-inspired action buttons
-  Widget _buildFerrariActionButtons(BuildContext context) {
-    return Wrap(
-      spacing: 30,
-      runSpacing: 20,
-      alignment: WrapAlignment.center,
-      children: [
-        _buildLuxuryButton(
-          text: 'VIEW PORTFOLIO',
-          icon: Icons.visibility_outlined,
-          isPrimary: true,
-          onPressed: () {},
-        ),
-        _buildLuxuryButton(
-          text: 'GET IN TOUCH',
-          icon: Icons.mail_outline_rounded,
-          isPrimary: false,
-          onPressed: () {},
-        ),
-      ],
-    );
-  }
-  
-  // Luxury button with Ferrari styling
-  Widget _buildLuxuryButton({
-    required String text,
-    required IconData icon,
-    required bool isPrimary,
-    required VoidCallback onPressed,
-  }) {
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: FerrariTheme.elegantAnimation,
-      builder: (context, value, child) {
-        return Transform.scale(
-          scale: 0.9 + 0.1 * value,
-          child: Container(
-            width: 200,
-            height: 60,
-            decoration: BoxDecoration(
-              gradient: isPrimary ? FerrariTheme.ferrariGradient : null,
-              color: isPrimary ? null : Colors.transparent,
-              borderRadius: FerrariTheme.subtleRadius,
-              border: Border.all(
-                color: isPrimary 
-                    ? Colors.transparent 
-                    : FerrariTheme.silverAccent.withValues(alpha: 0.3),
-                width: 1.5,
-              ),
-              boxShadow: isPrimary ? [
-                BoxShadow(
-                  color: FerrariTheme.carbonFiber.withValues(alpha: 0.3),
-                  blurRadius: 15,
-                  offset: const Offset(0, 8),
+          
+          const SizedBox(height: 30),
+          
+          // Animated typing effect for titles
+          AnimationConfiguration.synchronized(
+            duration: const Duration(milliseconds: 1400),
+            child: SlideAnimation(
+              verticalOffset: -20,
+              curve: Curves.easeOutQuart,
+              child: FadeInAnimation(
+                child: Container(
+                  height: 50,
+                  child: DefaultTextStyle(
+                    style: TextStyle(
+                      fontSize: size.width > 600 ? 24 : 18,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF007AFF),
+                      letterSpacing: 2.0,
+                    ),
+                    child: AnimatedTextKit(
+                      repeatForever: true,
+                      animatedTexts: heroTitles.map((title) => 
+                        TypewriterAnimatedText(
+                          title,
+                          speed: const Duration(milliseconds: 100),
+                          cursor: '|',
+                        ),
+                      ).toList(),
+                    ),
+                  ),
                 ),
-              ] : null,
+              ),
             ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: onPressed,
-                borderRadius: FerrariTheme.subtleRadius,
+          ),
+          
+          const SizedBox(height: 40),
+          
+          // Description with glass effect
+          AnimationConfiguration.synchronized(
+            duration: const Duration(milliseconds: 1600),
+            child: SlideAnimation(
+              verticalOffset: -10,
+              curve: Curves.easeOutQuart,
+              child: FadeInAnimation(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.03),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.1),
+                      width: 1,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.2),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    heroDescription,
+                    style: TextStyle(
+                      fontSize: size.width > 600 ? 18 : 16,
+                      color: Colors.white.withValues(alpha: 0.7),
+                      height: 1.6,
+                      letterSpacing: 0.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 60),
+          
+          // CTA Buttons
+          AnimationConfiguration.synchronized(
+            duration: const Duration(milliseconds: 1800),
+            child: SlideAnimation(
+              verticalOffset: 20,
+              curve: Curves.easeOutQuart,
+              child: FadeInAnimation(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      icon,
-                      color: FerrariTheme.pureWhite,
-                      size: 20,
+                    _buildCTAButton(
+                      'View Projects',
+                      FontAwesomeIcons.rocket,
+                      true,
+                      () {},
                     ),
-                    const SizedBox(width: 12),
-                    Text(
-                      text,
-                      style: const TextStyle(
-                        color: FerrariTheme.pureWhite,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0.8,
-                      ),
+                    const SizedBox(width: 20),
+                    _buildCTAButton(
+                      'Contact Me',
+                      FontAwesomeIcons.envelope,
+                      false,
+                      () {},
                     ),
                   ],
                 ),
               ),
             ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
-  
-  // Floating elements for depth
-  Widget _buildFloatingElements(BuildContext context) {
-    return Stack(
-      children: [
-        // Top left floating element
-        Positioned(
-          top: 100,
-          left: 50,
-          child: _buildFloatingElement(0.6, 2.5),
-        ),
-        // Top right floating element
-        Positioned(
-          top: 150,
-          right: 80,
-          child: _buildFloatingElement(0.4, 3.0),
-        ),
-        // Bottom left floating element
-        Positioned(
-          bottom: 200,
-          left: 100,
-          child: _buildFloatingElement(0.5, 2.8),
-        ),
-      ],
-    );
-  }
-  
-  Widget _buildFloatingElement(double opacity, double duration) {
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: Duration(milliseconds: (duration * 1000).toInt()),
-      builder: (context, value, child) {
-        return Transform.translate(
-          offset: Offset(0, -20 * value),
-          child: Opacity(
-            opacity: opacity * value,
-            child: Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    FerrariTheme.silverAccent.withValues(alpha: 0.2),
-                    Colors.transparent,
-                  ],
+
+  Widget _buildCTAButton(String text, IconData icon, bool isPrimary, VoidCallback onTap) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+          decoration: BoxDecoration(
+            gradient: isPrimary ? const LinearGradient(
+              colors: [
+                Color(0xFF007AFF),
+                Color(0xFF0066CC),
+              ],
+            ) : null,
+            color: isPrimary ? null : Colors.transparent,
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(
+              color: isPrimary ? Colors.transparent : const Color(0xFF007AFF),
+              width: 2,
+            ),
+            boxShadow: isPrimary ? [
+              BoxShadow(
+                color: const Color(0xFF007AFF).withValues(alpha: 0.3),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ] : null,
+          ),
+          child: Row(
+            children: [
+              Icon(
+                icon,
+                color: isPrimary ? Colors.white : const Color(0xFF007AFF),
+                size: 20,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                text,
+                style: TextStyle(
+                  color: isPrimary ? Colors.white : const Color(0xFF007AFF),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
                 ),
               ),
-            ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
-  
-  // Luxury scroll indicator
-  Widget _buildLuxuryScrollIndicator(BuildContext context) {
+
+  Widget _buildPremiumScrollButton(BuildContext context) {
     return Positioned(
       bottom: 40,
       left: 0,
       right: 0,
-      child: TweenAnimationBuilder(
-        tween: Tween<double>(begin: 0, end: 1),
-        duration: const Duration(milliseconds: 2500),
-        builder: (context, value, child) {
-          return Opacity(
-            opacity: value,
-            child: Column(
-              children: [
-                Text(
-                  'SCROLL TO EXPLORE',
-                  style: TextStyle(
-                    color: FerrariTheme.silverAccent.withValues(alpha: 0.8),
-                    fontSize: 12,
-                    letterSpacing: 2.0,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                TweenAnimationBuilder(
-                  tween: Tween<double>(begin: -10, end: 10),
-                  duration: const Duration(seconds: 2),
-                  builder: (context, value, child) {
-                    return Transform.translate(
-                      offset: Offset(0, value),
-                      child: Container(
+      child: Center(
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: _scrollToNext,
+            child: AnimatedBuilder(
+              animation: _scrollButtonController,
+              builder: (context, child) {
+                final bounce = math.sin(_scrollButtonController.value * math.pi * 2) * 5;
+                return Transform.translate(
+                  offset: Offset(0, bounce),
+                  child: Container(
+                    width: 50,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white.withValues(alpha: 0.1),
+                          Colors.white.withValues(alpha: 0.05),
+                        ],
+                      ),
+                      border: Border.all(
+                        color: const Color(0xFF007AFF).withValues(alpha: 0.3),
                         width: 2,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              FerrariTheme.silverAccent.withValues(alpha: 0.6),
-                              Colors.transparent,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF007AFF).withValues(alpha: 0.2),
+                          blurRadius: 20,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Animated scroll wheel
+                        AnimatedBuilder(
+                          animation: _scrollButtonController,
+                          builder: (context, child) {
+                            return Transform.translate(
+                              offset: Offset(0, -20 + 30 * _scrollButtonController.value),
+                              child: Container(
+                                width: 4,
+                                height: 12,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(2),
+                                  color: const Color(0xFF007AFF),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFF007AFF).withValues(alpha: 0.5),
+                                      blurRadius: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        // Arrow indicators
+                        Positioned(
+                          bottom: 10,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.keyboard_arrow_down,
+                                color: const Color(0xFF007AFF).withValues(
+                                  alpha: 0.3 + 0.3 * math.sin(_scrollButtonController.value * math.pi * 2),
+                                ),
+                                size: 20,
+                              ),
+                              Transform.translate(
+                                offset: const Offset(0, -10),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: const Color(0xFF007AFF).withValues(
+                                    alpha: 0.5 + 0.3 * math.sin(_scrollButtonController.value * math.pi * 2 + 1),
+                                  ),
+                                  size: 20,
+                                ),
+                              ),
                             ],
                           ),
-                          borderRadius: BorderRadius.circular(1),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ],
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
 }
 
-// Custom painter for carbon fiber pattern
-class CarbonFiberPainter extends CustomPainter {
+// Custom painters for background effects
+class ParticlePainter extends CustomPainter {
+  final double animationValue;
+  
+  ParticlePainter(this.animationValue);
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = FerrariTheme.carbonFiber.withValues(alpha: 0.03)
-      ..strokeWidth = 0.5;
+      ..color = const Color(0xFF007AFF).withValues(alpha: 0.05)
+      ..style = PaintingStyle.fill;
+
+    for (int i = 0; i < 50; i++) {
+      final x = (i * 73 + animationValue * size.width) % size.width;
+      final y = (i * 37 + animationValue * size.height) % size.height;
+      final radius = 1.0 + math.sin(animationValue * math.pi + i) * 0.5;
       
-    const spacing = 20.0;
-    
-    // Draw diagonal lines for carbon fiber effect
-    for (double i = -size.height; i < size.width + size.height; i += spacing) {
-      canvas.drawLine(
-        Offset(i, 0),
-        Offset(i + size.height, size.height),
-        paint,
-      );
-    }
-    
-    for (double i = -size.height; i < size.width + size.height; i += spacing) {
-      canvas.drawLine(
-        Offset(i + spacing / 2, 0),
-        Offset(i + size.height + spacing / 2, size.height),
-        paint,
-      );
+      canvas.drawCircle(Offset(x, y), radius, paint);
     }
   }
-  
+
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(ParticlePainter oldDelegate) => true;
+}
+
+class GridPatternPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white.withValues(alpha: 0.02)
+      ..strokeWidth = 0.5
+      ..style = PaintingStyle.stroke;
+
+    const spacing = 50.0;
+    
+    for (double x = 0; x < size.width; x += spacing) {
+      canvas.drawLine(Offset(x, 0), Offset(x, size.height), paint);
+    }
+    
+    for (double y = 0; y < size.height; y += spacing) {
+      canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(GridPatternPainter oldDelegate) => false;
 }
