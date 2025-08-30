@@ -44,7 +44,7 @@ class HeroSection extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        const Color(0xFFFF0000).withOpacity(0.2),
+                        const Color(0xFF0080FF).withOpacity(0.2),
                         const Color(0xFFB8B8C0).withOpacity(0.1),
                       ],
                     ),
@@ -95,7 +95,7 @@ class HeroSection extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFFFF0000).withOpacity(0.5),
+                  color: const Color(0xFF0080FF).withOpacity(0.5),
                   blurRadius: 50,
                   spreadRadius: 10,
                 ),
@@ -119,10 +119,10 @@ class HeroSection extends StatelessWidget {
       shaderCallback: (bounds) => const LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [Color(0xFFB8B8C0), Color(0xFFFEFEFE), Color(0xFF4A4A52)],
+        colors: [Color(0xFF4A90E2), Color(0xFF00BFFF), Color(0xFF0080FF)],
       ).createShader(bounds),
       child: Text(
-        'SERGEJ DAVID',
+        'SERGEY KOTENKOV',
         style: Theme.of(context).textTheme.displaySmall?.copyWith(
           color: Colors.white,
           fontWeight: FontWeight.bold,

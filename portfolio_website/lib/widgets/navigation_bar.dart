@@ -40,7 +40,7 @@ class CustomNavigationBar extends StatelessWidget implements PreferredSizeWidget
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFFFF0000).withOpacity(0.15),
+            const Color(0xFF0080FF).withOpacity(0.15),
             const Color(0xFFB8B8C0).withOpacity(0.08),
           ],
         ),
@@ -69,10 +69,10 @@ class CustomNavigationBar extends StatelessWidget implements PreferredSizeWidget
           scale: value,
           child: ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
-              colors: [Color(0xFFFF0000), Color(0xFFB8B8C0), Color(0xFF4A4A52)],
+              colors: [Color(0xFF0080FF), Color(0xFF00BFFF), Color(0xFF4A90E2)],
             ).createShader(bounds),
             child: const Text(
-              'FERRARI PORTFOLIO',
+              'KOTENKOV',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

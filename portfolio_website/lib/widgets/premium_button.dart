@@ -75,7 +75,7 @@ class _PremiumButtonState extends State<PremiumButton>
                 borderRadius: BorderRadius.circular(4),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFFF0000).withOpacity(
+                    color: const Color(0xFF0080FF).withOpacity(
                       widget.isPrimary ? 0.3 * _glowAnimation.value : 0,
                     ),
                     blurRadius: 30 * _glowAnimation.value,
@@ -105,8 +105,8 @@ class _PremiumButtonState extends State<PremiumButton>
                         end: Alignment.bottomRight,
                         colors: widget.isPrimary
                             ? [
-                                const Color(0xFFFF0000),
-                                const Color(0xFFCC0000),
+                                const Color(0xFF0080FF),
+                                const Color(0xFF0066CC),
                               ]
                             : [
                                 const Color(0xFF2C2C34),
@@ -115,8 +115,8 @@ class _PremiumButtonState extends State<PremiumButton>
                       ),
                       border: Border.all(
                         color: _isHovered
-                            ? const Color(0xFFFF0000)
-                            : const Color(0xFFB8B8C0).withOpacity(0.3),
+                            ? const Color(0xFF0080FF)
+                            : const Color(0xFF4A90E2).withOpacity(0.3),
                         width: _isHovered ? 2 : 1,
                       ),
                     ),

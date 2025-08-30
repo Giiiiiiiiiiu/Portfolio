@@ -4,14 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme {
   static const Color primaryColor = Color(0xFF2C2C34);
   static const Color secondaryColor = Color(0xFF3E3E46);
-  static const Color accentColor = Color(0xFFFF0000);
+  static const Color accentColor = Color(0xFF0080FF);
   static const Color darkBackground = Color(0xFF0A0A0A);
   static const Color lightBackground = Color(0xFFF7F7F7);
   static const Color gradientStart = Color(0xFF1C1C24);
   static const Color gradientEnd = Color(0xFF3E3E46);
-  static const Color neonAccent = Color(0xFFFF0000);
-  static const Color metallicSilver = Color(0xFFB8B8C0);
-  static const Color ferrariGray = Color(0xFF4A4A52);
+  static const Color neonAccent = Color(0xFF00BFFF);
+  static const Color metallicBlue = Color(0xFF4A90E2);
+  static const Color premiumBlue = Color(0xFF0066CC);
   static const Color premiumDark = Color(0xFF121216);
   static const Color glossyWhite = Color(0xFFFEFEFE);
   

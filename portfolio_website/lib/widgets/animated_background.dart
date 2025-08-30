@@ -92,7 +92,7 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     final random = math.Random(index);
     final size = 1.0 + random.nextDouble() * 3;
     final opacity = 0.05 + random.nextDouble() * 0.2;
-    final isRed = random.nextBool();
+    final isBlue = random.nextBool();
     
     return Container(
       width: size,
@@ -100,19 +100,19 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: RadialGradient(
-          colors: isRed ? [
-            const Color(0xFFFF0000).withOpacity(opacity),
-            const Color(0xFFFF0000).withOpacity(0),
+          colors: isBlue ? [
+            const Color(0xFF0080FF).withOpacity(opacity),
+            const Color(0xFF0080FF).withOpacity(0),
           ] : [
-            const Color(0xFFB8B8C0).withOpacity(opacity * 0.5),
-            const Color(0xFFB8B8C0).withOpacity(0),
+            const Color(0xFF00BFFF).withOpacity(opacity * 0.5),
+            const Color(0xFF00BFFF).withOpacity(0),
           ],
         ),
         boxShadow: [
           BoxShadow(
-            color: isRed 
-              ? const Color(0xFFFF0000).withOpacity(opacity * 0.3)
-              : const Color(0xFFB8B8C0).withOpacity(opacity * 0.2),
+            color: isBlue 
+              ? const Color(0xFF0080FF).withOpacity(opacity * 0.3)
+              : const Color(0xFF00BFFF).withOpacity(opacity * 0.2),
             blurRadius: size * 4,
             spreadRadius: size * 2,
           ),
