@@ -3,7 +3,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'animated_background.dart';
-import 'premium_button.dart';
+import 'neumorphic_button.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
@@ -101,11 +101,21 @@ class HeroSection extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Center(
-              child: Icon(
-                Icons.person,
-                size: 80,
-                color: Colors.white,
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/profile.jpg',
+                width: 150,
+                height: 150,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Icon(
+                      Icons.person,
+                      size: 80,
+                      color: Colors.white,
+                    ),
+                  );
+                },
               ),
             ),
           ),
@@ -165,18 +175,20 @@ class HeroSection extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        PremiumButton(
+        NeumorphicButton(
           text: 'VIEW PROJECTS',
-          icon: Icons.speed,
+          icon: Icons.rocket_launch,
           onPressed: () {},
           isPrimary: true,
+          width: 220,
         ),
         const SizedBox(width: 30),
-        PremiumButton(
-          text: 'CONTACT',
-          icon: Icons.send,
+        NeumorphicButton(
+          text: 'CONTACT ME',
+          icon: Icons.mail_outline,
           onPressed: () {},
           isPrimary: false,
+          width: 200,
         ),
       ],
     );

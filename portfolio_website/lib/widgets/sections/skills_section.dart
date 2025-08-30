@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
+import '../modern_skill_card.dart';
 
 class SkillsSection extends StatefulWidget {
   const SkillsSection({Key? key}) : super(key: key);
@@ -99,12 +100,37 @@ class _SkillsSectionState extends State<SkillsSection> {
       ),
       child: Column(
         children: [
+          ShaderMask(
+            shaderCallback: (bounds) => const LinearGradient(
+              colors: [
+                Color(0xFF0080FF),
+                Color(0xFF00BFFF),
+                Color(0xFF4A90E2),
+              ],
+            ).createShader(bounds),
+            child: Text(
+              'TECHNICAL MASTERY',
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 4,
+                shadows: [
+                  const Shadow(
+                    color: Color(0xFF0080FF),
+                    blurRadius: 30,
+                    offset: Offset(0, 5),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
           Text(
-            'TECHNICAL EXPERTISE',
-            style: Theme.of(context).textTheme.displayLarge?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 3,
+            'Next-Generation Skills & Technologies',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: Colors.white.withOpacity(0.7),
+              fontWeight: FontWeight.w300,
+              letterSpacing: 2,
             ),
           ),
           const SizedBox(height: 60),
@@ -131,117 +157,17 @@ class _SkillsSectionState extends State<SkillsSection> {
     final icon = categoryIcons[category]!;
     final skillCount = skillCategories[category]!.length;
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            expandedCategory = isExpanded ? null : category;
-          });
-        },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOutBack,
-          transform: Matrix4.identity()
-            ..scale(isExpanded ? 1.05 : 1.0),
-          child: GlassmorphicContainer(
-            width: 280,
-            height: 200,
-            borderRadius: 20,
-            blur: 20,
-            alignment: Alignment.center,
-            border: 2,
-            linearGradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                color.withOpacity(0.2),
-                color.withOpacity(0.05),
-              ],
-            ),
-            borderGradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                color.withOpacity(0.5),
-                color.withOpacity(0.2),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        colors: [
-                          color,
-                          color.withOpacity(0.6),
-                        ],
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: color.withOpacity(0.4),
-                          blurRadius: 20,
-                          spreadRadius: 5,
-                        ),
-                      ],
-                    ),
-                    child: Icon(
-                      icon,
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    category,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 2,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '$skillCount Skills',
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.7),
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: isExpanded 
-                        ? Colors.white.withOpacity(0.2)
-                        : color.withOpacity(0.3),
-                    ),
-                    child: Text(
-                      isExpanded ? 'CLOSE' : 'VIEW MORE',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return ModernSkillCard(
+      category: category,
+      icon: icon,
+      color: color,
+      skillCount: skillCount,
+      isExpanded: isExpanded,
+      onTap: () {
+        setState(() {
+          expandedCategory = isExpanded ? null : category;
+        });
+      },
     );
   }
 
