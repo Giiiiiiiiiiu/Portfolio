@@ -1,0 +1,100 @@
+{
+  "title": "PROFESSIONAL EXPERIENCE",
+  "subtitle": "Building exceptional digital products",
+  "experiences": [
+    {
+      "id": 1,
+      "position": "Senior Full-Stack Developer",
+      "company": "Tech Innovations GmbH",
+      "location": "Berlin, Germany",
+      "type": "Full-time",
+      "startDate": "2022-01",
+      "endDate": null,
+      "current": true,
+      "description": "Leading development of enterprise-scale applications using modern web technologies",
+      "achievements": [
+        "Architected microservices infrastructure serving 1M+ users",
+        "Reduced application load time by 60% through optimization",
+        "Mentored team of 5 junior developers",
+        "Implemented CI/CD pipeline reducing deployment time by 80%"
+      ],
+      "technologies": ["React", "Node.js", "AWS", "Docker", "PostgreSQL"]
+    },
+    {
+      "id": 2,
+      "position": "Full-Stack Developer",
+      "company": "Digital Solutions AG",
+      "location": "Munich, Germany",
+      "type": "Full-time",
+      "startDate": "2020-03",
+      "endDate": "2021-12",
+      "current": false,
+      "description": "Developed and maintained web applications for various clients",
+      "achievements": [
+        "Built 10+ production-ready applications",
+        "Improved API response time by 40%",
+        "Integrated AI features using OpenAI API",
+        "Led migration from monolith to microservices"
+      ],
+      "technologies": ["Vue.js", "Python", "Django", "MySQL", "Azure"]
+    },
+    {
+      "id": 3,
+      "position": "Frontend Developer",
+      "company": "StartUp Hub",
+      "location": "Hamburg, Germany",
+      "type": "Contract",
+      "startDate": "2019-01",
+      "endDate": "2020-02",
+      "current": false,
+      "description": "Focused on creating responsive and interactive user interfaces",
+      "achievements": [
+        "Redesigned UI increasing user engagement by 35%",
+        "Implemented real-time features using WebSockets",
+        "Created reusable component library",
+        "Optimized SEO improving search rankings"
+      ],
+      "technologies": ["React", "TypeScript", "Redux", "Sass", "Jest"]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Science in Computer Science",
+      "institution": "Technical University Munich",
+      "location": "Munich, Germany",
+      "startDate": "2017",
+      "endDate": "2019",
+      "gpa": "1.3",
+      "focus": "Artificial Intelligence & Machine Learning"
+    },
+    {
+      "degree": "Bachelor of Science in Software Engineering",
+      "institution": "University of Hamburg",
+      "location": "Hamburg, Germany",
+      "startDate": "2014",
+      "endDate": "2017",
+      "gpa": "1.5",
+      "focus": "Web Development & Mobile Applications"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Solutions Architect",
+      "issuer": "Amazon Web Services",
+      "date": "2023",
+      "credential": "AWS-SA-2023-XXXX"
+    },
+    {
+      "name": "Google Cloud Professional Developer",
+      "issuer": "Google Cloud",
+      "date": "2022",
+      "credential": "GCP-PD-2022-XXXX"
+    },
+    {
+      "name": "Meta React Native Developer",
+      "issuer": "Meta",
+      "date": "2021",
+      "credential": "META-RN-2021-XXXX"
+    }
+  ]
+}

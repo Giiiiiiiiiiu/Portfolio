@@ -1,0 +1,96 @@
+{
+  "title": "GET IN TOUCH",
+  "subtitle": "Let's create something exceptional together",
+  "description": "Whether you have a project in mind, need technical consultation, or just want to connect, I'm always open to discussing new opportunities.",
+  "contactInfo": {
+    "email": "sergey@kotenkov.dev",
+    "phone": "+49 176 12345678",
+    "location": "Berlin, Germany",
+    "availability": "Available for freelance and full-time opportunities"
+  },
+  "socialMedia": [
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/sergeykotenkov",
+      "icon": "github",
+      "username": "@sergeykotenkov"
+    },
+    {
+      "platform": "LinkedIn",
+      "url": "https://linkedin.com/in/sergeykotenkov",
+      "icon": "linkedin",
+      "username": "Sergey Kotenkov"
+    },
+    {
+      "platform": "Twitter",
+      "url": "https://twitter.com/sergeykotenkov",
+      "icon": "twitter",
+      "username": "@sergeykotenkov"
+    },
+    {
+      "platform": "Medium",
+      "url": "https://medium.com/@sergeykotenkov",
+      "icon": "article",
+      "username": "@sergeykotenkov"
+    }
+  ],
+  "contactForm": {
+    "fields": [
+      {
+        "name": "name",
+        "label": "Your Name",
+        "type": "text",
+        "required": true,
+        "placeholder": "John Doe"
+      },
+      {
+        "name": "email",
+        "label": "Email Address",
+        "type": "email",
+        "required": true,
+        "placeholder": "john@example.com"
+      },
+      {
+        "name": "subject",
+        "label": "Subject",
+        "type": "text",
+        "required": true,
+        "placeholder": "Project Inquiry"
+      },
+      {
+        "name": "message",
+        "label": "Message",
+        "type": "textarea",
+        "required": true,
+        "placeholder": "Tell me about your project..."
+      },
+      {
+        "name": "budget",
+        "label": "Project Budget (Optional)",
+        "type": "select",
+        "required": false,
+        "options": [
+          "< €5,000",
+          "€5,000 - €10,000",
+          "€10,000 - €25,000",
+          "€25,000 - €50,000",
+          "> €50,000"
+        ]
+      }
+    ],
+    "submitButton": {
+      "text": "SEND MESSAGE",
+      "icon": "send"
+    },
+    "successMessage": "Thank you for your message! I'll get back to you within 24 hours.",
+    "errorMessage": "Something went wrong. Please try again or email me directly."
+  },
+  "callToAction": {
+    "title": "Let's Work Together",
+    "description": "I'm passionate about turning ideas into reality through code.",
+    "button": {
+      "text": "START A PROJECT",
+      "icon": "rocket_launch"
+    }
+  }
+}

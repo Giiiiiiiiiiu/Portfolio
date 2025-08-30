@@ -1,0 +1,276 @@
+{
+  "title": "TECHNICAL EXPERTISE",
+  "subtitle": "Comprehensive skill set across modern technologies",
+  "categories": {
+    "LANGUAGES": {
+      "icon": "code",
+      "color": "#0080FF",
+      "skills": [
+        {
+          "name": "Python",
+          "icon": "code",
+          "percentage": 95,
+          "description": "Backend & AI Development"
+        },
+        {
+          "name": "JavaScript",
+          "icon": "javascript",
+          "percentage": 90,
+          "description": "Frontend & Backend"
+        },
+        {
+          "name": "TypeScript",
+          "icon": "code",
+          "percentage": 88,
+          "description": "Type-Safe Development"
+        },
+        {
+          "name": "Dart",
+          "icon": "phone_android",
+          "percentage": 85,
+          "description": "Flutter Development"
+        },
+        {
+          "name": "Java",
+          "icon": "coffee",
+          "percentage": 80,
+          "description": "Enterprise Applications"
+        },
+        {
+          "name": "C#",
+          "icon": "window",
+          "percentage": 75,
+          "description": ".NET Development"
+        },
+        {
+          "name": "SQL",
+          "icon": "storage",
+          "percentage": 85,
+          "description": "Database Queries"
+        },
+        {
+          "name": "HTML/CSS",
+          "icon": "web",
+          "percentage": 95,
+          "description": "Web Markup & Styling"
+        }
+      ]
+    },
+    "FRAMEWORKS": {
+      "icon": "layers",
+      "color": "#00BFFF",
+      "skills": [
+        {
+          "name": "React",
+          "icon": "web",
+          "percentage": 90,
+          "description": "SPA Development"
+        },
+        {
+          "name": "Next.js",
+          "icon": "web_asset",
+          "percentage": 88,
+          "description": "Full-Stack React"
+        },
+        {
+          "name": "Flutter",
+          "icon": "mobile_friendly",
+          "percentage": 85,
+          "description": "Cross-Platform Apps"
+        },
+        {
+          "name": "Node.js",
+          "icon": "dns",
+          "percentage": 85,
+          "description": "Server-Side JavaScript"
+        },
+        {
+          "name": "Express.js",
+          "icon": "api",
+          "percentage": 83,
+          "description": "REST APIs"
+        },
+        {
+          "name": "Django",
+          "icon": "security",
+          "percentage": 75,
+          "description": "Python Web Framework"
+        },
+        {
+          "name": "Spring Boot",
+          "icon": "settings_applications",
+          "percentage": 70,
+          "description": "Java Framework"
+        },
+        {
+          "name": "Vue.js",
+          "icon": "view_agenda",
+          "percentage": 72,
+          "description": "Progressive Framework"
+        }
+      ]
+    },
+    "DATABASES": {
+      "icon": "storage",
+      "color": "#4A90E2",
+      "skills": [
+        {
+          "name": "PostgreSQL",
+          "icon": "storage",
+          "percentage": 85,
+          "description": "Relational Database"
+        },
+        {
+          "name": "MongoDB",
+          "icon": "data_object",
+          "percentage": 80,
+          "description": "NoSQL Database"
+        },
+        {
+          "name": "MySQL",
+          "icon": "storage",
+          "percentage": 82,
+          "description": "Relational Database"
+        },
+        {
+          "name": "Redis",
+          "icon": "speed",
+          "percentage": 75,
+          "description": "In-Memory Cache"
+        },
+        {
+          "name": "Elasticsearch",
+          "icon": "search",
+          "percentage": 70,
+          "description": "Search Engine"
+        },
+        {
+          "name": "Firebase",
+          "icon": "cloud",
+          "percentage": 78,
+          "description": "Real-time Database"
+        },
+        {
+          "name": "DynamoDB",
+          "icon": "table_chart",
+          "percentage": 68,
+          "description": "AWS NoSQL"
+        },
+        {
+          "name": "SQLite",
+          "icon": "phone_android",
+          "percentage": 75,
+          "description": "Embedded Database"
+        }
+      ]
+    },
+    "CLOUD & DEVOPS": {
+      "icon": "cloud",
+      "color": "#0066CC",
+      "skills": [
+        {
+          "name": "AWS",
+          "icon": "cloud_queue",
+          "percentage": 85,
+          "description": "Amazon Web Services"
+        },
+        {
+          "name": "Microsoft Azure",
+          "icon": "cloud_circle",
+          "percentage": 80,
+          "description": "Microsoft Cloud"
+        },
+        {
+          "name": "Google Cloud",
+          "icon": "cloud",
+          "percentage": 75,
+          "description": "GCP Platform"
+        },
+        {
+          "name": "Docker",
+          "icon": "hub",
+          "percentage": 82,
+          "description": "Containerization"
+        },
+        {
+          "name": "Kubernetes",
+          "icon": "hub_outlined",
+          "percentage": 78,
+          "description": "Container Orchestration"
+        },
+        {
+          "name": "CI/CD",
+          "icon": "autorenew",
+          "percentage": 80,
+          "description": "Jenkins, GitHub Actions"
+        },
+        {
+          "name": "Terraform",
+          "icon": "build",
+          "percentage": 70,
+          "description": "Infrastructure as Code"
+        },
+        {
+          "name": "Linux",
+          "icon": "computer",
+          "percentage": 85,
+          "description": "Server Administration"
+        }
+      ]
+    },
+    "AI INTEGRATION": {
+      "icon": "auto_awesome",
+      "color": "#00CEC9",
+      "skills": [
+        {
+          "name": "OpenAI API",
+          "icon": "auto_awesome",
+          "percentage": 90,
+          "description": "GPT-4, DALL-E"
+        },
+        {
+          "name": "LangChain",
+          "icon": "link",
+          "percentage": 80,
+          "description": "LLM Orchestration"
+        },
+        {
+          "name": "TensorFlow",
+          "icon": "psychology",
+          "percentage": 75,
+          "description": "Machine Learning"
+        },
+        {
+          "name": "PyTorch",
+          "icon": "psychology_alt",
+          "percentage": 70,
+          "description": "Deep Learning"
+        },
+        {
+          "name": "Hugging Face",
+          "icon": "face",
+          "percentage": 78,
+          "description": "NLP Models"
+        },
+        {
+          "name": "Vector DBs",
+          "icon": "scatter_plot",
+          "percentage": 76,
+          "description": "Pinecone, Weaviate"
+        },
+        {
+          "name": "Prompt Engineering",
+          "icon": "edit_note",
+          "percentage": 88,
+          "description": "LLM Optimization"
+        },
+        {
+          "name": "RAG Systems",
+          "icon": "find_in_page",
+          "percentage": 82,
+          "description": "Retrieval Augmented"
+        }
+      ]
+    }
+  }
+}

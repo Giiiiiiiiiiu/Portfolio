@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "name": "SERGEY KOTENKOV",
+    "titles": [
+      "LUXURY DEVELOPER",
+      "PREMIUM DESIGNER",
+      "DIGITAL ARCHITECT",
+      "CODE ARTIST"
+    ],
+    "description": "Creating exceptional digital experiences with cutting-edge technology and premium design aesthetics.",
+    "buttons": [
+      {
+        "text": "VIEW PROJECTS",
+        "icon": "speed",
+        "primary": true,
+        "action": "navigate_projects"
+      },
+      {
+        "text": "CONTACT ME",
+        "icon": "send",
+        "primary": false,
+        "action": "navigate_contact"
+      }
+    ]
+  },
+  "about": {
+    "title": "ABOUT ME",
+    "subtitle": "Passionate Full-Stack Developer",
+    "description": "With over 5 years of experience in creating modern web and mobile applications, I specialize in building scalable, performant, and beautiful digital solutions.",
+    "highlights": [
+      "Full-Stack Development",
+      "Cloud Architecture",
+      "AI Integration",
+      "UI/UX Design"
+    ]
+  }
+}
