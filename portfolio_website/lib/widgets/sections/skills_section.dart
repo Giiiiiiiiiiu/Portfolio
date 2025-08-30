@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import '../modern_skill_card.dart';
+import '../ultra_modern_skill_card.dart';
 import '../../services/content_service.dart';
 
 class SkillsSection extends StatefulWidget {
@@ -253,21 +254,36 @@ class _SkillsSectionState extends State<SkillsSection> {
       curve: Curves.easeOutBack,
       child: Column(
         children: [
-          Text(
-            expandedCategory!,
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-              color: color,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 2,
+          ShaderMask(
+            shaderCallback: (bounds) => LinearGradient(
+              colors: [
+                color,
+                color.withOpacity(0.6),
+              ],
+            ).createShader(bounds),
+            child: Text(
+              expandedCategory!,
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 3,
+                shadows: [
+                  Shadow(
+                    color: color,
+                    blurRadius: 20,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 50),
           Wrap(
-            spacing: 20,
-            runSpacing: 20,
+            spacing: 25,
+            runSpacing: 25,
             alignment: WrapAlignment.center,
-            children: skills.map((skill) {
-              return _buildSkillCard(context, skill, color);
+            children: skills.asMap().entries.map((entry) {
+              return _buildSkillCard(context, entry.value, color, entry.key);
             }).toList(),
           ),
         ],
@@ -275,72 +291,14 @@ class _SkillsSectionState extends State<SkillsSection> {
     );
   }
 
-  Widget _buildSkillCard(BuildContext context, SkillItem skill, Color color) {
-    return TweenAnimationBuilder(
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 600),
-      curve: Curves.easeOutBack,
-      builder: (context, double value, child) {
-        return Transform.scale(
-          scale: value,
-          child: Container(
-            width: 200,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  const Color(0xFF1C1C24),
-                  const Color(0xFF2C2C34),
-                ],
-              ),
-              border: Border.all(
-                color: color.withOpacity(0.3),
-                width: 1,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: color.withOpacity(0.2),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Icon(
-                  skill.icon,
-                  size: 30,
-                  color: color,
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  skill.name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  skill.description,
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.6),
-                    fontSize: 12,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 15),
-                _buildProgressBar(skill.percentage, color),
-              ],
-            ),
-          ),
-        );
-      },
+  Widget _buildSkillCard(BuildContext context, SkillItem skill, Color color, int index) {
+    return UltraModernSkillCard(
+      skillName: skill.name,
+      icon: skill.icon,
+      percentage: skill.percentage,
+      description: skill.description,
+      primaryColor: color,
+      index: index,
     );
   }
 
