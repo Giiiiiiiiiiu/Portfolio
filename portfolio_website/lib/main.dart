@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'providers/theme_provider.dart';
-import 'providers/navigation_provider.dart';
+import 'providers/theme_provider.dart'; 
 import 'utils/app_router.dart';
 import 'utils/app_theme.dart';
 
@@ -11,8 +10,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()), 
       ],
       child: const PortfolioApp(),
     ),

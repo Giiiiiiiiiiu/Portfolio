@@ -12,7 +12,8 @@ class HeroSection extends StatefulWidget {
   State<HeroSection> createState() => _HeroSectionState();
 }
 
-class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin {
+class _HeroSectionState extends State<HeroSection>
+    with TickerProviderStateMixin {
   late AnimationController _scrollButtonController;
   late AnimationController _floatingController;
   late AnimationController _shimmerController;
@@ -28,17 +29,17 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
       duration: const Duration(seconds: 2),
       vsync: this,
     )..repeat();
-    
+
     _floatingController = AnimationController(
       duration: const Duration(seconds: 6),
       vsync: this,
     )..repeat(reverse: true);
-    
+
     _shimmerController = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
     )..repeat();
-    
+
     _loadHeroContent();
   }
 
@@ -70,7 +71,7 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    
+
     return Container(
       height: size.height,
       width: size.width,
@@ -79,9 +80,9 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color(0xFF0A0A0B), // Ultra dark
-            Color(0xFF141417), // Dark gray
-            Color(0xFF1A1A1D), // Slightly lighter
+            Color(0xFF0A0A0B),
+            Color(0xFF141417),
+            Color(0xFF1A1A1D),
           ],
         ),
       ),
@@ -89,10 +90,10 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
         children: [
           // Animated background particles
           _buildParticleBackground(),
-          
+
           // Grid pattern overlay
           _buildGridPattern(),
-          
+
           // Animated shimmer effect
           AnimatedBuilder(
             animation: _shimmerController,
@@ -112,26 +113,25 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
               );
             },
           ),
-          
+
           // Main content with full width
           Positioned.fill(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment:
+                  MainAxisAlignment.start, // Changed from center to start
               children: [
-                const SizedBox(height: 80), // Space for navigation
-                Expanded(
-                  child: Center(
-                    child: _buildMainContent(context, size),
-                  ),
-                ),
-                const SizedBox(height: 120), // Space for scroll button
+                const SizedBox(height: 80),
+                _buildMainContent(
+                    context, size), // Removed SizedBox height at top
+                const Spacer(), // Added spacer to push scroll button to bottom
+                const SizedBox(height: 120), // Kept space for scroll button
               ],
             ),
           ),
-          
+
           // Floating geometric shapes
           _buildFloatingShapes(),
-          
+
           // Premium scroll down button
           _buildPremiumScrollButton(context),
         ],
@@ -167,7 +167,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
           return AnimatedBuilder(
             animation: _floatingController,
             builder: (context, child) {
-              final offset = math.sin(_floatingController.value * math.pi + index) * 20;
+              final offset =
+                  math.sin(_floatingController.value * math.pi + index) * 20;
               return Positioned(
                 top: 100.0 + index * 120 + offset,
                 left: index.isEven ? 50.0 + offset : null,
@@ -227,7 +228,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                   child: Text(
                     heroName,
                     style: TextStyle(
-                      fontSize: size.width > 1200 ? 80 : (size.width > 600 ? 60 : 40),
+                      fontSize:
+                          size.width > 1200 ? 80 : (size.width > 600 ? 60 : 40),
                       fontWeight: FontWeight.w900,
                       letterSpacing: 3.0,
                       height: 1.2,
@@ -239,9 +241,9 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
               ),
             ),
           ),
-          
+
           const SizedBox(height: 30),
-          
+
           // Animated typing effect for titles
           AnimationConfiguration.synchronized(
             duration: const Duration(milliseconds: 1400),
@@ -260,22 +262,61 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                     ),
                     child: AnimatedTextKit(
                       repeatForever: true,
-                      animatedTexts: heroTitles.map((title) => 
-                        TypewriterAnimatedText(
-                          title,
-                          speed: const Duration(milliseconds: 100),
-                          cursor: '|',
-                        ),
-                      ).toList(),
+                      animatedTexts: heroTitles
+                          .map(
+                            (title) => TypewriterAnimatedText(
+                              title,
+                              speed: const Duration(milliseconds: 100),
+                              cursor: '|',
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
                 ),
               ),
             ),
           ),
-          
+
           const SizedBox(height: 40),
-          
+
+          // Adding the image here
+          AnimationConfiguration.synchronized(
+            duration: const Duration(milliseconds: 1500),
+            child: SlideAnimation(
+              verticalOffset: -10,
+              curve: Curves.easeOutQuart,
+              child: FadeInAnimation(
+                child: Container(
+                  width: 200, // Adjust size as needed
+                  height: 200, // Adjust size as needed
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF007AFF).withOpacity(0.2),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                    border: Border.all(
+                      color: const Color(0xFF007AFF).withOpacity(0.3),
+                      width: 2,
+                    ),
+                  ),
+                  child: ClipOval(
+                    child: Image.asset(
+                      '../assets/images/me.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 40),
+
           // Description with glass effect
           AnimationConfiguration.synchronized(
             duration: const Duration(milliseconds: 1600),
@@ -284,7 +325,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
               curve: Curves.easeOutQuart,
               child: FadeInAnimation(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.03),
                     borderRadius: BorderRadius.circular(20),
@@ -314,9 +356,9 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
               ),
             ),
           ),
-          
+
           const SizedBox(height: 60),
-          
+
           // CTA Buttons
           AnimationConfiguration.synchronized(
             duration: const Duration(milliseconds: 1800),
@@ -350,7 +392,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
     );
   }
 
-  Widget _buildCTAButton(String text, IconData icon, bool isPrimary, VoidCallback onTap) {
+  Widget _buildCTAButton(
+      String text, IconData icon, bool isPrimary, VoidCallback onTap) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -359,25 +402,29 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           decoration: BoxDecoration(
-            gradient: isPrimary ? const LinearGradient(
-              colors: [
-                Color(0xFF007AFF),
-                Color(0xFF0066CC),
-              ],
-            ) : null,
+            gradient: isPrimary
+                ? const LinearGradient(
+                    colors: [
+                      Color(0xFF007AFF),
+                      Color(0xFF0066CC),
+                    ],
+                  )
+                : null,
             color: isPrimary ? null : Colors.transparent,
             borderRadius: BorderRadius.circular(30),
             border: Border.all(
               color: isPrimary ? Colors.transparent : const Color(0xFF007AFF),
               width: 2,
             ),
-            boxShadow: isPrimary ? [
-              BoxShadow(
-                color: const Color(0xFF007AFF).withValues(alpha: 0.3),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
-              ),
-            ] : null,
+            boxShadow: isPrimary
+                ? [
+                    BoxShadow(
+                      color: const Color(0xFF007AFF).withValues(alpha: 0.3),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ]
+                : null,
           ),
           child: Row(
             children: [
@@ -416,7 +463,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
             child: AnimatedBuilder(
               animation: _scrollButtonController,
               builder: (context, child) {
-                final bounce = math.sin(_scrollButtonController.value * math.pi * 2) * 5;
+                final bounce =
+                    math.sin(_scrollButtonController.value * math.pi * 2) * 5;
                 return Transform.translate(
                   offset: Offset(0, bounce),
                   child: Container(
@@ -452,7 +500,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                           animation: _scrollButtonController,
                           builder: (context, child) {
                             return Transform.translate(
-                              offset: Offset(0, -20 + 30 * _scrollButtonController.value),
+                              offset: Offset(
+                                  0, -20 + 30 * _scrollButtonController.value),
                               child: Container(
                                 width: 4,
                                 height: 12,
@@ -461,7 +510,8 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                                   color: const Color(0xFF007AFF),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color(0xFF007AFF).withValues(alpha: 0.5),
+                                      color: const Color(0xFF007AFF)
+                                          .withValues(alpha: 0.5),
                                       blurRadius: 10,
                                     ),
                                   ],
@@ -478,7 +528,12 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                               Icon(
                                 Icons.keyboard_arrow_down,
                                 color: const Color(0xFF007AFF).withValues(
-                                  alpha: 0.3 + 0.3 * math.sin(_scrollButtonController.value * math.pi * 2),
+                                  alpha: 0.3 +
+                                      0.3 *
+                                          math.sin(
+                                              _scrollButtonController.value *
+                                                  math.pi *
+                                                  2),
                                 ),
                                 size: 20,
                               ),
@@ -487,7 +542,13 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
                                 child: Icon(
                                   Icons.keyboard_arrow_down,
                                   color: const Color(0xFF007AFF).withValues(
-                                    alpha: 0.5 + 0.3 * math.sin(_scrollButtonController.value * math.pi * 2 + 1),
+                                    alpha: 0.5 +
+                                        0.3 *
+                                            math.sin(
+                                                _scrollButtonController.value *
+                                                        math.pi *
+                                                        2 +
+                                                    1),
                                   ),
                                   size: 20,
                                 ),
@@ -511,7 +572,7 @@ class _HeroSectionState extends State<HeroSection> with TickerProviderStateMixin
 // Custom painters for background effects
 class ParticlePainter extends CustomPainter {
   final double animationValue;
-  
+
   ParticlePainter(this.animationValue);
 
   @override
@@ -524,7 +585,7 @@ class ParticlePainter extends CustomPainter {
       final x = (i * 73 + animationValue * size.width) % size.width;
       final y = (i * 37 + animationValue * size.height) % size.height;
       final radius = 1.0 + math.sin(animationValue * math.pi + i) * 0.5;
-      
+
       canvas.drawCircle(Offset(x, y), radius, paint);
     }
   }
@@ -542,11 +603,11 @@ class GridPatternPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     const spacing = 50.0;
-    
+
     for (double x = 0; x < size.width; x += spacing) {
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), paint);
     }
-    
+
     for (double y = 0; y < size.height; y += spacing) {
       canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
     }
