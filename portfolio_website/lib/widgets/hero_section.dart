@@ -22,6 +22,42 @@ class _HeroSectionState extends State<HeroSection>
   List<String> heroTitles = [];
   String heroDescription = '';
 
+  Color get _primaryColor =>
+      MediaQuery.of(context).platformBrightness == Brightness.dark
+          ? const Color(0xFF007AFF)
+          : const Color(0xFF0055CC);
+
+  Color get _backgroundColor =>
+      MediaQuery.of(context).platformBrightness == Brightness.dark
+          ? const Color(0xFF0A0A0B)
+          : Colors.white;
+
+  Color get _textColor =>
+      MediaQuery.of(context).platformBrightness == Brightness.dark
+          ? Colors.white
+          : Colors.black;
+
+  LinearGradient get _backgroundGradient =>
+      MediaQuery.of(context).platformBrightness == Brightness.dark
+          ? const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF0A0A0B),
+                Color(0xFF141417),
+                Color(0xFF1A1A1D),
+              ],
+            )
+          : LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white,
+                Colors.grey[50]!,
+                Colors.grey[100]!,
+              ],
+            );
+
   @override
   void initState() {
     super.initState();
@@ -71,20 +107,13 @@ class _HeroSectionState extends State<HeroSection>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Container(
       height: size.height,
       width: size.width,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF0A0A0B),
-            Color(0xFF141417),
-            Color(0xFF1A1A1D),
-          ],
-        ),
+      decoration: BoxDecoration(
+        gradient: _backgroundGradient,
       ),
       child: Stack(
         children: [
@@ -152,10 +181,19 @@ class _HeroSectionState extends State<HeroSection>
   }
 
   Widget _buildGridPattern() {
+    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Positioned.fill(
-      child: CustomPaint(
-        painter: GridPatternPainter(),
-        child: Container(),
+      child: Stack(
+        children: [
+          CustomPaint(
+            painter: GridPatternPainter(
+              color: isDark
+                  ? Colors.white.withOpacity(0.02)
+                  : Colors.black.withOpacity(0.05),
+            ),
+            child: Container(),
+          ),
+        ],
       ),
     );
   }
@@ -165,37 +203,36 @@ class _HeroSectionState extends State<HeroSection>
       children: [
         ...List.generate(5, (index) {
           return AnimatedBuilder(
-            animation: _floatingController,
-            builder: (context, child) {
-              final offset =
-                  math.sin(_floatingController.value * math.pi + index) * 20;
-              return Positioned(
-                top: 100.0 + index * 120 + offset,
-                left: index.isEven ? 50.0 + offset : null,
-                right: index.isOdd ? 50.0 - offset : null,
-                child: Transform.rotate(
-                  angle: _floatingController.value * 2 * math.pi + index,
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        colors: [
-                          const Color(0xFF007AFF).withValues(alpha: 0.1),
-                          const Color(0xFF0066CC).withValues(alpha: 0.05),
-                        ],
-                      ),
-                      border: Border.all(
-                        color: const Color(0xFF007AFF).withValues(alpha: 0.2),
-                        width: 1,
+              animation: _floatingController,
+              builder: (context, child) {
+                final offset =
+                    math.sin(_floatingController.value * math.pi + index) * 20;
+                return Positioned(
+                  top: 100.0 + index * 120 + offset,
+                  left: index.isEven ? 50.0 + offset : null,
+                  right: index.isOdd ? 50.0 - offset : null,
+                  child: Transform.rotate(
+                    angle: _floatingController.value * 2 * math.pi + index,
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            const Color(0xFF007AFF).withValues(alpha: 0.1),
+                            const Color(0xFF0066CC).withValues(alpha: 0.05),
+                          ],
+                        ),
+                        border: Border.all(
+                          color: const Color(0xFF007AFF).withValues(alpha: 0.2),
+                          width: 1,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
-          );
+                );
+              });
         }),
       ],
     );
@@ -210,69 +247,71 @@ class _HeroSectionState extends State<HeroSection>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Animated name with gradient
           AnimationConfiguration.synchronized(
             duration: const Duration(milliseconds: 1200),
             child: SlideAnimation(
               verticalOffset: -30,
               curve: Curves.easeOutQuart,
               child: FadeInAnimation(
-                child: ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                    colors: [
-                      Color(0xFF8E8E93),
-                      Color(0xFFFAFAFA),
-                      Color(0xFF8E8E93),
-                    ],
-                  ).createShader(bounds),
-                  child: Text(
-                    heroName,
-                    style: TextStyle(
-                      fontSize:
-                          size.width > 1200 ? 80 : (size.width > 600 ? 60 : 40),
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 3.0,
-                      height: 1.2,
-                      color: Colors.white,
+                child: Column(
+                  children: [
+                    // Profile image with animated border
+                    Container(
+                      width: size.width > 600 ? 150 : 120,
+                      height: size.width > 600 ? 150 : 120,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF007AFF).withOpacity(0.3),
+                            blurRadius: 30,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
+                        border: Border.all(
+                          color: const Color(0xFF007AFF).withOpacity(0.5),
+                          width: 3,
+                        ),
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          '../assets/images/me.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 30),
-
-          // Animated typing effect for titles
-          AnimationConfiguration.synchronized(
-            duration: const Duration(milliseconds: 1400),
-            child: SlideAnimation(
-              verticalOffset: -20,
-              curve: Curves.easeOutQuart,
-              child: FadeInAnimation(
-                child: Container(
-                  height: 50,
-                  child: DefaultTextStyle(
-                    style: TextStyle(
-                      fontSize: size.width > 600 ? 24 : 18,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF007AFF),
-                      letterSpacing: 2.0,
+                    const SizedBox(height: 30),
+                    // Silver text effect
+                    ShaderMask(
+                      shaderCallback: (bounds) => LinearGradient(
+                        colors: MediaQuery.of(context).platformBrightness ==
+                                Brightness.dark
+                            ? const [
+                                Color(0xFF8E8E93),
+                                Color(0xFFFAFAFA),
+                                Color(0xFF8E8E93),
+                              ]
+                            : [
+                                Color(0xFF2E2E2E),
+                                Color(0xFF000000),
+                                Color(0xFF2E2E2E),
+                              ],
+                      ).createShader(bounds),
+                      child: Text(
+                        'SERGEY KOTENKOV',
+                        style: TextStyle(
+                          fontSize: size.width > 1200
+                              ? 72
+                              : (size.width > 600 ? 54 : 36),
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 4.0,
+                          height: 1.2,
+                          color: _textColor,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    child: AnimatedTextKit(
-                      repeatForever: true,
-                      animatedTexts: heroTitles
-                          .map(
-                            (title) => TypewriterAnimatedText(
-                              title,
-                              speed: const Duration(milliseconds: 100),
-                              cursor: '|',
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ),
@@ -280,35 +319,31 @@ class _HeroSectionState extends State<HeroSection>
 
           const SizedBox(height: 40),
 
-          // Adding the image here
+          // Simplified animated titles
           AnimationConfiguration.synchronized(
-            duration: const Duration(milliseconds: 1500),
+            duration: const Duration(milliseconds: 1400),
             child: SlideAnimation(
-              verticalOffset: -10,
+              verticalOffset: -20,
               curve: Curves.easeOutQuart,
               child: FadeInAnimation(
-                child: Container(
-                  width: 200, // Adjust size as needed
-                  height: 200, // Adjust size as needed
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF007AFF).withOpacity(0.2),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                    border: Border.all(
-                      color: const Color(0xFF007AFF).withOpacity(0.3),
-                      width: 2,
-                    ),
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: size.width > 600 ? 28 : 22,
+                    fontWeight: FontWeight.w600,
+                    color: _primaryColor,
+                    letterSpacing: 2.0,
                   ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      '../assets/images/me.png',
-                      fit: BoxFit.cover,
-                    ),
+                  child: AnimatedTextKit(
+                    repeatForever: true,
+                    animatedTexts: heroTitles
+                        .map(
+                          (title) => TypewriterAnimatedText(
+                            title,
+                            speed: const Duration(milliseconds: 100),
+                            cursor: '|',
+                          ),
+                        )
+                        .toList(),
                   ),
                 ),
               ),
@@ -328,7 +363,7 @@ class _HeroSectionState extends State<HeroSection>
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.03),
+                    color: _textColor.withOpacity(0.03),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       color: Colors.white.withValues(alpha: 0.1),
@@ -346,7 +381,7 @@ class _HeroSectionState extends State<HeroSection>
                     heroDescription,
                     style: TextStyle(
                       fontSize: size.width > 600 ? 18 : 16,
-                      color: Colors.white.withValues(alpha: 0.7),
+                      color: _textColor.withOpacity(0.7),
                       height: 1.6,
                       letterSpacing: 0.5,
                     ),
@@ -403,41 +438,32 @@ class _HeroSectionState extends State<HeroSection>
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           decoration: BoxDecoration(
             gradient: isPrimary
-                ? const LinearGradient(
+                ? LinearGradient(
                     colors: [
-                      Color(0xFF007AFF),
-                      Color(0xFF0066CC),
+                      _primaryColor,
+                      _primaryColor.withOpacity(0.8),
                     ],
                   )
                 : null,
             color: isPrimary ? null : Colors.transparent,
             borderRadius: BorderRadius.circular(30),
             border: Border.all(
-              color: isPrimary ? Colors.transparent : const Color(0xFF007AFF),
+              color: isPrimary ? Colors.transparent : _primaryColor,
               width: 2,
             ),
-            boxShadow: isPrimary
-                ? [
-                    BoxShadow(
-                      color: const Color(0xFF007AFF).withValues(alpha: 0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
-                    ),
-                  ]
-                : null,
           ),
           child: Row(
             children: [
               Icon(
                 icon,
-                color: isPrimary ? Colors.white : const Color(0xFF007AFF),
+                color: isPrimary ? _backgroundColor : _primaryColor,
                 size: 20,
               ),
               const SizedBox(width: 10),
               Text(
                 text,
                 style: TextStyle(
-                  color: isPrimary ? Colors.white : const Color(0xFF007AFF),
+                  color: isPrimary ? _backgroundColor : _primaryColor,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.5,
@@ -595,10 +621,14 @@ class ParticlePainter extends CustomPainter {
 }
 
 class GridPatternPainter extends CustomPainter {
+  final Color color;
+
+  GridPatternPainter({required this.color});
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.02)
+      ..color = color
       ..strokeWidth = 0.5
       ..style = PaintingStyle.stroke;
 
@@ -614,5 +644,6 @@ class GridPatternPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(GridPatternPainter oldDelegate) => false;
+  bool shouldRepaint(GridPatternPainter oldDelegate) =>
+      oldDelegate.color != color;
 }
