@@ -255,31 +255,78 @@ class _HeroSectionState extends State<HeroSection>
               child: FadeInAnimation(
                 child: Column(
                   children: [
-                    // Profile image with animated border
-                    Container(
-                      width: size.width > 600 ? 150 : 120,
-                      height: size.width > 600 ? 150 : 120,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xFF007AFF).withOpacity(0.3),
-                            blurRadius: 30,
-                            offset: const Offset(0, 10),
+                    // Enhanced profile image with 3D effect
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // Outer glow
+                        Container(
+                          width: size.width > 600 ? 200 : 170,
+                          height: size.width > 600 ? 200 : 170,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF007AFF).withOpacity(0.2),
+                                blurRadius: 50,
+                                spreadRadius: 10,
+                              ),
+                            ],
                           ),
-                        ],
-                        border: Border.all(
-                          color: const Color(0xFF007AFF).withOpacity(0.5),
-                          width: 3,
                         ),
-                      ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          '../assets/images/me.png',
-                          fit: BoxFit.cover,
+                        // Main image container
+                        Container(
+                          width: size.width > 600 ? 180 : 150,
+                          height: size.width > 600 ? 180 : 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                const Color(0xFF007AFF).withOpacity(0.3),
+                                const Color(0xFF0066CC).withOpacity(0.1),
+                              ],
+                            ),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.2),
+                              width: 2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                blurRadius: 30,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(23),
+                            child: Image.asset(
+                              '../assets/images/me.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      ),
+                        // Animated overlay
+                        Container(
+                          width: size.width > 600 ? 180 : 150,
+                          height: size.width > 600 ? 180 : 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.white.withOpacity(0.2),
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+
                     const SizedBox(height: 30),
                     // Silver text effect
                     ShaderMask(
@@ -394,7 +441,7 @@ class _HeroSectionState extends State<HeroSection>
 
           const SizedBox(height: 60),
 
-          // CTA Buttons
+          // Updated CTA Buttons
           AnimationConfiguration.synchronized(
             duration: const Duration(milliseconds: 1800),
             child: SlideAnimation(
@@ -405,8 +452,8 @@ class _HeroSectionState extends State<HeroSection>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildCTAButton(
-                      'View Projects',
-                      FontAwesomeIcons.rocket,
+                      'View Company',
+                      FontAwesomeIcons.buildingUser, // Updated icon
                       true,
                       () {},
                     ),
@@ -427,6 +474,7 @@ class _HeroSectionState extends State<HeroSection>
     );
   }
 
+  // Enhanced CTA button with hover effect
   Widget _buildCTAButton(
       String text, IconData icon, bool isPrimary, VoidCallback onTap) {
     return MouseRegion(
@@ -439,6 +487,8 @@ class _HeroSectionState extends State<HeroSection>
           decoration: BoxDecoration(
             gradient: isPrimary
                 ? LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                     colors: [
                       _primaryColor,
                       _primaryColor.withOpacity(0.8),
@@ -451,8 +501,18 @@ class _HeroSectionState extends State<HeroSection>
               color: isPrimary ? Colors.transparent : _primaryColor,
               width: 2,
             ),
+            boxShadow: isPrimary
+                ? [
+                    BoxShadow(
+                      color: _primaryColor.withOpacity(0.3),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ]
+                : null,
           ),
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 icon,
