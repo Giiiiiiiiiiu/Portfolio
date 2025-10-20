@@ -14,8 +14,7 @@ const ContactSection = () => {
         <motion.h2 
           className="section-title"
           initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         > 
           {contactData.title}
@@ -24,8 +23,7 @@ const ContactSection = () => {
           <motion.div 
             className="contact-info"
             initial={{ opacity: 0, x: -80 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, type: "spring" as const, stiffness: 100 }}
           >
             <h3>{contactData.heading}</h3>
@@ -35,15 +33,13 @@ const ContactSection = () => {
             className="contact-form" 
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: 80 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, type: "spring" as const, stiffness: 100 }}
           >
             <motion.div 
               className="form-group"
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
               <input 
@@ -56,8 +52,7 @@ const ContactSection = () => {
             <motion.div 
               className="form-group"
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
               <input 
@@ -70,8 +65,7 @@ const ContactSection = () => {
             <motion.div 
               className="form-group"
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
               <textarea 
@@ -85,8 +79,7 @@ const ContactSection = () => {
               type="submit" 
               className="send-button"
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
               whileHover={{ 
                 scale: 1.05, 

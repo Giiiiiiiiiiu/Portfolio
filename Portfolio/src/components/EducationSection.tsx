@@ -36,8 +36,7 @@ const EducationSection = () => {
         <motion.h2 
           className="section-title"
           initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         > 
           {educationData.title}
@@ -46,8 +45,7 @@ const EducationSection = () => {
           className="timeline"
           variants={timelineVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          animate="visible"
         >
           {educationData.timeline.map((item, index) => (
             <motion.div 
@@ -58,8 +56,7 @@ const EducationSection = () => {
               <motion.div 
                 className="timeline-dot"
                 initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
+                animate={{ scale: 1 }}
                 transition={{ delay: index * 0.3 + 0.2, type: "spring" as const, stiffness: 500 }}
               />
               <motion.div 

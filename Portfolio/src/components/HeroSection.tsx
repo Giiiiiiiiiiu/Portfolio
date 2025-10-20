@@ -54,20 +54,17 @@ const HeroSection = () => {
         </motion.h1>
         <motion.p 
           className="tagline"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
+          transition={{ delay: 0.9, duration: 0.8 }}
         >
           {heroData.tagline}
         </motion.p>
         <motion.div 
           className="scroll-indicator"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 10, 0] }}
-          transition={{ 
-            opacity: { delay: 1.1, duration: 0.5 },
-            y: { delay: 1.5, duration: 2, repeat: Infinity, ease: "easeInOut" }
-          }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.1, duration: 0.5 }}
         >
           <span>{heroData.scrollText}</span>
           <div className="scroll-arrow">↓</div>
