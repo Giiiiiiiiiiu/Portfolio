@@ -7,28 +7,50 @@
       "icon": "📱",
       "title": "App Entwicklung",
       "description": "Native & Cross-Platform Apps für iOS und Android",
-      "tags": ["React Native", "Flutter", "Swift"]
+      "tags": ["React Native", "Flutter", "Swift"],
+      "combos": [
+        { "name": "Expo + C++", "tech": ["Expo", "C++"] },
+        { "name": "Flutter + C++", "tech": ["Flutter", "C++"] },
+        { "name": "SwiftUI + C++", "tech": ["SwiftUI", "C++"] },
+        { "name": "Kotlin + C++", "tech": ["Kotlin", "C++"] }
+      ]
     },
     {
       "id": 2,
       "icon": "🌐",
       "title": "Web Entwicklung",
       "description": "Moderne, responsive Webanwendungen",
-      "tags": ["React", "TypeScript", "Node.js"]
+      "tags": ["React", "TypeScript", "Node.js"],
+      "combos": [
+        { "name": "React", "tech": ["React", "TypeScript", "Tailwind"] },
+        { "name": "HTML/CSS/JS", "tech": ["HTML", "CSS", "JavaScript"] },
+        { "name": "Flutter Web", "tech": ["Flutter", "Dart"] }
+      ]
     },
     {
       "id": 3,
       "icon": "🎮",
-      "title": "Spiele Entwicklung",
+      "title": "Game Entwicklung",
       "description": "Interaktive Gaming-Erlebnisse",
-      "tags": ["Unity", "Unreal", "C#"]
+      "tags": ["Unity", "Unreal", "C#"],
+      "combos": [
+        { "name": "Unity", "tech": ["Unity", "C#"] },
+        { "name": "Unreal Engine", "tech": ["Unreal", "C++", "Blueprints"] },
+        { "name": "Construct", "tech": ["Construct", "JavaScript"] }
+      ]
     },
     {
       "id": 4,
       "icon": "🤖",
       "title": "KI Integration",
       "description": "Intelligente Systeme & Machine Learning",
-      "tags": ["OpenAI", "TensorFlow", "Python"]
+      "tags": ["OpenAI", "TensorFlow", "Python"],
+      "combos": [
+        { "name": "OpenAI API", "tech": ["GPT-4", "DALL-E", "Whisper"] },
+        { "name": "TensorFlow", "tech": ["TensorFlow", "Keras", "Python"] },
+        { "name": "PyTorch", "tech": ["PyTorch", "NumPy", "Pandas"] },
+        { "name": "LangChain", "tech": ["LangChain", "Vector DBs"] }
+      ]
     }
   ]
 }
