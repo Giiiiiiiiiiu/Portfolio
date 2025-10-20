@@ -1,0 +1,34 @@
+{
+  "title": "IT Skills",
+  "sectionNumber": "01",
+  "skills": [
+    {
+      "id": 1,
+      "icon": "📱",
+      "title": "App Entwicklung",
+      "description": "Native & Cross-Platform Apps für iOS und Android",
+      "tags": ["React Native", "Flutter", "Swift"]
+    },
+    {
+      "id": 2,
+      "icon": "🌐",
+      "title": "Web Entwicklung",
+      "description": "Moderne, responsive Webanwendungen",
+      "tags": ["React", "TypeScript", "Node.js"]
+    },
+    {
+      "id": 3,
+      "icon": "🎮",
+      "title": "Spiele Entwicklung",
+      "description": "Interaktive Gaming-Erlebnisse",
+      "tags": ["Unity", "Unreal", "C#"]
+    },
+    {
+      "id": 4,
+      "icon": "🤖",
+      "title": "KI Integration",
+      "description": "Intelligente Systeme & Machine Learning",
+      "tags": ["OpenAI", "TensorFlow", "Python"]
+    }
+  ]
+}

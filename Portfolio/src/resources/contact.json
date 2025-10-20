@@ -1,0 +1,15 @@
+{
+  "title": "Kontakt",
+  "sectionNumber": "04",
+  "heading": "Lass uns reden!",
+  "description": "Hast du ein spannendes Projekt oder möchtest du zusammenarbeiten? Schreib mir eine Nachricht!",
+  "form": {
+    "namePlaceholder": "Dein Name",
+    "emailPlaceholder": "Deine E-Mail",
+    "messagePlaceholder": "Deine Nachricht",
+    "submitButton": "Nachricht senden"
+  },
+  "footer": {
+    "text": "© 2025 Dein Name. Made with ❤️ and React"
+  }
+}

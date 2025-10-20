@@ -1,0 +1,16 @@
+{
+  "title": "Meine Firma",
+  "sectionNumber": "03",
+  "company": {
+    "logo": "🚀",
+    "name": "Deine Firma GmbH",
+    "tagline": "Innovation durch Technologie",
+    "description": "Wir entwickeln maßgeschneiderte Softwarelösungen für Unternehmen jeder Größe. Von mobilen Apps bis hin zu komplexen Webanwendungen - wir bringen deine Ideen zum Leben.",
+    "services": [
+      "Custom Software Development",
+      "Mobile & Web Apps",
+      "KI-Integration",
+      "Consulting & Support"
+    ]
+  }
+}

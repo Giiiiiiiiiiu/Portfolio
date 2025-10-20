@@ -1,0 +1,27 @@
+{
+  "title": "Werdegang",
+  "sectionNumber": "02",
+  "timeline": [
+    {
+      "id": 1,
+      "year": "2024",
+      "title": "Aktuelle Ausbildung",
+      "location": "Schule / Universität",
+      "description": "Spezialisierung auf Informatik und Softwareentwicklung"
+    },
+    {
+      "id": 2,
+      "year": "2023",
+      "title": "Weiterbildung",
+      "location": "Online & Zertifikate",
+      "description": "Verschiedene Kurse in Web Development, App Development und KI"
+    },
+    {
+      "id": 3,
+      "year": "2020",
+      "title": "Schulabschluss",
+      "location": "Gymnasium",
+      "description": "Mit Schwerpunkt auf MINT-Fächer"
+    }
+  ]
+}
