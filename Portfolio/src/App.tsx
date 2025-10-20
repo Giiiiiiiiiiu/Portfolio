@@ -1,12 +1,10 @@
-import { useEffect, useState, useCallback, useMemo, lazy, Suspense, memo } from 'react'
+import { useEffect, useState, useCallback, useMemo, memo } from 'react'
 import './App.css'
 import HeroSection from './components/HeroSection'
-
-// Lazy load non-critical sections
-const SkillsSection = lazy(() => import('./components/SkillsSection'))
-const EducationSection = lazy(() => import('./components/EducationSection'))
-const ContactSection = lazy(() => import('./components/ContactSection'))
-const FooterSection = lazy(() => import('./components/FooterSection'))
+import SkillsSection from './components/SkillsSection'
+import EducationSection from './components/EducationSection'
+import ContactSection from './components/ContactSection'
+import FooterSection from './components/FooterSection'
 
 // Memoized NavigationDot component
 const NavigationDot = memo(({ index, isActive, onClick }: { index: number; isActive: boolean; onClick: () => void }) => (
@@ -80,12 +78,10 @@ function App() {
       </div>
 
       <HeroSection />
-      <Suspense fallback={<div className="loading">Loading...</div>}>
-        <SkillsSection />
-        <EducationSection />
-        <ContactSection />
-        <FooterSection />
-      </Suspense>
+      <SkillsSection />
+      <EducationSection />
+      <ContactSection />
+      <FooterSection />
     </div>
   )
 }
