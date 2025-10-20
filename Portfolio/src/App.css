@@ -163,7 +163,7 @@
   .nav-dots {
     position: fixed !important;
     top: env(safe-area-inset-top, 1rem);
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
     left: 50%;
     right: auto;
     transform: translateX(-50%);
@@ -189,7 +189,7 @@
   .nav-dots {
     position: fixed !important;
     top: env(safe-area-inset-top, 0.8rem);
-    margin-top: 0.4rem;
+    margin-top: 1.2rem;
     gap: 1rem;
     padding: 0.9rem 1.3rem;
     border-radius: 1.8rem;
@@ -352,6 +352,10 @@
   animation: float 6s ease-in-out infinite;
   transform-style: preserve-3d;
   transition: all 0.5s ease;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .profile-image-container:hover {
@@ -377,6 +381,9 @@
     inset 0 1px 1px rgba(255, 255, 255, 0.1);
   transform-style: preserve-3d;
   animation: profilePulse 5s ease-in-out infinite;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 @keyframes profilePulse {
@@ -400,6 +407,11 @@
   border-radius: 50%;
   object-fit: cover;
   display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
 }
 
 .glow-effect {
@@ -1398,6 +1410,16 @@
     height: 200px;
   }
   
+  .timeline-content {
+    pointer-events: none;
+    cursor: default;
+  }
+  
+  .timeline-content:hover {
+    transform: none;
+    border-color: var(--card-border);
+  }
+  
   .skills-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -1478,6 +1500,16 @@
   .profile-image-container {
     width: 150px;
     height: 150px;
+  }
+  
+  .timeline-content {
+    pointer-events: none;
+    cursor: default;
+  }
+  
+  .timeline-content:hover {
+    transform: none;
+    border-color: var(--card-border);
   }
   
   .skill-card {
