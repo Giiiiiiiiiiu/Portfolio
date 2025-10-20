@@ -162,7 +162,8 @@
 @media (max-width: 768px) {
   .nav-dots {
     position: fixed !important;
-    top: 1.5rem;
+    top: env(safe-area-inset-top, 1rem);
+    margin-top: 0.5rem;
     left: 50%;
     right: auto;
     transform: translateX(-50%);
@@ -173,6 +174,7 @@
     transform-style: flat;
     perspective: none;
     z-index: 1001;
+    will-change: transform;
   }
   
   .dot {
@@ -186,12 +188,14 @@
 @media (max-width: 480px) {
   .nav-dots {
     position: fixed !important;
-    top: 1.2rem;
+    top: env(safe-area-inset-top, 0.8rem);
+    margin-top: 0.4rem;
     gap: 1rem;
     padding: 0.9rem 1.3rem;
     border-radius: 1.8rem;
     transform-style: flat;
     perspective: none;
+    will-change: transform;
   }
   
   .dot {
