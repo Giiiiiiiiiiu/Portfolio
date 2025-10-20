@@ -73,12 +73,12 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6366f1;
+  background: 'transparent';
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8b5cf6;
+  background: 'transparent';
 }
 
 @media (prefers-color-scheme: light) {
