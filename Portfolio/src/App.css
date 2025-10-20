@@ -79,6 +79,18 @@
   box-sizing: border-box;
 }
 
+/* Verhindere horizontales Scrollen auf Tablets */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Bessere Scroll-Performance auf Touch-Geräten */
+html {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
 .app {
   background: var(--bg-dark);
   color: var(--text-primary);
@@ -101,6 +113,14 @@
   pointer-events: none;
   z-index: 0;
   animation: meshMove 25s ease-in-out infinite;
+}
+
+/* Reduziere Animationen auf Tablets für bessere Performance */
+@media (max-width: 900px) and (orientation: portrait) {
+  .app::before {
+    animation: meshMove 35s ease-in-out infinite;
+    opacity: 0.4;
+  }
 }
 
 @keyframes meshMove {
@@ -158,8 +178,34 @@
   }
 }
 
+/* Portrait Tablets bei größeren Auflösungen */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.6rem;
+  }
+  
+  .nav-dots {
+    right: 1.8rem;
+  }
+  
+  .section {
+    padding: 3.5rem 2.5rem;
+  }
+  
+  .company-services {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Bessere Touch-Interaktion */
+  button, a, .skill-card, .timeline-content, .combo-item {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
+
 /* Mobile: Navigation oben horizontal und sticky */
-@media (max-width: 768px) {
+@media (max-width: 768px) and (orientation: landscape), (max-width: 599px) {
   .nav-dots {
     position: fixed !important;
     top: env(safe-area-inset-top, 1rem);
@@ -269,6 +315,7 @@
    ======================================== */
 .section {
   min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height für mobile Geräte */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1357,34 +1404,337 @@
 /* ========================================
    RESPONSIVE DESIGN
    ======================================== */
+
+/* Tablet Landscape und kleine Desktops */
 @media (max-width: 1024px) {
+  .section {
+    padding: 3.5rem 2rem;
+  }
+  
   .section-title {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    margin-bottom: 3rem;
   }
   
   .name {
-    font-size: 4.5rem;
+    font-size: 5rem;
+  }
+  
+  .tagline {
+    font-size: 1.5rem;
   }
   
   .skills-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.8rem;
   }
   
   .skill-card {
     padding: 2.5rem;
+    min-height: 380px;
+  }
+  
+  .combos-title {
+    font-size: 2.2rem;
+  }
+  
+  .contact-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  
+  .timeline-content {
+    padding: 2rem;
+  }
+  
+  .company-card {
+    padding: 3.5rem;
+  }
+}
+
+/* Vertikale Tablets wie Surface Go Portrait (800px Breite) */
+@media (max-width: 900px) and (orientation: portrait) {
+  .section {
+    padding: 3rem 1.8rem;
+    min-height: auto;
+  }
+  
+  .section-content {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+  
+  .section::before {
+    filter: blur(40px);
+  }
+  
+  .section-title {
+    font-size: 3rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+  
+  .title-number {
+    font-size: 1.3rem;
+  }
+  
+  /* Hero Section Anpassungen */
+  .name {
+    font-size: 4rem;
+  }
+  
+  .tagline {
+    font-size: 1.4rem;
+    margin-bottom: 3rem;
+  }
+  
+  .profile-image-container {
+    width: 220px;
+    height: 220px;
+    margin-bottom: 2.5rem;
+  }
+  
+  /* Skills Grid optimal für vertikale Tablets */
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .skill-card {
+    padding: 2rem;
+    min-height: 320px;
+    transform-style: flat;
+  }
+  
+  /* Reduziere Hover-Effekte für bessere Touch-Bedienung */
+  .skill-card:hover {
+    transform: translateY(-5px) scale(1.02);
+  }
+  
+  .icon-wrapper {
+    width: 85px;
+    height: 85px;
+    font-size: 3.5rem;
+  }
+  
+  .skill-title-large {
+    font-size: 1.6rem;
+  }
+  
+  .skill-description {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Timeline Optimierungen */
+  .timeline {
+    padding-left: 3rem;
+  }
+  
+  .timeline::before {
+    width: 2px;
+  }
+  
+  .timeline-dot {
+    width: 16px;
+    height: 16px;
+    left: -3.4rem;
+  }
+  
+  .timeline-item {
+    margin-bottom: 3rem;
+  }
+  
+  .timeline-content {
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .timeline-content:hover {
+    transform: translateX(10px) scale(1.01);
+  }
+  
+  .timeline-content h3 {
+    font-size: 1.3rem;
+  }
+  
+  .timeline-year {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Company Section */
+  .company-card {
+    padding: 3rem 2rem;
+  }
+  
+  .company-logo {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .company-name {
+    font-size: 2.5rem;
+  }
+  
+  .company-tagline {
+    font-size: 1.2rem;
+  }
+  
+  .company-services {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  /* Contact Form */
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .contact-info h3 {
+    font-size: 2.2rem;
+  }
+  
+  .form-input {
+    padding: 1.1rem 1.3rem;
+  }
+  
+  .send-button {
+    padding: 1.3rem 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  /* Combos Grid */
+  .combos-grid {
+    gap: 1.2rem;
   }
   
   .combos-title {
     font-size: 2rem;
+    margin-bottom: 2rem;
   }
   
-  .contact-content {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+  .combo-item {
+    padding: 1.3rem;
+  }
+  
+  .combo-item:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+  
+  .tech-badge {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.82rem;
+  }
+  
+  .tech-badge:hover {
+    transform: translateY(-2px) scale(1.05);
+  }
+  
+  /* Footer Anpassungen */
+  .footer-section {
+    padding: 3rem 1.8rem;
+  }
+  
+  .social-link {
+    width: 55px;
+    height: 55px;
+    font-size: 1.6rem;
   }
 }
 
+/* Surface Go spezifische Anpassungen (800x1280px im Portrait) */
+@media only screen 
+  and (min-device-width: 800px) 
+  and (max-device-width: 801px)
+  and (orientation: portrait) {
+  .section {
+    padding: 2.5rem 1.5rem;
+  }
+  
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.3rem;
+  }
+  
+  .nav-dots {
+    right: 0.8rem;
+    padding: 1rem 0.8rem;
+  }
+}
+
+/* Spezielle Anpassungen für schmale vertikale Tablets */
+@media (min-width: 600px) and (max-width: 850px) and (orientation: portrait) {
+  /* Navigation Dots speziell für vertikale Tablets */
+  .nav-dots {
+    position: fixed !important;
+    right: 1rem;
+    top: 50%;
+    left: auto;
+    transform: translateY(-50%);
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.2rem 1rem;
+    border-radius: 1.8rem;
+    background: rgba(10, 10, 30, 0.6);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  .dot {
+    width: 12px;
+    height: 12px;
+  }
+  
+  /* Hero Section Feinabstimmung */
+  .hero-content {
+    padding-top: 1rem;
+  }
+  
+  /* Skills optimiert für 2 Spalten */
+  .skill-card:hover {
+    transform: translateY(-8px) scale(1.03);
+  }
+  
+  .skill-card:active {
+    transform: translateY(-2px) scale(1.01);
+  }
+  
+  .click-hint {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+  
+  /* Bessere Touch-Targets */
+  .form-input {
+    min-height: 44px;
+  }
+  
+  .send-button {
+    min-height: 48px;
+  }
+  
+  /* Floating Animations reduzieren für bessere Performance */
+  .profile-image-container {
+    animation: float 8s ease-in-out infinite;
+  }
+  
+  .logo-placeholder {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Scroll-Indikator anpassen */
+  .scroll-indicator {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile Querformat und kleine Tablets */
 @media (max-width: 768px) {
   .section {
     padding: 3rem 1.5rem;
@@ -1488,7 +1838,48 @@
   }
 }
 
+/* Kleine vertikale Tablets und große Phones */
+@media (max-width: 600px) and (orientation: portrait) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 1.3rem;
+  }
+  
+  .skill-card {
+    padding: 1.8rem;
+    min-height: 300px;
+  }
+  
+  .company-services {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Navigation oben horizontal für kleine Geräte */
+  .nav-dots {
+    position: fixed !important;
+    top: env(safe-area-inset-top, 1rem);
+    margin-top: 1.5rem;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 1.2rem;
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+  }
+}
+
+/* Sehr kleine Bildschirme und alte Smartphones */
 @media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .section {
+    min-height: 100vh;
+    min-height: 100svh; /* Small viewport height */
+  }
+  
   .name {
     font-size: 2.5rem;
   }
