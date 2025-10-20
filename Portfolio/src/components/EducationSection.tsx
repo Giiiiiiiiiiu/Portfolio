@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
+import { memo, useMemo } from 'react';
 import educationData from '../resources/education.json';
 
-const EducationSection = () => {
+const EducationSection = memo(() => {
+  const isMobile = useMemo(() => window.innerWidth <= 768, []);
   const timelineVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -37,7 +39,7 @@ const EducationSection = () => {
           className="section-title"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
         > 
           {educationData.title}
         </motion.h2>
@@ -47,7 +49,7 @@ const EducationSection = () => {
           initial="hidden"
           animate="visible"
         >
-          {educationData.timeline.map((item, index) => (
+          {educationData.timeline.map((item) => (
             <motion.div 
               key={item.id} 
               className="timeline-item"
@@ -57,20 +59,24 @@ const EducationSection = () => {
                 className="timeline-dot"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ delay: index * 0.3 + 0.2, type: "spring" as const, stiffness: 500 }}
+                transition={{ type: "spring" as const, stiffness: 500, duration: 0.3 }}
               />
               <motion.div 
                 className="timeline-content"
-                whileHover={{ 
-                  x: 20, 
-                  rotateY: -5, 
-                  scale: 1.02,
-                  transition: { type: "spring" as const, stiffness: 300 }
-                }}
+                {...(!isMobile && {
+                  whileHover: { 
+                    x: 20, 
+                    rotateY: -5, 
+                    scale: 1.02,
+                    transition: { type: "spring" as const, stiffness: 300 }
+                  }
+                })}
               >
                 <motion.div 
                   className="timeline-year"
-                  whileHover={{ scale: 1.1, z: 20 }}
+                  {...(!isMobile && {
+                    whileHover: { scale: 1.1, z: 20 }
+                  })}
                 >
                   {item.year}
                 </motion.div>
@@ -84,6 +90,8 @@ const EducationSection = () => {
       </div>
     </section>
   );
-};
+});
+
+EducationSection.displayName = 'EducationSection';
 
 export default EducationSection;

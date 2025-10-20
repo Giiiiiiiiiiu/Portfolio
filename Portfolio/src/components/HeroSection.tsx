@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
+import { memo, useMemo } from 'react';
 import heroData from '../resources/hero.json';
 
-const HeroSection = () => {
+const HeroSection = memo(() => {
+  const isMobile = useMemo(() => window.innerWidth <= 768, []);
   return (
     <section className="section hero-section">
       <div className="hero-content">
@@ -13,13 +15,15 @@ const HeroSection = () => {
             type: "spring" as const, 
             stiffness: 80, 
             damping: 15,
-            delay: 0.2 
+            duration: 0.3
           }}
-          whileHover={{ 
-            scale: 1.1, 
-            rotateY: 10,
-            transition: { type: "spring" as const, stiffness: 300 }
-          }}
+          {...(!isMobile && {
+            whileHover: { 
+              scale: 1.1, 
+              rotateY: 10,
+              transition: { type: "spring" as const, stiffness: 300 }
+            }
+          })}
         >
           <div className="profile-image">
             <img 
@@ -33,13 +37,13 @@ const HeroSection = () => {
           className="name"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          transition={{ duration: 0.3 }}
         >
           <motion.span 
             className="name-line"
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6, type: "spring" as const, stiffness: 100 }}
+            transition={{ type: "spring" as const, stiffness: 100, duration: 0.3 }}
           >
             {heroData.name.firstName}
           </motion.span>
@@ -47,7 +51,7 @@ const HeroSection = () => {
             className="name-line"
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7, type: "spring" as const, stiffness: 100 }}
+            transition={{ type: "spring" as const, stiffness: 100, duration: 0.3 }}
           >
             {heroData.name.lastName}
           </motion.span>
@@ -56,7 +60,7 @@ const HeroSection = () => {
           className="tagline"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
+          transition={{ duration: 0.3 }}
         >
           {heroData.tagline}
         </motion.p>
@@ -64,7 +68,7 @@ const HeroSection = () => {
           className="scroll-indicator"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.1, duration: 0.5 }}
+          transition={{ duration: 0.3 }}
         >
           <span>{heroData.scrollText}</span>
           <div className="scroll-arrow">↓</div>
@@ -72,6 +76,8 @@ const HeroSection = () => {
       </div>
     </section>
   );
-};
+});
+
+HeroSection.displayName = 'HeroSection';
 
 export default HeroSection;

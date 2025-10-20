@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
+import React, { memo, useMemo } from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
-const FooterSection = () => {
+const FooterSection = memo(() => {
+  const isMobile = useMemo(() => window.innerWidth <= 768, []);
+
   const socialLinks = [
     {
       name: 'GitHub',
@@ -31,9 +34,9 @@ const FooterSection = () => {
           className="social-links"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
         >
-          {socialLinks.map((social, index) => (
+          {socialLinks.map((social) => (
             <motion.a
               key={social.name}
               href={social.url}
@@ -42,12 +45,14 @@ const FooterSection = () => {
               className="social-link"
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ 
-                scale: 1.2,
-                rotate: 360,
-                transition: { duration: 0.4 }
-              }}
+              transition={{ duration: 0.3 }}
+              {...(!isMobile && {
+                whileHover: { 
+                  scale: 1.2,
+                  rotate: 360,
+                  transition: { duration: 0.4 }
+                }
+              })}
               style={{ 
                 '--social-color': social.color 
               } as React.CSSProperties & { '--social-color': string }}
@@ -62,13 +67,15 @@ const FooterSection = () => {
           className="footer-text"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
+          transition={{ duration: 0.3 }}
         >
           © {new Date().getFullYear()} - Made with 💙 by Sergey Kotenkov
         </motion.p>
       </div>
     </footer>
   );
-};
+});
+
+FooterSection.displayName = 'FooterSection';
 
 export default FooterSection;

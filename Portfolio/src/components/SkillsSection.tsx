@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import React, { useState } from 'react';
+import React, { useState, memo, useMemo, useCallback } from 'react';
 import skillsData from '../resources/skills.json';
 import { 
   SiSwift, SiKotlin, SiFlutter, SiDart, SiExpo, SiReact, 
@@ -11,62 +11,64 @@ import {
 } from 'react-icons/si';
 import { FaCode, FaEnvelope, FaPhone, FaServer, FaCloud } from 'react-icons/fa';
 
-const SkillsSection = () => {
+const SkillsSection = memo(() => {
   const [expandedSkill, setExpandedSkill] = useState<number | null>(null);
+  const isMobile = useMemo(() => window.innerWidth <= 768, []);
   
-  const getTechColor = (tech: string): string => {
+  const getTechColor = useCallback((tech: string): string => {
     return (skillsData.techColors as Record<string, string>)[tech] || '#3b82f6';
-  };
+  }, []);
 
-  const getTextColor = (tech: string): string => {
+  const getTextColor = useCallback((tech: string): string => {
     // Heller Hintergrund = dunkler Text
     const lightBgTechs = ['JavaScript', 'Tailwind'];
     return lightBgTechs.includes(tech) ? '#000000' : '#ffffff';
-  };
+  }, []);
 
-  const getTechIcon = (tech: string) => {
-    const iconMap: Record<string, React.ReactElement> = {
-      'SwiftUI': <SiSwift />,
-      'Swift': <SiSwift />,
-      'Kotlin': <SiKotlin />,
-      'Flutter': <SiFlutter />,
-      'Dart': <SiDart />,
-      'Expo': <SiExpo />,
-      'React': <SiReact />,
-      'TypeScript': <SiTypescript />,
-      'Tailwind': <SiTailwindcss />,
-      'HTML': <SiHtml5 />,
-      'CSS': <SiCss3 />,
-      'JavaScript': <SiJavascript />,
-      'C++': <SiCplusplus />,
-      'C#': <SiSharp />,
-      'Unity': <SiUnity />,
-      'Unreal': <SiUnrealengine />,
-      'Blueprints': <FaCode />,
-      'Construct': <FaCode />,
-      'MySQL': <SiMysql />,
-      'PostgreSQL': <SiPostgresql />,
-      'phpMyAdmin': <SiPhp />,
-      'MongoDB': <SiMongodb />,
-      'DynamoDB': <SiAmazondynamodb />,
-      'Redis': <SiRedis />,
-      'Pusher': <SiPusher />,
-      'Socket.io': <SiSocketdotio />,
-      'WebSockets': <FaCode />,
-      'Firebase': <SiFirebase />,
-      'AWS': <SiAmazon />,
-      'Azure': <FaCloud />,
-      'Google Cloud': <SiGooglecloud />,
-      'EC2': <FaServer />,
-      'S3': <SiAmazon />,
-      'Lambda': <FaServer />,
-      'SendGrid': <FaEnvelope />,
-      'Twilio': <FaPhone />,
-      'Docker': <SiDocker />,
-      'Kubernetes': <SiKubernetes />
-    };
-    return iconMap[tech] || <FaCode />;
-  };
+  const iconMap = useMemo(() => ({
+    'SwiftUI': <SiSwift />,
+    'Swift': <SiSwift />,
+    'Kotlin': <SiKotlin />,
+    'Flutter': <SiFlutter />,
+    'Dart': <SiDart />,
+    'Expo': <SiExpo />,
+    'React': <SiReact />,
+    'TypeScript': <SiTypescript />,
+    'Tailwind': <SiTailwindcss />,
+    'HTML': <SiHtml5 />,
+    'CSS': <SiCss3 />,
+    'JavaScript': <SiJavascript />,
+    'C++': <SiCplusplus />,
+    'C#': <SiSharp />,
+    'Unity': <SiUnity />,
+    'Unreal': <SiUnrealengine />,
+    'Blueprints': <FaCode />,
+    'Construct': <FaCode />,
+    'MySQL': <SiMysql />,
+    'PostgreSQL': <SiPostgresql />,
+    'phpMyAdmin': <SiPhp />,
+    'MongoDB': <SiMongodb />,
+    'DynamoDB': <SiAmazondynamodb />,
+    'Redis': <SiRedis />,
+    'Pusher': <SiPusher />,
+    'Socket.io': <SiSocketdotio />,
+    'WebSockets': <FaCode />,
+    'Firebase': <SiFirebase />,
+    'AWS': <SiAmazon />,
+    'Azure': <FaCloud />,
+    'Google Cloud': <SiGooglecloud />,
+    'EC2': <FaServer />,
+    'S3': <SiAmazon />,
+    'Lambda': <FaServer />,
+    'SendGrid': <FaEnvelope />,
+    'Twilio': <FaPhone />,
+    'Docker': <SiDocker />,
+    'Kubernetes': <SiKubernetes />
+  }), []);
+
+  const getTechIcon = useCallback((tech: string) => {
+    return (iconMap as Record<string, React.ReactElement>)[tech] || <FaCode />;
+  }, [iconMap]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -96,9 +98,9 @@ const SkillsSection = () => {
     }
   };
 
-  const toggleSkill = (skillId: number) => {
-    setExpandedSkill(expandedSkill === skillId ? null : skillId);
-  };
+  const toggleSkill = useCallback((skillId: number) => {
+    setExpandedSkill(prev => prev === skillId ? null : skillId);
+  }, []);
 
   return (
     <section className="section skills-section">
@@ -107,7 +109,7 @@ const SkillsSection = () => {
           className="section-title"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
         > 
           {skillsData.title}
         </motion.h2>
@@ -122,10 +124,12 @@ const SkillsSection = () => {
               key={skill.id} 
               className="skill-card"
               variants={cardVariants}
-              whileHover={{ 
-                scale: 1.02,
-                transition: { type: "spring" as const, stiffness: 300 }
-              }}
+              {...(!isMobile && {
+                whileHover: { 
+                  scale: 1.02,
+                  transition: { type: "spring" as const, stiffness: 300 }
+                }
+              })}
               onClick={() => toggleSkill(skill.id)}
               style={{ cursor: 'pointer' }}
             >
@@ -217,6 +221,8 @@ const SkillsSection = () => {
       </div>
     </section>
   );
-};
+});
+
+SkillsSection.displayName = 'SkillsSection';
 
 export default SkillsSection;
