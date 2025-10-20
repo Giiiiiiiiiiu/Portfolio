@@ -2,8 +2,7 @@
   "title": "IT Skills",
   "sectionNumber": "01",
   "techColors": {
-    "SwiftUI": "#FF2D55",
-    "Swift": "#F05138",
+    "Swift": "#FF2D55",
     "Kotlin": "#7F52FF",
     "Flutter": "#02569B",
     "Dart": "#0175C2",
@@ -62,7 +61,7 @@
       "combos": [
         { "name": "Expo + C++", "tech": ["Expo", "C++"] },
         { "name": "Flutter + C++", "tech": ["Flutter", "C++"] },
-        { "name": "SwiftUI + C++", "tech": ["SwiftUI", "C++"] },
+        { "name": "Swift + C++", "tech": ["Swift", "C++"] },
         { "name": "Kotlin + C++", "tech": ["Kotlin", "C++"] }
       ]
     },
@@ -73,9 +72,9 @@
       "description": "Moderne, responsive Webanwendungen",
       "tags": ["React", "TypeScript", "Node.js"],
       "combos": [
-        { "name": "React", "tech": ["React", "TypeScript", "Tailwind"] },
+        { "name": "React", "tech": ["React", "CSS","TypeScript"] },
         { "name": "HTML/CSS/JS", "tech": ["HTML", "CSS", "JavaScript"] },
-        { "name": "Flutter Web", "tech": ["Flutter", "Dart"] }
+        { "name": "Flutter Web", "tech": ["Flutter"] }
       ]
     },
     {
