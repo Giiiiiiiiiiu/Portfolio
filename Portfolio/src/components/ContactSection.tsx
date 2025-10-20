@@ -110,15 +110,6 @@ const ContactSection = () => {
           </motion.form>
         </div>
       </div>
-      <motion.footer 
-        className="footer"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-      >
-        <p>{contactData.footer.text}</p>
-      </motion.footer>
     </section>
   );
 };

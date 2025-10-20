@@ -4,24 +4,24 @@
   "timeline": [
     {
       "id": 1,
-      "year": "2024",
-      "title": "Aktuelle Ausbildung",
-      "location": "Schule / Universität",
-      "description": "Spezialisierung auf Informatik und Softwareentwicklung"
+      "year": "seit 2025",
+      "title": "Bachelor Angewandte Informatik",
+      "location": "Hochschule Worms",
+      "description": "Studium der angewandten Informatik mit Schwerpunkt auf praxisnahe Softwareentwicklung, moderne Programmierparadigmen und aktuelle IT-Technologien. Vertiefung in Cloud Computing, KI-Integration und Full-Stack Development."
     },
     {
       "id": 2,
-      "year": "2023",
-      "title": "Weiterbildung",
-      "location": "Online & Zertifikate",
-      "description": "Verschiedene Kurse in Web Development, App Development und KI"
+      "year": "2023 - 2025",
+      "title": "Fachabitur Informatik",
+      "location": "Karlhoffmann Schule",
+      "description": "Schwerpunkte: C# Programmierung, Systemadministration, C++ mit Arduino, Game Development mit Unity. Projektarbeiten in objektorientierter Programmierung und Hardware-naher Entwicklung."
     },
     {
       "id": 3,
-      "year": "2020",
-      "title": "Schulabschluss",
-      "location": "Gymnasium",
-      "description": "Mit Schwerpunkt auf MINT-Fächer"
+      "year": "2023",
+      "title": "Mittlere Reife",
+      "location": "Westend Realschule Plus",
+      "description": "Erfolgreicher Schulabschluss mit allgemeiner Hochschulzugangsberechtigung."
     }
   ]
 }

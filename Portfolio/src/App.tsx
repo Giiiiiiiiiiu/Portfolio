@@ -5,6 +5,7 @@ import SkillsSection from './components/SkillsSection'
 import EducationSection from './components/EducationSection'
 import CompanySection from './components/CompanySection'
 import ContactSection from './components/ContactSection'
+import FooterSection from './components/FooterSection'
 
 function App() {
   const [activeSection, setActiveSection] = useState(0)
@@ -50,6 +51,7 @@ function App() {
       <EducationSection />
       <CompanySection />
       <ContactSection />
+      <FooterSection />
     </div>
   )
 }
