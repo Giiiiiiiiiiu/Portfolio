@@ -27,7 +27,7 @@ const HeroSection = memo(() => {
         >
           <div className="profile-image">
             <img 
-              src="/me.png"  
+              src={`${import.meta.env.BASE_URL}me.png`}
               className="profile-picture"
             />
           </div>
