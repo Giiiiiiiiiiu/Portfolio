@@ -36,7 +36,7 @@ function App() {
     <div className="app">
       {/* Navigation Dots */}
       <div className="nav-dots">
-        {[0, 1, 2, 3, 4].map((index) => (
+        {[0, 1, 2, 3].map((index) => (
           <button
             key={index}
             className={`dot ${activeSection === index ? 'active' : ''}`}
@@ -49,7 +49,7 @@ function App() {
       <HeroSection />
       <SkillsSection />
       <EducationSection />
-      <CompanySection />
+      {/* <CompanySection /> */}
       <ContactSection />
       <FooterSection />
     </div>

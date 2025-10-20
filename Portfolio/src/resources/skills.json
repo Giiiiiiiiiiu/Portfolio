@@ -30,7 +30,27 @@
     "NumPy": "#013243",
     "Pandas": "#150458",
     "LangChain": "#121212",
-    "Vector DBs": "#4B5563"
+    "Vector DBs": "#4B5563",
+    "MySQL": "#00758F",
+    "PostgreSQL": "#336791",
+    "phpMyAdmin": "#6C78AF",
+    "MongoDB": "#47A248",
+    "DynamoDB": "#FF9900",
+    "Redis": "#DC382D",
+    "Pusher": "#300D4F",
+    "Socket.io": "#010101",
+    "WebSockets": "#FF6B00",
+    "Firebase": "#FFCA28",
+    "AWS": "#FF9900",
+    "Azure": "#0078D4",
+    "Google Cloud": "#4285F4",
+    "EC2": "#FF9900",
+    "S3": "#569A31",
+    "Lambda": "#FF9900",
+    "SendGrid": "#1A82E2",
+    "Twilio": "#F22F46",
+    "Docker": "#2496ED",
+    "Kubernetes": "#326CE5"
   },
   "skills": [
     {
@@ -72,15 +92,39 @@
     },
     {
       "id": 4,
-      "icon": "🤖",
-      "title": "KI Integration",
-      "description": "Intelligente Systeme & Machine Learning",
-      "tags": ["OpenAI", "TensorFlow", "Python"],
+      "icon": "☁️",
+      "title": "Cloud & DevOps",
+      "description": "Cloud-Infrastruktur & Serverless Services",
+      "tags": ["AWS", "Azure", "Docker"],
       "combos": [
-        { "name": "OpenAI API", "tech": ["GPT-4", "DALL-E", "Whisper"] },
-        { "name": "TensorFlow", "tech": ["TensorFlow", "Keras", "Python"] },
-        { "name": "PyTorch", "tech": ["PyTorch", "NumPy", "Pandas"] },
-        { "name": "LangChain", "tech": ["LangChain", "Vector DBs"] }
+        { "name": "AWS", "tech": ["AWS", "EC2", "S3", "Lambda"] },
+        { "name": "Microsoft Azure", "tech": ["Azure", "Docker", "Kubernetes"] },
+        { "name": "Google Cloud", "tech": ["Google Cloud", "Kubernetes"] },
+        { "name": "Email/SMS Services", "tech": ["SendGrid", "Twilio"] }
+      ]
+    },
+    {
+      "id": 5,
+      "icon": "🗄️",
+      "title": "Datenbanken",
+      "description": "SQL & NoSQL Datenbanksysteme",
+      "tags": ["MySQL", "MongoDB", "Redis"],
+      "combos": [
+        { "name": "SQL", "tech": ["MySQL", "PostgreSQL", "phpMyAdmin"] },
+        { "name": "NoSQL", "tech": ["MongoDB", "DynamoDB", "Redis"] }
+      ]
+    },
+    {
+      "id": 6,
+      "icon": "⚡",
+      "title": "Echtzeit-Kommunikation",
+      "description": "Real-time Data & Live Updates",
+      "tags": ["Pusher", "WebSockets", "Socket.io"],
+      "combos": [
+        { "name": "Pusher", "tech": ["Pusher", "WebSockets"] },
+        { "name": "MongoDB Streams", "tech": ["MongoDB", "WebSockets"] },
+        { "name": "Socket.io", "tech": ["Socket.io", "Redis"] },
+        { "name": "Firebase Realtime", "tech": ["Firebase", "WebSockets"] }
       ]
     }
   ]

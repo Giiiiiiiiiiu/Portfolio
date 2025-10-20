@@ -4,10 +4,12 @@ import skillsData from '../resources/skills.json';
 import { 
   SiSwift, SiKotlin, SiFlutter, SiDart, SiExpo, SiReact, 
   SiTypescript, SiTailwindcss, SiHtml5, SiCss3, SiJavascript,
-  SiCplusplus, SiSharp, SiUnity, SiUnrealengine, SiPython,
-  SiOpenai, SiTensorflow, SiPytorch, SiNumpy, SiPandas
+  SiCplusplus, SiSharp, SiUnity, SiUnrealengine,
+  SiMysql, SiPostgresql, SiPhp, SiMongodb, SiAmazondynamodb,
+  SiRedis, SiPusher, SiSocketdotio, SiFirebase,
+  SiAmazon, SiGooglecloud, SiDocker, SiKubernetes
 } from 'react-icons/si';
-import { FaCode, FaPaintBrush, FaMicrophone, FaLink, FaDatabase } from 'react-icons/fa';
+import { FaCode, FaEnvelope, FaPhone, FaServer, FaCloud } from 'react-icons/fa';
 
 const SkillsSection = () => {
   const [expandedSkill, setExpandedSkill] = useState<number | null>(null);
@@ -42,17 +44,26 @@ const SkillsSection = () => {
       'Unreal': <SiUnrealengine />,
       'Blueprints': <FaCode />,
       'Construct': <FaCode />,
-      'Python': <SiPython />,
-      'GPT-4': <SiOpenai />,
-      'DALL-E': <FaPaintBrush />,
-      'Whisper': <FaMicrophone />,
-      'TensorFlow': <SiTensorflow />,
-      'Keras': <SiTensorflow />,
-      'PyTorch': <SiPytorch />,
-      'NumPy': <SiNumpy />,
-      'Pandas': <SiPandas />,
-      'LangChain': <FaLink />,
-      'Vector DBs': <FaDatabase />
+      'MySQL': <SiMysql />,
+      'PostgreSQL': <SiPostgresql />,
+      'phpMyAdmin': <SiPhp />,
+      'MongoDB': <SiMongodb />,
+      'DynamoDB': <SiAmazondynamodb />,
+      'Redis': <SiRedis />,
+      'Pusher': <SiPusher />,
+      'Socket.io': <SiSocketdotio />,
+      'WebSockets': <FaCode />,
+      'Firebase': <SiFirebase />,
+      'AWS': <SiAmazon />,
+      'Azure': <FaCloud />,
+      'Google Cloud': <SiGooglecloud />,
+      'EC2': <FaServer />,
+      'S3': <SiAmazon />,
+      'Lambda': <FaServer />,
+      'SendGrid': <FaEnvelope />,
+      'Twilio': <FaPhone />,
+      'Docker': <SiDocker />,
+      'Kubernetes': <SiKubernetes />
     };
     return iconMap[tech] || <FaCode />;
   };
