@@ -679,11 +679,6 @@
   gap: 0.5rem;
 }
 
-.combo-name::before {
-  content: '⚡';
-  font-size: 1.3rem;
-}
-
 .combo-tech {
   display: flex;
   flex-wrap: wrap;
