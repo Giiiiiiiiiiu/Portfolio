@@ -139,7 +139,6 @@ const SkillsSection = () => {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: idx * 0.08 }}
-                          whileHover={{ scale: 1.05 }}
                         >
                           <div className="combo-name">{combo.name}</div>
                           <div className="combo-tech">
