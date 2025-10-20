@@ -1276,6 +1276,19 @@
     font-size: 4.5rem;
   }
   
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .skill-card {
+    padding: 2.5rem;
+  }
+  
+  .combos-title {
+    font-size: 2rem;
+  }
+  
   .contact-content {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -1313,6 +1326,53 @@
   
   .skills-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .skill-card {
+    padding: 2rem;
+    min-height: 350px;
+  }
+  
+  .icon-wrapper {
+    width: 90px;
+    height: 90px;
+    font-size: 3.5rem;
+  }
+  
+  .skill-title-large {
+    font-size: 1.8rem;
+  }
+  
+  .skill-description {
+    font-size: 1rem;
+  }
+  
+  .combos-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+  
+  .combo-item {
+    padding: 1.2rem;
+  }
+  
+  .combo-name {
+    font-size: 1rem;
+  }
+  
+  .tech-badge {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .tech-icon {
+    font-size: 1rem;
+  }
+  
+  .click-hint {
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
   }
   
   .timeline {
@@ -1344,6 +1404,53 @@
   .profile-image-container {
     width: 150px;
     height: 150px;
+  }
+  
+  .skill-card {
+    padding: 1.5rem;
+    min-height: 320px;
+  }
+  
+  .icon-wrapper {
+    width: 80px;
+    height: 80px;
+    font-size: 3rem;
+  }
+  
+  .skill-title-large {
+    font-size: 1.5rem;
+  }
+  
+  .skill-description {
+    font-size: 0.9rem;
+  }
+  
+  .combos-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .combo-item {
+    padding: 1rem;
+  }
+  
+  .combo-name {
+    font-size: 0.9rem;
+  }
+  
+  .tech-badge {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.75rem;
+    gap: 0.4rem;
+  }
+  
+  .tech-icon {
+    font-size: 0.9rem;
+  }
+  
+  .click-hint {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
   }
 }
 
