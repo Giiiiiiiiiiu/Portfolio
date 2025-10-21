@@ -4,7 +4,7 @@ import heroData from '../resources/hero.json';
 
 const HeroSection = memo(() => {
   const isMobile = useMemo(() => window.innerWidth <= 768, []);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 150, y: 150 }); // Fixed position top-left
   const [isEffectActive, setIsEffectActive] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
   
@@ -17,19 +17,12 @@ const HeroSection = memo(() => {
     // Check if pointer is coarse (touch)
     const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
     
-    // Enable effect only if:
-    // 1. Device supports hover (not mobile/tablet)
-    // 2. Device has fine pointer (mouse/trackpad)
-    // 3. Device doesn't have coarse pointer as primary input
-    // This allows hybrid devices (laptop with touch) to still use the effect
+    // Enable effect only if device has mouse support OR always show fixed position
     return hasHover && hasFinePointer && !hasCoarsePointer;
   }, []);
   
   // Check if user has scrolled past hero section
   useEffect(() => {
-    // Only check scroll if mouse is supported
-    if (!hasMouseSupport) return;
-    
     const handleScroll = () => {
       if (sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
@@ -48,7 +41,7 @@ const HeroSection = memo(() => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [hasMouseSupport]);
+  }, []);
   
   // Mouse tracking (only for devices with mouse support)
   useEffect(() => {
@@ -74,10 +67,9 @@ const HeroSection = memo(() => {
   
   return (
     <section className="section hero-section" ref={sectionRef}>
-      {/* Hidden background image with reveal mask - only for devices with mouse */}
-      {hasMouseSupport && (
-        <div 
-          className="hero-background-reveal"
+      {/* Hidden background image with reveal mask - fixed position top-left for devices without mouse */}
+      <div 
+        className="hero-background-reveal"
           style={{
             position: 'absolute',
             top: 0,
@@ -104,7 +96,6 @@ const HeroSection = memo(() => {
             pointerEvents: 'none'
           }}
         />
-      )}
       
       <div className="hero-content">
         <motion.div 
