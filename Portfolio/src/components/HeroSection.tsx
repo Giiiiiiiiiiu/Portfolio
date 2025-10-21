@@ -66,41 +66,6 @@ const HeroSection = memo(() => {
         }}
       />
       
-      {/* Glow effect at cursor */}
-      <div
-        className="cursor-glow"
-        style={{
-          position: 'absolute',
-          left: mousePosition.x - 150,
-          top: mousePosition.y - 150,
-          width: '300px',
-          height: '300px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)',
-          pointerEvents: 'none',
-          zIndex: 1,
-          transition: 'left 0.1s ease-out, top 0.1s ease-out',
-          filter: 'blur(20px)'
-        }}
-      />
-      
-      {/* Animated ring around reveal area */}
-      <div
-        className="reveal-ring"
-        style={{
-          position: 'absolute',
-          left: mousePosition.x - 250,
-          top: mousePosition.y - 250,
-          width: '500px',
-          height: '500px',
-          borderRadius: '50%',
-          border: '2px solid rgba(59, 130, 246, 0.3)',
-          pointerEvents: 'none',
-          zIndex: 1,
-          transition: 'left 0.1s ease-out, top 0.1s ease-out',
-          animation: 'pulse 2s infinite'
-        }}
-      />
       <div className="hero-content">
         <motion.div 
           className="profile-image-container"

@@ -420,43 +420,12 @@ html {
   backface-visibility: hidden;
 }
 
-/* Cursor Glow Effect */
-.cursor-glow {
-  mix-blend-mode: screen;
-  will-change: transform;
-}
-
-/* Reveal Ring Animation */
-@keyframes pulse {
-  0% {
-    transform: scale(0.95);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(0.95);
-    opacity: 1;
-  }
-}
-
-.reveal-ring {
-  will-change: transform;
-}
-
 /* Mobile optimization */
 @media (max-width: 768px) {
   .hero-background-reveal {
     /* Smaller reveal area on mobile */
     mask-size: 150% 150% !important;
     -webkit-mask-size: 150% 150% !important;
-  }
-  
-  .cursor-glow,
-  .reveal-ring {
-    display: none; /* Hide extra effects on mobile for performance */
   }
 }
 
