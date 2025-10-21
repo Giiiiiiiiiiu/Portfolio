@@ -8,8 +8,28 @@ const HeroSection = memo(() => {
   const [isEffectActive, setIsEffectActive] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
   
+  // Detect if device has a mouse/cursor (not touch-only)
+  const hasMouseSupport = useMemo(() => {
+    // Check if device supports hover (has mouse/trackpad)
+    const hasHover = window.matchMedia('(hover: hover)').matches;
+    // Check if device has fine pointer (mouse/trackpad vs touch)
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    // Check if pointer is coarse (touch)
+    const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+    
+    // Enable effect only if:
+    // 1. Device supports hover (not mobile/tablet)
+    // 2. Device has fine pointer (mouse/trackpad)
+    // 3. Device doesn't have coarse pointer as primary input
+    // This allows hybrid devices (laptop with touch) to still use the effect
+    return hasHover && hasFinePointer && !hasCoarsePointer;
+  }, []);
+  
   // Check if user has scrolled past hero section
   useEffect(() => {
+    // Only check scroll if mouse is supported
+    if (!hasMouseSupport) return;
+    
     const handleScroll = () => {
       if (sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
@@ -28,11 +48,12 @@ const HeroSection = memo(() => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [hasMouseSupport]);
   
-  // Mouse and touch tracking
+  // Mouse tracking (only for devices with mouse support)
   useEffect(() => {
-    if (!isEffectActive) return; // Don't track if effect is inactive
+    // Only track mouse if device has mouse support and effect is active
+    if (!hasMouseSupport || !isEffectActive) return;
     
     const handleMouseMove = (e: MouseEvent) => {
       if (sectionRef.current) {
@@ -44,56 +65,46 @@ const HeroSection = memo(() => {
       }
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0 && sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        setMousePosition({ 
-          x: e.touches[0].clientX - rect.left, 
-          y: e.touches[0].clientY - rect.top 
-        });
-      }
-    };
-
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
     };
-  }, [isEffectActive]);
+  }, [hasMouseSupport, isEffectActive]);
   
   return (
     <section className="section hero-section" ref={sectionRef}>
-      {/* Hidden background image with reveal mask */}
-      <div 
-        className="hero-background-reveal"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundImage: `url(${import.meta.env.BASE_URL}OpacityBackground.svg)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: isEffectActive ? 1 : 0,
-          zIndex: 0,
-          maskImage: isEffectActive 
-            ? `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`
-            : 'radial-gradient(circle 0px at 0px 0px, transparent 100%)',
-          WebkitMaskImage: isEffectActive
-            ? `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`
-            : 'radial-gradient(circle 0px at 0px 0px, transparent 100%)',
-          maskSize: '100% 100%',
-          WebkitMaskSize: '100% 100%',
-          maskRepeat: 'no-repeat',
-          WebkitMaskRepeat: 'no-repeat',
-          transition: 'opacity 0.5s ease-out, mask-image 0.5s ease-out, -webkit-mask-image 0.5s ease-out',
-          pointerEvents: 'none'
-        }}
-      />
+      {/* Hidden background image with reveal mask - only for devices with mouse */}
+      {hasMouseSupport && (
+        <div 
+          className="hero-background-reveal"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundImage: `url(${import.meta.env.BASE_URL}OpacityBackground.svg)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: isEffectActive ? 1 : 0,
+            zIndex: 0,
+            maskImage: isEffectActive 
+              ? `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`
+              : 'radial-gradient(circle 0px at 0px 0px, transparent 100%)',
+            WebkitMaskImage: isEffectActive
+              ? `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`
+              : 'radial-gradient(circle 0px at 0px 0px, transparent 100%)',
+            maskSize: '100% 100%',
+            WebkitMaskSize: '100% 100%',
+            maskRepeat: 'no-repeat',
+            WebkitMaskRepeat: 'no-repeat',
+            transition: 'opacity 0.5s ease-out, mask-image 0.5s ease-out, -webkit-mask-image 0.5s ease-out',
+            pointerEvents: 'none'
+          }}
+        />
+      )}
       
       <div className="hero-content">
         <motion.div 
