@@ -10,13 +10,13 @@ const FooterSection = memo(() => {
     {
       name: 'GitHub',
       icon: <FaGithub />,
-      url: 'https://github.com/yourusername', // Ersetze mit deinem GitHub Username
+      url: 'https://github.com/giiiiiiiiiiu', // Ersetze mit deinem GitHub Username
       color: '#333'
     },
     {
       name: 'LinkedIn',
       icon: <FaLinkedin />,
-      url: 'https://linkedin.com/in/yourprofile', // Ersetze mit deinem LinkedIn Profil
+      url: 'https://linkedin.com/in/Sergey-Kotenkov', // Ersetze mit deinem LinkedIn Profil
       color: '#0077B5'
     },
     {
