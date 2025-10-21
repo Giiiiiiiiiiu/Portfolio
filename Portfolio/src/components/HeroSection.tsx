@@ -5,10 +5,35 @@ import heroData from '../resources/hero.json';
 const HeroSection = memo(() => {
   const isMobile = useMemo(() => window.innerWidth <= 768, []);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isEffectActive, setIsEffectActive] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
+  
+  // Check if user has scrolled past hero section
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        // Deactivate effect when hero section is mostly out of view
+        if (rect.bottom < window.innerHeight * 0.2) {
+          setIsEffectActive(false);
+        } else {
+          setIsEffectActive(true);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   
   // Mouse and touch tracking
   useEffect(() => {
+    if (!isEffectActive) return; // Don't track if effect is inactive
+    
     const handleMouseMove = (e: MouseEvent) => {
       if (sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
@@ -36,7 +61,7 @@ const HeroSection = memo(() => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
     };
-  }, []);
+  }, [isEffectActive]);
   
   return (
     <section className="section hero-section" ref={sectionRef}>
@@ -53,15 +78,19 @@ const HeroSection = memo(() => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          opacity: 1,
+          opacity: isEffectActive ? 1 : 0,
           zIndex: 0,
-          maskImage: `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`,
-          WebkitMaskImage: `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`,
+          maskImage: isEffectActive 
+            ? `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`
+            : 'radial-gradient(circle 0px at 0px 0px, transparent 100%)',
+          WebkitMaskImage: isEffectActive
+            ? `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`
+            : 'radial-gradient(circle 0px at 0px 0px, transparent 100%)',
           maskSize: '100% 100%',
           WebkitMaskSize: '100% 100%',
           maskRepeat: 'no-repeat',
           WebkitMaskRepeat: 'no-repeat',
-          transition: 'mask-position 0.1s ease-out, -webkit-mask-position 0.1s ease-out',
+          transition: 'opacity 0.5s ease-out, mask-image 0.5s ease-out, -webkit-mask-image 0.5s ease-out',
           pointerEvents: 'none'
         }}
       />
