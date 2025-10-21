@@ -64,8 +64,10 @@
   
   .timeline-content {
     box-shadow: 
-      0 4px 20px var(--shadow-color), 
-      inset 0 1px 1px rgba(255, 255, 255, 0.5);
+      inset 6px 6px 15px rgba(59, 130, 246, 0.12),
+      inset 3px 3px 8px rgba(59, 130, 246, 0.15),
+      0 1px 2px rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%);
   }
   
   .company-card {
@@ -583,13 +585,14 @@ html {
   justify-content: center;
   cursor: pointer;
   background: var(--card-bg);
+  border: none;
   transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-style: preserve-3d;
   box-shadow: 
     inset 8px 8px 20px rgba(0, 0, 0, 0.5),
     inset 4px 4px 10px rgba(0, 0, 0, 0.4),
     0 1px 2px rgba(255, 255, 255, 0.1);
-  transform: translateZ(-30px) perspective(1000px) rotateX(2deg);
+  transform: translateZ(-30px);
 }
 
 .skill-card::before {
@@ -608,9 +611,8 @@ html {
 }
 
 .skill-card:hover {
-  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.15) 100%);
-  border-color: var(--primary);
-  transform: translateY(-20px) translateZ(50px) scale(1.08) perspective(1000px) rotateX(-2deg);
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%);
+  transform: translateY(-20px) translateZ(50px) scale(1.08);
   box-shadow: 
     inset -10px -10px 30px rgba(0, 0, 0, 0.3),
     inset -5px -5px 15px rgba(0, 0, 0, 0.2);
@@ -940,22 +942,25 @@ html {
 
 .timeline-content {
   background: var(--card-bg);
-  border: 2px solid var(--card-border);
+  border: none;
   border-radius: 1.5rem;
   padding: 2.5rem;
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
   box-shadow: 
-    0 8px 32px var(--shadow-color), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.1),
-    inset 0 0 40px rgba(0, 0, 0, 0.3);
+    inset 8px 8px 20px rgba(0, 0, 0, 0.5),
+    inset 4px 4px 10px rgba(0, 0, 0, 0.4),
+    0 1px 2px rgba(255, 255, 255, 0.1);
+  transform: translateZ(-30px);
   backdrop-filter: blur(20px) saturate(180%);
 }
 
 .timeline-content:hover {
-  border-color: var(--primary);
-  transform: translateX(15px) translateZ(30px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  background: var(--bg-card);
+  transform: translateX(15px) translateY(-20px) translateZ(50px) scale(1.08);
+  box-shadow: 
+    inset -10px -10px 30px rgba(0, 0, 0, 0.3),
+    inset -5px -5px 15px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%);
 }
 
 .timeline-year {
@@ -1547,11 +1552,11 @@ html {
   
   /* Reduziere Hover-Effekte für bessere Touch-Bedienung */
   .skill-card {
-    transform: translateZ(-15px) perspective(800px) rotateX(1deg);
+    transform: translateZ(-15px);
   }
   
   .skill-card:hover {
-    transform: translateY(-10px) translateZ(20px) scale(1.04) perspective(800px) rotateX(-1deg);
+    transform: translateY(-10px) translateZ(20px) scale(1.04);
   }
   
   .icon-wrapper {
@@ -1590,11 +1595,18 @@ html {
   
   .timeline-content {
     padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transform: translateZ(-15px);
+    box-shadow: 
+      inset 6px 6px 15px rgba(0, 0, 0, 0.3),
+      inset 3px 3px 8px rgba(0, 0, 0, 0.2),
+      0 1px 2px rgba(255, 255, 255, 0.1);
   }
   
   .timeline-content:hover {
-    transform: translateX(10px) scale(1.01);
+    transform: translateX(10px) translateY(-10px) translateZ(20px) scale(1.04);
+    box-shadow: 
+      inset -6px -6px 15px rgba(0, 0, 0, 0.2),
+      inset -3px -3px 8px rgba(0, 0, 0, 0.15);
   }
   
   .timeline-content h3 {
@@ -1854,7 +1866,6 @@ html {
   
   .timeline-content:hover {
     transform: none;
-    border-color: var(--card-border);
   }
   
   .skills-grid {
@@ -1987,7 +1998,6 @@ html {
   
   .timeline-content:hover {
     transform: none;
-    border-color: var(--card-border);
   }
   
   .skill-card {
