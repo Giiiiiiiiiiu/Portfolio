@@ -1,8 +1,4 @@
-/* ========================================
-   GLOBAL STYLES & VARIABLES - NEW MODERN DESIGN
-   ======================================== */
 :root {
-  /* Dark Mode - Schwarz + Blau */
   --primary: #3b82f6;
   --primary-dark: #2563eb;
   --primary-light: #60a5fa;
@@ -26,8 +22,6 @@
   --mesh-2: rgba(59, 130, 246, 0.06);
   --mesh-3: rgba(59, 130, 246, 0.04);
 }
-
-/* Light Mode - Weiß + Blau */
 @media (prefers-color-scheme: light) {
   :root {
     --primary: #3b82f6;
@@ -53,7 +47,6 @@
     --mesh-2: rgba(59, 130, 246, 0.04);
     --mesh-3: rgba(59, 130, 246, 0.03);
   }
-  
   .skill-card {
     box-shadow: 
       inset 6px 6px 15px rgba(59, 130, 246, 0.12),
@@ -61,7 +54,6 @@
       0 1px 2px rgba(255, 255, 255, 0.3);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%);
   }
-  
   .timeline-content {
     box-shadow: 
       inset 6px 6px 15px rgba(59, 130, 246, 0.12),
@@ -69,39 +61,31 @@
       0 1px 2px rgba(255, 255, 255, 0.3);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 240, 240, 0.95) 100%);
   }
-  
   .company-card {
     box-shadow: 
       0 10px 40px var(--shadow-color), 
       inset 0 1px 1px rgba(255, 255, 255, 0.5);
   }
 }
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
-/* Verhindere horizontales Scrollen auf Tablets */
 html, body {
   overflow-x: hidden;
   width: 100%;
 }
-
-/* Bessere Scroll-Performance auf Touch-Geräten */
 html {
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }
-
 .app {
   background: var(--bg-dark);
   color: var(--text-primary);
   overflow-x: hidden;
   position: relative;
 }
-
 .app::before {
   content: '';
   position: fixed;
@@ -118,24 +102,17 @@ html {
   z-index: 0;
   animation: meshMove 25s ease-in-out infinite;
 }
-
-/* Reduziere Animationen auf Tablets für bessere Performance */
 @media (max-width: 900px) and (orientation: portrait) {
   .app::before {
     animation: meshMove 35s ease-in-out infinite;
     opacity: 0.4;
   }
 }
-
 @keyframes meshMove {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(20px, -20px) scale(1.05); }
   66% { transform: translate(-20px, 20px) scale(0.95); }
 }
-
-/* ========================================
-   NAVIGATION DOTS
-   ======================================== */
 .nav-dots {
   position: fixed;
   right: 2.5rem;
@@ -156,7 +133,6 @@ html {
     0 8px 32px rgba(0, 0, 0, 0.5),
     inset 0 1px 1px rgba(255, 255, 255, 0.15);
 }
-
 .dot {
   width: 14px;
   height: 14px;
@@ -167,70 +143,53 @@ html {
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
 }
-
-/* Tablet */
 @media (max-width: 1024px) {
   .nav-dots {
     right: 1.5rem;
     gap: 1.2rem;
     padding: 1.2rem 1rem;
   }
-  
   .dot {
     width: 13px;
     height: 13px;
   }
 }
-
-/* Portrait Tablets bei größeren Auflösungen */
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  /* Hero Section für größere Tablets */
   .hero-section {
     min-height: 100vh;
     padding: 2rem 1.5rem;
   }
-  
   .name {
     font-size: 3.5rem;
     margin-bottom: 1.2rem;
   }
-  
   .profile-image-container {
     width: 200px;
     height: 200px;
     margin-bottom: 2rem;
   }
-  
   .tagline {
     font-size: 1.3rem;
     margin-bottom: 2.5rem;
   }
-  
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.6rem;
   }
-  
   .nav-dots {
     right: 1.8rem;
   }
-  
   .section {
     padding: 3rem 2rem;
   }
-  
   .company-services {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  /* Bessere Touch-Interaktion */
   button, a, .skill-card, .timeline-content, .combo-item {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
 }
-
-/* Mobile: Navigation oben horizontal und sticky */
 @media (max-width: 768px) and (orientation: landscape), (max-width: 599px) {
   .nav-dots {
     position: fixed !important;
@@ -248,15 +207,12 @@ html {
     z-index: 1001;
     will-change: transform;
   }
-  
   .dot {
     width: 14px;
     height: 14px;
     border-width: 2.5px;
   }
 }
-
-/* Kleine Handys */
 @media (max-width: 480px) {
   .nav-dots {
     position: fixed !important;
@@ -269,14 +225,12 @@ html {
     perspective: none;
     will-change: transform;
   }
-  
   .dot {
     width: 13px;
     height: 13px;
     border-width: 2.5px;
   }
 }
-
 .dot::before {
   content: '';
   position: absolute;
@@ -287,13 +241,11 @@ html {
   transition: opacity 0.4s ease;
   filter: blur(12px);
 }
-
 .dot:hover {
   border-color: var(--primary);
   transform: scale(1.4);
   background: var(--primary);
 }
-
 .dot.active {
   background: var(--primary);
   border-color: var(--primary);
@@ -301,47 +253,35 @@ html {
   transform: scale(1.3) translateZ(10px);
   animation: glow 2s ease-in-out infinite;
 }
-
 .dot.active::before {
   opacity: 0.8;
   animation: pulse 2s ease-in-out infinite;
 }
-
-/* Mobile: Touch-optimierte Hover-Effekte */
 @media (max-width: 768px) {
   .dot:hover {
     transform: scale(1.3);
   }
-  
   .dot.active {
     transform: scale(1.3);
   }
-  
   .dot:active {
     transform: scale(1.4);
   }
 }
-
 @media (max-width: 480px) {
   .dot:hover {
     transform: scale(1.25);
   }
-  
   .dot.active {
     transform: scale(1.25);
   }
-  
   .dot:active {
     transform: scale(1.35);
   }
 }
-
-/* ========================================
-   SECTION BASE
-   ======================================== */
 .section {
   min-height: 100vh;
-  min-height: 100dvh; /* Dynamic viewport height für mobile Geräte */
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -351,7 +291,6 @@ html {
   transform-style: preserve-3d;
   perspective: 2000px;
 }
-
 .section::before {
   content: '';
   position: absolute;
@@ -365,14 +304,12 @@ html {
   pointer-events: none;
   filter: blur(60px);
 }
-
 .section-content {
   max-width: 1200px;
   width: 100%;
   animation: fadeInUp 1s ease-out;
   transform-style: preserve-3d;
 }
-
 .section-title {
   font-size: 4.5rem;
   font-weight: 800;
@@ -391,66 +328,49 @@ html {
   letter-spacing: -0.02em;
   filter: drop-shadow(0 0 20px var(--glow));
 }
-
 .section-title:hover {
   transform: translateZ(30px);
   filter: drop-shadow(0 0 30px var(--glow-strong));
 }
-
 .title-number {
   font-size: 1.5rem;
   color: var(--primary);
   font-weight: 700;
   opacity: 0.7;
 }
-
-/* ========================================
-   HERO SECTION
-   ======================================== */
 .hero-section {
   background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
   position: relative;
   overflow: hidden;
 }
-
-/* SVG Background Reveal Effect */
 .hero-background-reveal {
   will-change: mask-position, -webkit-mask-position;
   transform: translateZ(0);
   backface-visibility: hidden;
 }
-
-/* Light Mode: Make SVG brighter */
 @media (prefers-color-scheme: light) {
   .hero-background-reveal {
     filter: brightness(1.3) contrast(0.9) saturate(0.8);
     opacity: 0.9;
   }
 }
-
-/* Mobile optimization */
 @media (max-width: 768px) {
   .hero-background-reveal {
-    /* Smaller reveal area on mobile */
     mask-size: 150% 150% !important;
     -webkit-mask-size: 150% 150% !important;
   }
 }
-
-/* Light Mode + Mobile: Extra brightness adjustments */
 @media (prefers-color-scheme: light) and (max-width: 768px) {
   .hero-background-reveal {
     filter: brightness(1.4) contrast(0.85) saturate(0.7);
     opacity: 0.85;
   }
 }
-
 .hero-content {
   text-align: center;
   position: relative;
   z-index: 2;
 }
-
 .profile-image-container {
   position: relative;
   width: 250px;
@@ -464,12 +384,10 @@ html {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }
-
 .profile-image-container:hover {
   transform: translateZ(50px) scale(1.1) rotateY(5deg);
   animation: none;
 }
-
 .profile-image {
   width: 100%;
   height: 100%;
@@ -492,7 +410,6 @@ html {
   user-select: none;
   -webkit-user-select: none;
 }
-
 @keyframes profilePulse {
   0%, 100% {
     box-shadow: 
@@ -507,7 +424,6 @@ html {
       inset 0 0 30px rgba(0, 0, 0, 0.3);
   }
 }
-
 .profile-picture {
   width: 100%;
   height: 100%;
@@ -520,7 +436,6 @@ html {
   -webkit-touch-callout: none;
   -webkit-user-drag: none;
 }
-
 .glow-effect {
   position: absolute;
   inset: -35px;
@@ -533,12 +448,10 @@ html {
   z-index: 1;
   animation: glowRotate 10s linear infinite, pulse 5s ease-in-out infinite;
 }
-
 @keyframes glowRotate {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 .name {
   font-size: 7rem;
   font-weight: 900;
@@ -555,7 +468,6 @@ html {
   filter: drop-shadow(0 0 25px var(--glow));
   animation: textGlow 4s ease-in-out infinite;
 }
-
 @keyframes textGlow {
   0%, 100% {
     filter: drop-shadow(0 0 25px var(--glow));
@@ -564,16 +476,13 @@ html {
     filter: drop-shadow(0 0 35px var(--glow-strong));
   }
 }
-
 .name-line {
   display: block;
   animation: slideInLeft 0.8s ease-out;
 }
-
 .name-line:nth-child(2) {
   animation-delay: 0.2s;
 }
-
 .tagline {
   font-size: 1.75rem;
   color: var(--text-secondary);
@@ -582,7 +491,6 @@ html {
   font-weight: 500;
   letter-spacing: 0.02em;
 }
-
 .scroll-indicator {
   display: flex;
   flex-direction: column;
@@ -594,21 +502,15 @@ html {
   letter-spacing: 2px;
   animation: fadeIn 1s ease-out 0.6s both;
 }
-
 .scroll-arrow {
   font-size: 1.5rem;
   animation: bounce 2s ease-in-out infinite;
 }
-
-/* ========================================
-   SKILLS SECTION
-   ======================================== */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
-
 .skill-card {
   border-radius: 2rem;
   padding: 3rem;
@@ -629,7 +531,6 @@ html {
   transform: translateZ(-30px);
   overflow: hidden;
 }
-
 .skill-card::before {
   content: '';
   position: absolute;
@@ -640,11 +541,9 @@ html {
   transition: opacity 0.6s ease;
   opacity: 1;
 }
-
 .skill-card:hover::before {
   opacity: 0;
 }
-
 .skill-card:hover {
   background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%);
   transform: translateY(-20px) translateZ(50px) scale(1.08);
@@ -652,12 +551,10 @@ html {
     inset -10px -10px 30px rgba(0, 0, 0, 0.3),
     inset -5px -5px 15px rgba(0, 0, 0, 0.2);
 }
-
 .skill-icon-large {
   margin-bottom: 2rem;
   cursor: pointer;
 }
-
 .icon-wrapper {
   width: 120px;
   height: 120px;
@@ -674,7 +571,6 @@ html {
   position: relative;
   overflow: hidden;
 }
-
 .icon-wrapper::before {
   content: '';
   position: absolute;
@@ -685,7 +581,6 @@ html {
   opacity: 0.6;
   z-index: -1;
 }
-
 .skill-title-large {
   font-size: 2.2rem;
   font-weight: 800;
@@ -696,14 +591,12 @@ html {
   background-clip: text;
   font-family: 'Space Grotesk', sans-serif;
 }
-
 .skill-description {
   font-size: 1.1rem;
   color: var(--text-secondary);
   margin-bottom: 2rem;
   line-height: 1.6;
 }
-
 .skill-tag-item {
   display: inline-block;
   padding: 0.5rem 1.2rem;
@@ -715,7 +608,6 @@ html {
   font-weight: 600;
   margin: 0.3rem;
 }
-
 .click-hint {
   margin-top: 2rem;
   font-size: 1.1rem;
@@ -731,7 +623,6 @@ html {
   border-radius: 1rem;
   backdrop-filter: blur(10px);
 }
-
 .skill-card h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
@@ -741,14 +632,12 @@ html {
   font-weight: 700;
   letter-spacing: -0.01em;
 }
-
 .skill-card p {
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 1.5rem;
   position: relative;
 }
-
 .skill-tags {
   display: flex;
   flex-wrap: wrap;
@@ -756,7 +645,6 @@ html {
   justify-content: center;
   margin-bottom: 1rem;
 }
-
 .skill-full-content {
   width: 100%;
   height: 100%;
@@ -766,12 +654,10 @@ html {
   align-items: center;
   padding: 0.5rem;
 }
-
 .skill-default-view {
   text-align: center;
   gap: 0.5rem;
 }
-
 .combos-title {
   font-size: 1.8rem;
   font-weight: 800;
@@ -788,7 +674,6 @@ html {
   position: relative;
   padding-bottom: 0.5rem;
 }
-
 .combos-title::after {
   content: '';
   position: absolute;
@@ -800,7 +685,6 @@ html {
   background: linear-gradient(90deg, transparent, var(--primary), transparent);
   border-radius: 2px;
 }
-
 .combos-grid {
   display: grid;
   gap: 0.8rem;
@@ -809,9 +693,6 @@ html {
   grid-template-columns: 1fr;
   padding: 0;
 }
-
-/* Kompakte Tech Stacks - kein Scrollen nötig */
-
 .combo-item {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.04));
   border: 1px solid var(--card-border);
@@ -823,7 +704,6 @@ html {
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
-
 .combo-item::before {
   content: '';
   position: absolute;
@@ -834,11 +714,9 @@ html {
   background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
   transition: left 0.5s ease;
 }
-
 .combo-item:hover::before {
   left: 100%;
 }
-
 .combo-item:hover {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.06));
   border-color: var(--primary);
@@ -847,7 +725,6 @@ html {
     0 4px 20px rgba(59, 130, 246, 0.2),
     0 0 0 1px var(--primary);
 }
-
 .combo-name {
   font-weight: 700;
   color: var(--text-primary);
@@ -858,14 +735,12 @@ html {
   align-items: center;
   gap: 0.3rem;
 }
-
 .combo-tech {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
   align-items: center;
 }
-
 .tech-badge {
   display: inline-flex;
   align-items: center;
@@ -882,7 +757,6 @@ html {
   overflow: hidden;
   cursor: pointer;
 }
-
 .tech-badge::before {
   content: '';
   position: absolute;
@@ -891,16 +765,13 @@ html {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .tech-badge:hover::before {
   opacity: 1;
 }
-
 .tech-badge:hover {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
-
 .tech-icon {
   font-size: 0.9rem;
   line-height: 1;
@@ -908,22 +779,16 @@ html {
   align-items: center;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
-
 .tech-name {
   line-height: 1;
   font-weight: 700;
   letter-spacing: 0.01em;
   font-size: 0.7rem;
 }
-
-/* ========================================
-   EDUCATION SECTION
-   ======================================== */
 .timeline {
   position: relative;
   padding-left: 4rem;
 }
-
 .timeline::before {
   content: '';
   position: absolute;
@@ -938,7 +803,6 @@ html {
   border-radius: 10px;
   animation: timelinePulse 4s ease-in-out infinite;
 }
-
 @keyframes timelinePulse {
   0%, 100% {
     box-shadow: 0 0 10px var(--glow);
@@ -947,21 +811,17 @@ html {
     box-shadow: 0 0 15px var(--glow-strong);
   }
 }
-
 .timeline-item {
   position: relative;
   margin-bottom: 4rem;
   animation: fadeInLeft 0.8s ease-out;
 }
-
 .timeline-item:nth-child(2) {
   animation-delay: 0.2s;
 }
-
 .timeline-item:nth-child(3) {
   animation-delay: 0.4s;
 }
-
 .timeline-dot {
   position: absolute;
   left: -4.5rem;
@@ -977,12 +837,10 @@ html {
   transform-style: preserve-3d;
   transition: all 0.5s ease;
 }
-
 .timeline-item:hover .timeline-dot {
   transform: translateZ(30px) scale(1.3);
   box-shadow: 0 0 40px var(--glow-strong);
 }
-
 .timeline-content {
   background: var(--card-bg);
   border: none;
@@ -997,7 +855,6 @@ html {
   transform: translateZ(-30px);
   backdrop-filter: blur(20px) saturate(180%);
 }
-
 .timeline-content:hover {
   transform: translateX(15px) translateY(-20px) translateZ(50px) scale(1.08);
   box-shadow: 
@@ -1005,7 +862,6 @@ html {
     inset -5px -5px 15px rgba(0, 0, 0, 0.2);
   background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%);
 }
-
 .timeline-year {
   display: inline-block;
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
@@ -1023,32 +879,24 @@ html {
   transition: all 0.5s ease;
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
-
 .timeline-content:hover .timeline-year {
   transform: translateZ(15px) scale(1.05);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
-
 .timeline-content h3 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
   color: var(--text-primary);
 }
-
 .timeline-location {
   color: var(--primary);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
-
 .timeline-description {
   color: var(--text-secondary);
   line-height: 1.6;
 }
-
-/* ========================================
-   COMPANY SECTION
-   ======================================== */
 .company-card {
   background: var(--card-bg);
   border: 2px solid var(--card-border);
@@ -1064,7 +912,6 @@ html {
     inset 0 0 80px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(30px) saturate(180%);
 }
-
 .company-card::before {
   content: '';
   position: absolute;
@@ -1076,7 +923,6 @@ html {
   transition: opacity 0.5s ease;
   border-radius: 2.5rem;
 }
-
 .company-card::after {
   content: '';
   position: absolute;
@@ -1090,21 +936,17 @@ html {
   z-index: -1;
   filter: blur(25px);
 }
-
 .company-card:hover {
   border-color: var(--primary);
   transform: translateY(-15px) translateZ(40px) scale(1.03);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
 }
-
 .company-card:hover::before {
   opacity: 0;
 }
-
 .company-card:hover::after {
   opacity: 0;
 }
-
 .company-logo {
   width: 120px;
   height: 120px;
@@ -1112,7 +954,6 @@ html {
   position: relative;
   z-index: 1;
 }
-
 .logo-placeholder {
   width: 100%;
   height: 100%;
@@ -1129,12 +970,10 @@ html {
   transform-style: preserve-3d;
   transition: all 0.5s ease;
 }
-
 .company-card:hover .logo-placeholder {
   transform: translateZ(40px) rotateY(10deg) scale(1.1);
   animation: none;
 }
-
 .company-name {
   font-size: 3rem;
   font-weight: 800;
@@ -1148,7 +987,6 @@ html {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-
 .company-tagline {
   color: var(--primary-light);
   font-size: 1.4rem;
@@ -1159,28 +997,24 @@ html {
   letter-spacing: 0.02em;
   font-family: 'Space Grotesk', sans-serif;
 }
-
 .company-description {
   max-width: 700px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
-
 .company-description p {
   color: var(--text-secondary);
   line-height: 1.8;
   margin-bottom: 2rem;
   font-size: 1.1rem;
 }
-
 .company-services {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-top: 2rem;
 }
-
 .service-item {
   background: rgba(14, 165, 233, 0.1);
   border: 1px solid rgba(14, 165, 233, 0.3);
@@ -1192,7 +1026,6 @@ html {
   backdrop-filter: blur(5px);
   transform-style: preserve-3d;
 }
-
 .service-item:hover {
   background: rgba(14, 165, 233, 0.2);
   transform: translateZ(20px) scale(1.08);
@@ -1201,23 +1034,17 @@ html {
     0 10px 30px var(--glow),
     0 0 20px var(--glow-strong);
 }
-
-/* ========================================
-   CONTACT SECTION
-   ======================================== */
 .contact-section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-
 .contact-content {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   gap: 4rem;
   align-items: start;
 }
-
 .contact-info h3 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -1226,23 +1053,19 @@ html {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-
 .contact-description {
   color: var(--text-secondary);
   line-height: 1.8;
   font-size: 1.1rem;
 }
-
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
-
 .form-group {
   position: relative;
 }
-
 .form-input {
   width: 100%;
   background: var(--card-bg);
@@ -1257,7 +1080,6 @@ html {
   backdrop-filter: blur(10px);
   transform-style: preserve-3d;
 }
-
 .form-input:focus {
   border-color: var(--primary);
   box-shadow: 
@@ -1267,16 +1089,13 @@ html {
   transform: translateY(-5px) translateZ(20px);
   background: var(--bg-card);
 }
-
 .form-input::placeholder {
   color: var(--text-secondary);
 }
-
 .form-textarea {
   resize: vertical;
   min-height: 150px;
 }
-
 .send-button {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
   color: white;
@@ -1300,7 +1119,6 @@ html {
     inset 0 1px 1px rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
 }
-
 .send-button::before {
   content: '';
   position: absolute;
@@ -1309,7 +1127,6 @@ html {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .send-button:hover {
   transform: translateY(-10px) translateZ(40px) scale(1.05);
   border-color: var(--accent);
@@ -1317,34 +1134,25 @@ html {
     0 25px 70px var(--glow-strong),
     inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
-
 .send-button:hover::before {
   opacity: 1;
 }
-
 .send-button:active {
   transform: translateY(-1px);
 }
-
 .send-button span,
 .send-button svg {
   position: relative;
   z-index: 1;
 }
-
 .send-button svg {
   width: 20px;
   height: 20px;
   transition: transform 0.3s ease;
 }
-
 .send-button:hover svg {
   transform: translateX(5px) translateY(-5px);
 }
-
-/* ========================================
-   ANIMATIONS
-   ======================================== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -1353,7 +1161,6 @@ html {
     opacity: 1;
   }
 }
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -1364,7 +1171,6 @@ html {
     transform: translateY(0);
   }
 }
-
 @keyframes fadeInLeft {
   from {
     opacity: 0;
@@ -1375,7 +1181,6 @@ html {
     transform: translateX(0);
   }
 }
-
 @keyframes slideInLeft {
   from {
     opacity: 0;
@@ -1386,7 +1191,6 @@ html {
     transform: translateX(0);
   }
 }
-
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
@@ -1395,7 +1199,6 @@ html {
     transform: translateY(-20px);
   }
 }
-
 @keyframes pulse {
   0%, 100% {
     opacity: 0.4;
@@ -1406,7 +1209,6 @@ html {
     transform: scale(1.05);
   }
 }
-
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
@@ -1415,7 +1217,6 @@ html {
     transform: translateY(10px);
   }
 }
-
 @keyframes wiggle {
   0%, 100% {
     transform: rotate(0deg);
@@ -1427,7 +1228,6 @@ html {
     transform: rotate(5deg);
   }
 }
-
 @keyframes float3D {
   0%, 100% {
     transform: translateY(0) translateZ(0) rotateX(0deg);
@@ -1439,7 +1239,6 @@ html {
     transform: translateY(-5px) translateZ(-10px) rotateX(-1deg);
   }
 }
-
 @keyframes glow {
   0%, 100% {
     box-shadow: 0 0 20px var(--glow);
@@ -1448,91 +1247,67 @@ html {
     box-shadow: 0 0 40px var(--glow-strong);
   }
 }
-
-/* ========================================
-   RESPONSIVE DESIGN
-   ======================================== */
-
-/* Tablet Landscape und kleine Desktops */
 @media (max-width: 1024px) {
   .section {
     padding: 3.5rem 2rem;
   }
-  
   .section-title {
     font-size: 3.5rem;
     margin-bottom: 3rem;
   }
-  
   .name {
     font-size: 5rem;
   }
-  
   .tagline {
     font-size: 1.5rem;
   }
-  
   .skills-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.8rem;
   }
-  
   .skill-card {
     padding: 2.5rem;
     min-height: 380px;
   }
-  
   .combos-title {
     font-size: 2.2rem;
   }
-  
   .contact-content {
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
   }
-  
   .timeline-content {
     padding: 2rem;
   }
-  
   .company-card {
     padding: 3.5rem;
   }
 }
-
-/* Vertikale Tablets wie Surface Go Portrait (800px Breite) */
 @media (max-width: 900px) and (orientation: portrait) {
   .section {
     padding: 2rem 1.5rem;
     min-height: auto;
   }
-  
   .section-content {
     max-width: 100%;
     padding: 0 0.5rem;
   }
-  
   .section::before {
     filter: blur(40px);
   }
-  
   .section-title {
     font-size: 2.5rem;
     margin-bottom: 2rem;
     text-align: center;
   }
-  
   .title-number {
     font-size: 1.2rem;
   }
-  
-  /* Hero Section Anpassungen - Kleiner für bessere Passform */
   .hero-section {
     min-height: 100vh;
     min-height: 100dvh;
     padding: 1.5rem 1rem;
   }
-  
   .hero-content {
     padding-top: 0;
     padding-bottom: 1rem;
@@ -1540,95 +1315,74 @@ html {
     flex-direction: column;
     justify-content: center;
   }
-  
   .name {
     font-size: 2.5rem;
     margin-bottom: 0.8rem;
     line-height: 1.05;
   }
-  
   .tagline {
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
   }
-  
   .profile-image-container {
     width: 160px;
     height: 160px;
     margin: 0 auto 1.5rem;
   }
-  
   .glow-effect {
     inset: -25px;
   }
-  
   .scroll-indicator {
     font-size: 0.75rem;
     gap: 0.2rem;
     margin-top: 1rem;
   }
-  
   .scroll-arrow {
     font-size: 1rem;
   }
-  
-  /* Skills Grid optimal für vertikale Tablets */
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     max-width: 100%;
     margin: 0 auto;
   }
-  
   .skill-card {
     padding: 2rem;
     min-height: 320px;
     transform-style: flat;
   }
-  
-  /* Reduziere Hover-Effekte für bessere Touch-Bedienung */
   .skill-card {
     transform: translateZ(-15px);
   }
-  
   .skill-card:hover {
     transform: translateY(-10px) translateZ(20px) scale(1.04);
   }
-  
   .icon-wrapper {
     width: 85px;
     height: 85px;
     font-size: 3.5rem;
   }
-  
   .skill-title-large {
     font-size: 1.6rem;
   }
-  
   .skill-description {
     font-size: 0.95rem;
     margin-bottom: 1.5rem;
   }
-  
-  /* Timeline Optimierungen */
   .timeline {
     padding-left: 3rem;
   }
-  
   .timeline::before {
     width: 2px;
   }
-  
   .timeline-dot {
     width: 16px;
     height: 16px;
     left: -3.4rem;
   }
-  
   .timeline-item {
     margin-bottom: 3rem;
   }
-  
   .timeline-content {
     padding: 2rem;
     transform: translateZ(-15px);
@@ -1637,107 +1391,81 @@ html {
       inset 3px 3px 8px rgba(0, 0, 0, 0.2),
       0 1px 2px rgba(255, 255, 255, 0.1);
   }
-  
   .timeline-content:hover {
     transform: translateX(10px) translateY(-10px) translateZ(20px) scale(1.04);
     box-shadow: 
       inset -6px -6px 15px rgba(0, 0, 0, 0.2),
       inset -3px -3px 8px rgba(0, 0, 0, 0.15);
   }
-  
   .timeline-content h3 {
     font-size: 1.3rem;
   }
-  
   .timeline-year {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
-  
-  /* Company Section */
   .company-card {
     padding: 3rem 2rem;
   }
-  
   .company-logo {
     width: 100px;
     height: 100px;
   }
-  
   .company-name {
     font-size: 2.5rem;
   }
-  
   .company-tagline {
     font-size: 1.2rem;
   }
-  
   .company-services {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.8rem;
   }
-  
-  /* Contact Form */
   .contact-content {
     grid-template-columns: 1fr;
     gap: 2.5rem;
     max-width: 600px;
     margin: 0 auto;
   }
-  
   .contact-info h3 {
     font-size: 2.2rem;
   }
-  
   .form-input {
     padding: 1.1rem 1.3rem;
   }
-  
   .send-button {
     padding: 1.3rem 2.5rem;
     font-size: 1.1rem;
   }
-  
-  /* Combos Grid */
   .combos-grid {
     gap: 1.2rem;
   }
-  
   .combos-title {
     font-size: 2rem;
     margin-bottom: 2rem;
   }
-  
   .combo-item {
     padding: 1.3rem;
   }
-  
   .combo-item:hover {
     transform: translateY(-5px) scale(1.01);
   }
-  
   .tech-badge {
     padding: 0.3rem 0.6rem;
     font-size: 0.65rem;
   }
-  
   .tech-badge:hover {
     transform: translateY(-2px) scale(1.05);
   }
-  
-  /* Footer Anpassungen */
   .footer-section {
     padding: 3rem 1.8rem;
   }
-  
   .social-link {
     width: 55px;
     height: 55px;
     font-size: 1.6rem;
   }
 }
-
-/* Surface Go spezifische Anpassungen (800x1280px im Portrait) */
 @media only screen 
   and (min-device-width: 800px) 
   and (max-device-width: 801px)
@@ -1745,43 +1473,34 @@ html {
   .section {
     padding: 2rem 1.2rem;
   }
-  
   .hero-section {
     min-height: 100vh;
     padding: 1.5rem 1rem;
   }
-  
   .name {
     font-size: 2.4rem;
     line-height: 1.05;
     margin-bottom: 0.7rem;
   }
-  
   .tagline {
     font-size: 1.05rem;
     margin-bottom: 1.3rem;
   }
-  
   .profile-image-container {
     width: 155px;
     height: 155px;
     margin-bottom: 1.3rem;
   }
-  
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.3rem;
   }
-  
   .nav-dots {
     right: 0.8rem;
     padding: 1rem 0.8rem;
   }
 }
-
-/* Spezielle Anpassungen für schmale vertikale Tablets */
 @media (min-width: 600px) and (max-width: 850px) and (orientation: portrait) {
-  /* Navigation Dots speziell für vertikale Tablets */
   .nav-dots {
     position: fixed !important;
     right: 1rem;
@@ -1796,199 +1515,151 @@ html {
     backdrop-filter: blur(20px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
-  
   .dot {
     width: 12px;
     height: 12px;
   }
-  
-  /* Hero Section kompakter */
   .hero-section {
     min-height: 100vh;
     min-height: 100dvh;
     display: flex;
     align-items: center;
   }
-  
   .hero-content {
     padding: 0;
   }
-  
   .name {
     font-size: 2.3rem;
     line-height: 1.05;
     margin-bottom: 0.7rem;
   }
-  
   .tagline {
     font-size: 1rem;
     margin-bottom: 1.2rem;
   }
-  
   .profile-image-container {
     width: 150px;
     height: 150px;
     margin-bottom: 1.2rem;
   }
-  
-  /* Skills optimiert für 2 Spalten */
   .skill-card:hover {
     transform: translateY(-8px) scale(1.03);
   }
-  
   .skill-card:active {
     transform: translateY(-2px) scale(1.01);
   }
-  
   .click-hint {
     font-size: 0.9rem;
     padding: 0.6rem 1rem;
   }
-  
-  /* Bessere Touch-Targets */
   .form-input {
     min-height: 44px;
   }
-  
   .send-button {
     min-height: 48px;
   }
-  
-  /* Floating Animations reduzieren für bessere Performance */
   .profile-image-container {
     animation: float 8s ease-in-out infinite;
   }
-  
   .logo-placeholder {
     animation: float 6s ease-in-out infinite;
   }
-  
-  /* Scroll-Indikator anpassen */
   .scroll-indicator {
     font-size: 0.85rem;
   }
 }
-
-/* Mobile Querformat und kleine Tablets */
 @media (max-width: 768px) {
   .section {
     padding: 3rem 1.5rem;
   }
-  
   .section-title {
     font-size: 2.5rem;
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-  
   .name {
     font-size: 3.5rem;
   }
-  
   .tagline {
     font-size: 1.2rem;
   }
-  
   .profile-image-container {
     width: 200px;
     height: 200px;
   }
-  
   .timeline-content {
     pointer-events: none;
     cursor: default;
   }
-  
   .timeline-content:hover {
     transform: none;
   }
-  
   .skills-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
   .skill-card {
     padding: 2rem;
     min-height: 350px;
   }
-  
   .icon-wrapper {
     width: 90px;
     height: 90px;
     font-size: 3.5rem;
   }
-  
   .skill-title-large {
     font-size: 1.8rem;
   }
-  
   .skill-description {
     font-size: 1rem;
   }
-  
   .combos-title {
     font-size: 1.8rem;
     margin-bottom: 2rem;
   }
-  
   .combo-item {
     padding: 1.2rem;
   }
-  
   .combo-name {
     font-size: 1rem;
   }
-  
   .tech-badge {
     padding: 0.3rem 0.6rem;
     font-size: 0.65rem;
   }
-  
   .tech-icon {
     font-size: 1rem;
   }
-  
   .click-hint {
     font-size: 0.95rem;
     padding: 0.6rem 1rem;
   }
-  
   .timeline {
     padding-left: 2rem;
   }
-  
   .timeline-dot {
     left: -2.5rem;
   }
-  
   .company-card {
     padding: 2.5rem 1.5rem;
   }
-  
   .company-services {
     grid-template-columns: 1fr;
   }
 }
-
-/* Kleine vertikale Tablets und große Phones */
 @media (max-width: 600px) and (orientation: portrait) {
   .skills-grid {
     grid-template-columns: 1fr;
     gap: 1.3rem;
   }
-  
   .skill-card {
     padding: 1.8rem;
     min-height: 300px;
   }
-  
   .company-services {
     grid-template-columns: 1fr;
   }
-  
-  /* Navigation oben horizontal für kleine Geräte */
   .nav-dots {
     position: fixed !important;
     top: env(safe-area-inset-top, 1rem);
@@ -2002,91 +1673,69 @@ html {
     border-radius: 2rem;
   }
 }
-
-/* Sehr kleine Bildschirme und alte Smartphones */
 @media (max-width: 480px) {
   html {
     font-size: 14px;
   }
-  
   .section {
     min-height: 100vh;
-    min-height: 100svh; /* Small viewport height */
+    min-height: 100svh; 
   }
-  
   .name {
     font-size: 2.5rem;
   }
-  
   .section-title {
     font-size: 2rem;
   }
-  
   .profile-image-container {
     width: 150px;
     height: 150px;
   }
-  
   .timeline-content {
     pointer-events: none;
     cursor: default;
   }
-  
   .timeline-content:hover {
     transform: none;
   }
-  
   .skill-card {
     padding: 1.5rem;
     min-height: 320px;
   }
-  
   .icon-wrapper {
     width: 80px;
     height: 80px;
     font-size: 3rem;
   }
-  
   .skill-title-large {
     font-size: 1.5rem;
   }
-  
   .skill-description {
     font-size: 0.9rem;
   }
-  
   .combos-title {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
-  
   .combo-item {
     padding: 1rem;
   }
-  
   .combo-name {
     font-size: 0.9rem;
   }
-  
   .tech-badge {
     padding: 0.35rem 0.7rem;
     font-size: 0.75rem;
     gap: 0.4rem;
   }
-  
   .tech-icon {
     font-size: 0.9rem;
   }
-  
   .click-hint {
     font-size: 0.85rem;
     padding: 0.5rem 0.8rem;
   }
 }
-
-/* ========================================
-   LOADING STATE
-   ======================================== */
 .loading {
   display: flex;
   align-items: center;
@@ -2096,17 +1745,12 @@ html {
   color: var(--text-primary);
   font-family: 'Space Grotesk', sans-serif;
 }
-
-/* ========================================
-   FOOTER SECTION
-   ======================================== */
 .footer-section {
   background: var(--bg-darker);
   padding: 4rem 2rem;
   border-top: 1px solid var(--card-border);
   position: relative;
 }
-
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -2115,14 +1759,12 @@ html {
   align-items: center;
   gap: 2rem;
 }
-
 .social-links {
   display: flex;
   gap: 2rem;
   align-items: center;
   justify-content: center;
 }
-
 .social-link {
   width: 60px;
   height: 60px;
@@ -2141,14 +1783,12 @@ html {
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-
 .social-link:hover {
   background: var(--social-color);
   color: white;
   border-color: var(--social-color);
   box-shadow: 0 8px 30px var(--social-color);
 }
-
 .social-tooltip {
   position: absolute;
   bottom: -35px;
@@ -2165,27 +1805,22 @@ html {
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
-
 .social-link:hover .social-tooltip {
   opacity: 1;
 }
-
 .footer-text {
   font-size: 1rem;
   color: var(--text-secondary);
   text-align: center;
   margin: 0;
 }
-
 @media (max-width: 768px) {
   .footer-section {
     padding: 3rem 1.5rem;
   }
-  
   .social-links {
     gap: 1.5rem;
   }
-  
   .social-link {
     width: 50px;
     height: 50px;

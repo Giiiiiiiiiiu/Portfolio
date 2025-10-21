@@ -7,7 +7,6 @@ import ContactSection from './components/ContactSection'
 import FooterSection from './components/FooterSection'
 import ColorPalette from './components/ColorPalette'
 
-// Memoized NavigationDot component
 const NavigationDot = memo(({ index, isActive, onClick }: { index: number; isActive: boolean; onClick: () => void }) => (
   <button
     className={`dot ${isActive ? 'active' : ''}`}
@@ -21,10 +20,8 @@ NavigationDot.displayName = 'NavigationDot'
 function App() {
   const [activeSection, setActiveSection] = useState(0)
   
-  // Cache the sections array
   const sections = useMemo(() => [0, 1, 2, 3], [])
 
-  // Throttled scroll handler for performance
   const handleScroll = useCallback(() => {
     const sections = document.querySelectorAll('.section')
     const scrollPos = window.scrollY + window.innerHeight / 2
@@ -59,17 +56,14 @@ function App() {
     sections[index]?.scrollIntoView({ behavior: 'smooth' })
   }, [])
 
-  // Create cached click handlers for each dot
   const dotHandlers = useMemo(() => 
     sections.map(index => () => scrollToSection(index))
   , [sections, scrollToSection])
 
   return (
     <div className="app">
-      {/* Color Palette */}
       <ColorPalette />
       
-      {/* Navigation Dots */}
       <div className="nav-dots">
         {sections.map((index) => (
           <NavigationDot

@@ -20,7 +20,6 @@ const SkillsSection = memo(() => {
   }, []);
 
   const getTextColor = useCallback((tech: string): string => {
-    // Heller Hintergrund = dunkler Text
     const lightBgTechs = ['JavaScript', 'Tailwind'];
     return lightBgTechs.includes(tech) ? '#000000' : '#ffffff';
   }, []);

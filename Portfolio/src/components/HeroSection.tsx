@@ -4,29 +4,22 @@ import heroData from '../resources/hero.json';
 
 const HeroSection = memo(() => {
   const isMobile = useMemo(() => window.innerWidth <= 768, []);
-  const [mousePosition, setMousePosition] = useState({ x: 150, y: 150 }); // Fixed position top-left
+  const [mousePosition, setMousePosition] = useState({ x: 150, y: 150 });
   const [isEffectActive, setIsEffectActive] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
   
-  // Detect if device has a mouse/cursor (not touch-only)
   const hasMouseSupport = useMemo(() => {
-    // Check if device supports hover (has mouse/trackpad)
     const hasHover = window.matchMedia('(hover: hover)').matches;
-    // Check if device has fine pointer (mouse/trackpad vs touch)
     const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-    // Check if pointer is coarse (touch)
     const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
     
-    // Enable effect only if device has mouse support OR always show fixed position
     return hasHover && hasFinePointer && !hasCoarsePointer;
   }, []);
   
-  // Check if user has scrolled past hero section
   useEffect(() => {
     const handleScroll = () => {
       if (sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
-        // Deactivate effect when hero section is mostly out of view
         if (rect.bottom < window.innerHeight * 0.2) {
           setIsEffectActive(false);
         } else {
@@ -36,16 +29,14 @@ const HeroSection = memo(() => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial state
+    handleScroll();
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
   
-  // Mouse tracking (only for devices with mouse support)
   useEffect(() => {
-    // Only track mouse if device has mouse support and effect is active
     if (!hasMouseSupport || !isEffectActive) return;
     
     const handleMouseMove = (e: MouseEvent) => {
@@ -67,7 +58,6 @@ const HeroSection = memo(() => {
   
   return (
     <section className="section hero-section" ref={sectionRef}>
-      {/* Hidden background image with reveal mask - fixed position top-left for devices without mouse */}
       <div 
         className="hero-background-reveal"
           style={{

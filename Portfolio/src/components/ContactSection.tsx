@@ -7,7 +7,6 @@ const ContactSection = memo(() => {
 
   const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Hier kannst du später die Email-Logik implementieren
     console.log('Form submitted');
   }, []);
 

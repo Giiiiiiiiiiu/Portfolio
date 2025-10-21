@@ -82,7 +82,6 @@ const ColorPalette = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Load saved color preference
     const savedColor = localStorage.getItem('portfolioColorTheme');
     if (savedColor) {
       const colorIndex = colorThemes.findIndex(theme => theme.name === savedColor);

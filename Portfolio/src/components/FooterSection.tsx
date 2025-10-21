@@ -10,19 +10,19 @@ const FooterSection = memo(() => {
     {
       name: 'GitHub',
       icon: <FaGithub />,
-      url: 'https://github.com/giiiiiiiiiiu', // Ersetze mit deinem GitHub Username
+      url: 'https://github.com/giiiiiiiiiiu',
       color: '#333'
     },
     {
       name: 'LinkedIn',
       icon: <FaLinkedin />,
-      url: 'https://linkedin.com/in/Sergey-Kotenkov', // Ersetze mit deinem LinkedIn Profil
+      url: 'https://linkedin.com/in/Sergey-Kotenkov',
       color: '#0077B5'
     },
     {
       name: 'X',
       icon: <FaXTwitter />,
-      url: 'https://x.com/yourusername', // Ersetze mit deinem X/Twitter Username
+      url: 'https://x.com/yourusername',
       color: '#000000'
     }
   ];
