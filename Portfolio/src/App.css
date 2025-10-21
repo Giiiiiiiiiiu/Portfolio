@@ -420,12 +420,28 @@ html {
   backface-visibility: hidden;
 }
 
+/* Light Mode: Make SVG brighter */
+@media (prefers-color-scheme: light) {
+  .hero-background-reveal {
+    filter: brightness(1.3) contrast(0.9) saturate(0.8);
+    opacity: 0.9;
+  }
+}
+
 /* Mobile optimization */
 @media (max-width: 768px) {
   .hero-background-reveal {
     /* Smaller reveal area on mobile */
     mask-size: 150% 150% !important;
     -webkit-mask-size: 150% 150% !important;
+  }
+}
+
+/* Light Mode + Mobile: Extra brightness adjustments */
+@media (prefers-color-scheme: light) and (max-width: 768px) {
+  .hero-background-reveal {
+    filter: brightness(1.4) contrast(0.85) saturate(0.7);
+    opacity: 0.85;
   }
 }
 
