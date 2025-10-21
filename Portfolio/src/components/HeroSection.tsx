@@ -1,11 +1,106 @@
 import { motion } from 'framer-motion';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useEffect, useRef, useState } from 'react';
 import heroData from '../resources/hero.json';
 
 const HeroSection = memo(() => {
   const isMobile = useMemo(() => window.innerWidth <= 768, []);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const sectionRef = useRef<HTMLDivElement>(null);
+  
+  // Mouse and touch tracking
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        setMousePosition({ 
+          x: e.clientX - rect.left, 
+          y: e.clientY - rect.top 
+        });
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0 && sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        setMousePosition({ 
+          x: e.touches[0].clientX - rect.left, 
+          y: e.touches[0].clientY - rect.top 
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, []);
+  
   return (
-    <section className="section hero-section">
+    <section className="section hero-section" ref={sectionRef}>
+      {/* Hidden background image with reveal mask */}
+      <div 
+        className="hero-background-reveal"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url(${import.meta.env.BASE_URL}OpacityBackground.svg)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 1,
+          zIndex: 0,
+          maskImage: `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`,
+          WebkitMaskImage: `radial-gradient(circle 250px at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.3) 70%, transparent 100%)`,
+          maskSize: '100% 100%',
+          WebkitMaskSize: '100% 100%',
+          maskRepeat: 'no-repeat',
+          WebkitMaskRepeat: 'no-repeat',
+          transition: 'mask-position 0.1s ease-out, -webkit-mask-position 0.1s ease-out',
+          pointerEvents: 'none'
+        }}
+      />
+      
+      {/* Glow effect at cursor */}
+      <div
+        className="cursor-glow"
+        style={{
+          position: 'absolute',
+          left: mousePosition.x - 150,
+          top: mousePosition.y - 150,
+          width: '300px',
+          height: '300px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)',
+          pointerEvents: 'none',
+          zIndex: 1,
+          transition: 'left 0.1s ease-out, top 0.1s ease-out',
+          filter: 'blur(20px)'
+        }}
+      />
+      
+      {/* Animated ring around reveal area */}
+      <div
+        className="reveal-ring"
+        style={{
+          position: 'absolute',
+          left: mousePosition.x - 250,
+          top: mousePosition.y - 250,
+          width: '500px',
+          height: '500px',
+          borderRadius: '50%',
+          border: '2px solid rgba(59, 130, 246, 0.3)',
+          pointerEvents: 'none',
+          zIndex: 1,
+          transition: 'left 0.1s ease-out, top 0.1s ease-out',
+          animation: 'pulse 2s infinite'
+        }}
+      />
       <div className="hero-content">
         <motion.div 
           className="profile-image-container"
