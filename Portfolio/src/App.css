@@ -1530,10 +1530,7 @@ html {
   .hero-section {
     min-height: 100vh;
     min-height: 100dvh;
-    max-height: 100vh;
-    max-height: 100dvh;
     padding: 1.5rem 1rem;
-    overflow-y: auto;
   }
   
   .hero-content {
@@ -1542,10 +1539,6 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: calc(100vh - 3rem);
-    min-height: calc(100dvh - 3rem);
-    max-height: calc(100vh - 3rem);
-    max-height: calc(100dvh - 3rem);
   }
   
   .name {
