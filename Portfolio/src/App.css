@@ -541,15 +541,18 @@ html {
   transition: opacity 0.6s ease;
   opacity: 1;
 }
-.skill-card:hover::before {
-  opacity: 0;
-}
-.skill-card:hover {
-  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%);
-  transform: translateY(-20px) translateZ(50px) scale(1.08);
-  box-shadow: 
-    inset -10px -10px 30px rgba(0, 0, 0, 0.3),
-    inset -5px -5px 15px rgba(0, 0, 0, 0.2);
+/* Skill card hover effects only for devices with mouse/cursor */
+@media (hover: hover) {
+  .skill-card:hover::before {
+    opacity: 0;
+  }
+  .skill-card:hover {
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%);
+    transform: translateY(-20px) translateZ(50px) scale(1.08);
+    box-shadow: 
+      inset -10px -10px 30px rgba(0, 0, 0, 0.3),
+      inset -5px -5px 15px rgba(0, 0, 0, 0.2);
+  }
 }
 .skill-icon-large {
   margin-bottom: 2rem;
@@ -714,16 +717,19 @@ html {
   background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
   transition: left 0.5s ease;
 }
-.combo-item:hover::before {
-  left: 100%;
-}
-.combo-item:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.06));
-  border-color: var(--primary);
-  transform: translateY(-2px) scale(1.01);
-  box-shadow: 
-    0 4px 20px rgba(59, 130, 246, 0.2),
-    0 0 0 1px var(--primary);
+/* Hover effects only for devices with mouse/cursor */
+@media (hover: hover) {
+  .combo-item:hover::before {
+    left: 100%;
+  }
+  .combo-item:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.06));
+    border-color: var(--primary);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 
+      0 4px 20px rgba(59, 130, 246, 0.2),
+      0 0 0 1px var(--primary);
+  }
 }
 .combo-name {
   font-weight: 700;
@@ -765,12 +771,15 @@ html {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-.tech-badge:hover::before {
-  opacity: 1;
-}
-.tech-badge:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+/* Tech badge hover effects only for devices with mouse/cursor */
+@media (hover: hover) {
+  .tech-badge:hover::before {
+    opacity: 1;
+  }
+  .tech-badge:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  }
 }
 .tech-icon {
   font-size: 0.9rem;
@@ -1354,8 +1363,11 @@ html {
   .skill-card {
     transform: translateZ(-15px);
   }
-  .skill-card:hover {
-    transform: translateY(-10px) translateZ(20px) scale(1.04);
+  /* Tablet hover effect only for devices with cursor */
+  @media (hover: hover) {
+    .skill-card:hover {
+      transform: translateY(-10px) translateZ(20px) scale(1.04);
+    }
   }
   .icon-wrapper {
     width: 85px;
@@ -1542,8 +1554,11 @@ html {
     height: 150px;
     margin-bottom: 1.2rem;
   }
-  .skill-card:hover {
-    transform: translateY(-8px) scale(1.03);
+  /* Mobile hover effect only for devices with cursor */
+  @media (hover: hover) {
+    .skill-card:hover {
+      transform: translateY(-8px) scale(1.03);
+    }
   }
   .skill-card:active {
     transform: translateY(-2px) scale(1.01);
