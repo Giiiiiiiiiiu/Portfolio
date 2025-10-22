@@ -596,6 +596,12 @@ html {
   opacity: 0.6;
   z-index: -1;
 }
+.skill-svg-icon {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  /* Filter entfernt, um SVGs sichtbar zu machen */
+}
 .skill-title-large {
   font-size: 2.2rem;
   font-weight: 800;
@@ -1871,6 +1877,10 @@ html {
     height: 85px;
     font-size: 3.5rem;
   }
+  .skill-svg-icon {
+    width: 70%;
+    height: 70%;
+  }
   .skill-title-large {
     font-size: 1.6rem;
   }
@@ -2117,6 +2127,10 @@ html {
     height: 90px;
     font-size: 3.5rem;
   }
+  .skill-svg-icon {
+    width: 70%;
+    height: 70%;
+  }
   .skill-title-large {
     font-size: 1.8rem;
   }
@@ -2215,6 +2229,10 @@ html {
     width: 80px;
     height: 80px;
     font-size: 3rem;
+  }
+  .skill-svg-icon {
+    width: 70%;
+    height: 70%;
   }
   .skill-title-large {
     font-size: 1.5rem;

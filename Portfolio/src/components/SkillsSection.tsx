@@ -1,6 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState, memo, useCallback, useMemo } from 'react';
 import skillsData from '../resources/skills.json';
+import handySvg from '/handy.svg';
+import webSvg from '/web.svg';
+import gameSvg from '/game.svg';
+import cloudSvg from '/cloud.svg';
+import databaseSvg from '/database.svg';
+import lightningSvg from '/lightning.svg';
 import { 
   SiSwift, SiKotlin, SiFlutter, SiDart, SiExpo, SiReact, 
   SiTypescript, SiTailwindcss, SiHtml5, SiCss3, SiJavascript,
@@ -13,6 +19,25 @@ import { FaCode, FaEnvelope, FaPhone, FaServer, FaCloud } from 'react-icons/fa';
 
 const SkillsSection = memo(() => {
   const [expandedSkill, setExpandedSkill] = useState<number | null>(null);
+  
+  const getSkillIcon = useCallback((skillId: number) => {
+    switch(skillId) {
+      case 1: // App Entwicklung
+        return <img src={handySvg} alt="App Entwicklung" className="skill-svg-icon" />;
+      case 2: // Web Entwicklung
+        return <img src={webSvg} alt="Web Entwicklung" className="skill-svg-icon" />;
+      case 3: // Game Entwicklung
+        return <img src={gameSvg} alt="Game Entwicklung" className="skill-svg-icon" />;
+      case 4: // Cloud & DevOps
+        return <img src={cloudSvg} alt="Cloud & DevOps" className="skill-svg-icon" />;
+      case 5: // Datenbanken
+        return <img src={databaseSvg} alt="Datenbanken" className="skill-svg-icon" />;
+      case 6: // Echtzeit-Kommunikation
+        return <img src={lightningSvg} alt="Echtzeit-Kommunikation" className="skill-svg-icon" />;
+      default:
+        return <span className="skill-emoji">🔧</span>;
+    }
+  }, []);
   
   const getTechColor = useCallback((tech: string): string => {
     return (skillsData.techColors as Record<string, string>)[tech] || '#3b82f6';
@@ -185,7 +210,7 @@ const SkillsSection = memo(() => {
                       }}
                     >
                       <div className="icon-wrapper">
-                        {skill.icon}
+                        {getSkillIcon(skill.id)}
                       </div>
                     </motion.div>
                     <h3 className="skill-title-large">{skill.title}</h3>
