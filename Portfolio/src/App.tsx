@@ -5,7 +5,6 @@ import SkillsSection from './components/SkillsSection'
 import EducationSection from './components/EducationSection'
 import ContactSection from './components/ContactSection'
 import FooterSection from './components/FooterSection'
-import ColorPalette from './components/ColorPalette'
 
 const NavigationDot = memo(({ index, isActive, onClick }: { index: number; isActive: boolean; onClick: () => void }) => (
   <button
@@ -62,8 +61,6 @@ function App() {
 
   return (
     <div className="app">
-      <ColorPalette />
-      
       <div className="nav-dots">
         {sections.map((index) => (
           <NavigationDot
