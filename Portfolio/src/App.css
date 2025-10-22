@@ -1560,9 +1560,6 @@ html {
       transform: translateY(-8px) scale(1.03);
     }
   }
-  .skill-card:active {
-    transform: translateY(-2px) scale(1.01);
-  }
   .click-hint {
     font-size: 0.9rem;
     padding: 0.6rem 1rem;

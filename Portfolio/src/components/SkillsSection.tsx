@@ -129,6 +129,11 @@ const SkillsSection = memo(() => {
                   transition: { type: "spring" as const, stiffness: 300 }
                 }
               })}
+              animate={{
+                scale: expandedSkill === skill.id ? 1.05 : 1,
+                y: expandedSkill === skill.id ? -10 : 0,
+              }}
+              transition={{ type: "spring" as const, stiffness: 300, damping: 20 }}
               onClick={() => toggleSkill(skill.id)}
               style={{ cursor: 'pointer' }}
             >
