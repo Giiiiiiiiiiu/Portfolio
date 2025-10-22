@@ -541,6 +541,18 @@ html {
   transition: opacity 0.6s ease;
   opacity: 1;
 }
+/* Expanded state - same as hover */
+.skill-card.expanded::before {
+  opacity: 0 !important;
+}
+.skill-card.expanded {
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%) !important;
+  transform: translateY(-20px) translateZ(50px) scale(1.08) !important;
+  box-shadow: 
+    inset -10px -10px 30px rgba(0, 0, 0, 0.2),
+    inset -5px -5px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
 /* Skill card hover effects only for devices with mouse/cursor */
 @media (hover: hover) {
   .skill-card:hover::before {

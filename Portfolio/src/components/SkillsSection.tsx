@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import React, { useState, memo, useMemo, useCallback } from 'react';
+import React, { useState, memo, useCallback, useMemo } from 'react';
 import skillsData from '../resources/skills.json';
 import { 
   SiSwift, SiKotlin, SiFlutter, SiDart, SiExpo, SiReact, 
@@ -13,7 +13,6 @@ import { FaCode, FaEnvelope, FaPhone, FaServer, FaCloud } from 'react-icons/fa';
 
 const SkillsSection = memo(() => {
   const [expandedSkill, setExpandedSkill] = useState<number | null>(null);
-  const isMobile = useMemo(() => window.innerWidth <= 768, []);
   
   const getTechColor = useCallback((tech: string): string => {
     return (skillsData.techColors as Record<string, string>)[tech] || '#3b82f6';
@@ -121,19 +120,8 @@ const SkillsSection = memo(() => {
           {skillsData.skills.map((skill) => (
             <motion.div 
               key={skill.id} 
-              className="skill-card"
+              className={`skill-card ${expandedSkill === skill.id ? 'expanded' : ''}`}
               variants={cardVariants}
-              {...(!isMobile && {
-                whileHover: { 
-                  scale: 1.02,
-                  transition: { type: "spring" as const, stiffness: 300 }
-                }
-              })}
-              animate={{
-                scale: expandedSkill === skill.id ? 1.05 : 1,
-                y: expandedSkill === skill.id ? -10 : 0,
-              }}
-              transition={{ type: "spring" as const, stiffness: 300, damping: 20 }}
               onClick={() => toggleSkill(skill.id)}
               style={{ cursor: 'pointer' }}
             >
