@@ -7,6 +7,7 @@ const HeroSection = memo(() => {
   const [mousePosition, setMousePosition] = useState({ x: 150, y: 150 });
   const [isEffectActive, setIsEffectActive] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
   
   const hasMouseSupport = useMemo(() => {
     const hasHover = window.matchMedia('(hover: hover)').matches;
@@ -66,7 +67,7 @@ const HeroSection = memo(() => {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundImage: `url(${import.meta.env.BASE_URL}OpacityBackground.svg)`,
+            backgroundImage: `url(${import.meta.env.BASE_URL}${isDarkMode ? 'OpacityBackground_BLACK.svg' : 'OpacityBackground_WHITE.svg'})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
