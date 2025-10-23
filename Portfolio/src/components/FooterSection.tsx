@@ -16,7 +16,7 @@ const FooterSection = memo(() => {
     {
       name: 'LinkedIn',
       icon: <FaLinkedin />,
-      url: 'https://linkedin.com/in/Sergey-Kotenkov',
+      url: 'https://www.linkedin.com/in/sergey-kotenkov-22b718382',
       color: '#0077B5'
     },
    /*  {
