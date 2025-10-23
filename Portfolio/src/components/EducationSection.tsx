@@ -30,10 +30,7 @@ const EducationSection = memo(() => {
                     <div className="card-year-section">
                       <div className="year-hologram">
                         {item.year}
-                      </div>
-                      <div className="index-badge">
-                        {String(index + 1).padStart(2, '0')}
-                      </div>
+                      </div> 
                     </div>
                     
                     <div className="card-content-body">

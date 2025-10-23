@@ -680,21 +680,7 @@ html {
   background-size: 200% 100%;
   border: 1px solid rgba(99, 102, 241, 0.3);
   letter-spacing: 2px;
-}
-
-.index-badge {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 1.2rem;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  gap: 0.3rem;
-}
+} 
 .combo-tech {
   display: flex;
   flex-wrap: wrap;
@@ -1116,13 +1102,7 @@ html {
       rgba(59, 130, 246, 0.2)
     );
     border-color: rgba(59, 130, 246, 0.25);
-  }
-  
-  .index-badge {
-    color: #3b82f6;
-    background: rgba(59, 130, 246, 0.1);
-    border-color: rgba(59, 130, 246, 0.2);
-  }
+  } 
   
   .location-tag {
     color: var(--primary);
@@ -1195,13 +1175,7 @@ html {
       rgba(59, 130, 246, 0.1)
     );
     border-color: rgba(59, 130, 246, 0.2);
-  }
-  
-  .index-badge {
-    color: #3b82f6;
-    background: rgba(59, 130, 246, 0.08);
-    border-color: rgba(59, 130, 246, 0.15);
-  }
+  } 
   
   
   .location-tag {
@@ -1333,13 +1307,7 @@ html {
   .year-hologram {
     font-size: 1rem;
     padding: 0.5rem 1rem;
-  }
-  
-  .index-badge {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
+  } 
   
   .card-title-3d {
     font-size: 1.4rem;
