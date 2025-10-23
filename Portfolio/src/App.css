@@ -646,6 +646,63 @@ html {
   border-radius: 1rem;
   backdrop-filter: blur(10px);
 }
+/* Combos Container Styles */
+.combos-container {
+  background: rgba(59, 130, 246, 0.05);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  border-radius: 1.2rem;
+  padding: 2rem;
+  margin-top: 1rem;
+  backdrop-filter: blur(5px);
+}
+
+.combo-item {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.8rem;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.combo-item:last-child {
+  margin-bottom: 0;
+}
+
+.combo-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-light);
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.combo-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tech-badge-styled {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1.5px solid;
+  transition: transform 0.2s ease;
+  cursor: default;
+  user-select: none;
+  opacity: 0.95;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tech-badge-styled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 .skill-card h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;

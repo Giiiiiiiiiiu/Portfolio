@@ -160,8 +160,7 @@ const SkillsSection = memo(() => {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="combos-title">Tech Stacks</div>
-                    <div className="combos-grid">
+                    <div className="combos-container">
                       {skill.combos.map((combo, idx) => (
                         <motion.div
                           key={idx}
@@ -175,12 +174,11 @@ const SkillsSection = memo(() => {
                             {combo.tech.map((tech, techIdx) => (
                               <span 
                                 key={techIdx} 
-                                className="tech-badge"
+                                className="tech-badge-styled"
                                 style={{
                                   backgroundColor: getTechColor(tech),
                                   color: getTextColor(tech),
-                                  borderColor: getTechColor(tech),
-                                  fontWeight: 700
+                                  borderColor: getTechColor(tech)
                                 }}
                               >
                                 <span className="tech-icon">{getTechIcon(tech)}</span>
