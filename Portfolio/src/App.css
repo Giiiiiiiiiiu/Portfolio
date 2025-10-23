@@ -541,16 +541,18 @@ html {
   transition: opacity 0.6s ease;
   opacity: 1;
 }
-/* Expanded state - same as hover */
+/* Expanded state - similar to hover but more subtle */
 .skill-card.expanded::before {
   opacity: 0 !important;
 }
 .skill-card.expanded {
   background: linear-gradient(135deg, var(--card-bg) 0%, rgba(59, 130, 246, 0.08) 100%) !important;
-  transform: translateY(-20px) translateZ(50px) scale(1.08) !important;
+  transform: translateY(-10px) scale(1.02) !important;
   box-shadow: 
     inset -10px -10px 30px rgba(0, 0, 0, 0.2),
-    inset -5px -5px 15px rgba(0, 0, 0, 0.15) !important;
+    inset -5px -5px 15px rgba(0, 0, 0, 0.15),
+    0 15px 40px rgba(59, 130, 246, 0.15) !important;
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
 }
 
 /* Skill card hover effects only for devices with mouse/cursor */
@@ -1834,6 +1836,14 @@ html {
   .skill-card {
     transform: translateZ(-15px);
   }
+  /* Expanded state for tablets in portrait */
+  .skill-card.expanded {
+    transform: translateY(-5px) scale(1.01) !important;
+    box-shadow: 
+      inset -8px -8px 20px rgba(0, 0, 0, 0.18),
+      inset -4px -4px 10px rgba(0, 0, 0, 0.12),
+      0 10px 30px rgba(59, 130, 246, 0.12) !important;
+  }
   /* Tablet hover effect only for devices with cursor */
   @media (hover: hover) {
     .skill-card:hover {
@@ -2089,6 +2099,14 @@ html {
   .skill-card {
     padding: 2rem;
     min-height: 350px;
+  }
+  /* Expanded state for mobile */
+  .skill-card.expanded {
+    transform: translateY(-3px) scale(1.005) !important;
+    box-shadow: 
+      inset -6px -6px 15px rgba(0, 0, 0, 0.15),
+      inset -3px -3px 8px rgba(0, 0, 0, 0.1),
+      0 8px 20px rgba(59, 130, 246, 0.1) !important;
   }
   .icon-wrapper {
     width: 90px;
