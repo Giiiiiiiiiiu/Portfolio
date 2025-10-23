@@ -1,14 +1,81 @@
 import { motion } from 'framer-motion';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import contactData from '../resources/contact.json';
+import { EMAILJS_CONFIG } from '../config/emailjs';
 
 const ContactSection = memo(() => {
   const isMobile = useMemo(() => window.innerWidth <= 768, []);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
 
-  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('Form submitted');
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   }, []);
+
+  const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      // Initialize EmailJS (only needs to be done once)
+      emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+      
+      // Prepare template parameters
+      // Include name and email in the message body
+      const fullMessage = `Von: ${formData.name}
+E-Mail: ${formData.email}
+
+Nachricht:
+${formData.message}`;
+      
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: fullMessage
+      };
+      
+      // Send email
+      await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams
+      );
+      
+      // Success
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+      
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setSubmitStatus('error');
+      
+      // Reset error message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [formData, isSubmitting]);
 
   return (
     <section className="section contact-section">
@@ -46,9 +113,13 @@ const ContactSection = memo(() => {
             >
               <input 
                 type="text" 
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
                 placeholder={contactData.form.namePlaceholder}
                 className="form-input"
                 required
+                disabled={isSubmitting}
               />
             </motion.div>
             <motion.div 
@@ -59,9 +130,13 @@ const ContactSection = memo(() => {
             >
               <input 
                 type="email" 
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 placeholder={contactData.form.emailPlaceholder}
                 className="form-input"
                 required
+                disabled={isSubmitting}
               />
             </motion.div>
             <motion.div 
@@ -71,19 +146,24 @@ const ContactSection = memo(() => {
               transition={{ duration: 0.3 }}
             >
               <textarea 
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
                 placeholder={contactData.form.messagePlaceholder}
                 className="form-input form-textarea"
                 rows={5}
                 required
+                disabled={isSubmitting}
               ></textarea>
             </motion.div>
             <motion.button 
               type="submit" 
-              className="send-button"
+              className={`send-button ${isSubmitting ? 'submitting' : ''}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              {...(!isMobile && {
+              disabled={isSubmitting}
+              {...(!isMobile && !isSubmitting && {
                 whileHover: { 
                   scale: 1.05, 
                   y: -10,
@@ -92,7 +172,7 @@ const ContactSection = memo(() => {
                 whileTap: { scale: 0.95 }
               })}
             >
-              <span>{contactData.form.submitButton}</span>
+              <span>{isSubmitting ? 'Sende...' : contactData.form.submitButton}</span>
               <motion.svg 
                 viewBox="0 0 24 24" 
                 fill="none" 
@@ -104,6 +184,28 @@ const ContactSection = memo(() => {
                 <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </motion.svg>
             </motion.button>
+            
+            {submitStatus === 'success' && (
+              <motion.div 
+                className="form-status success"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+              >
+                ✅ Nachricht erfolgreich gesendet!
+              </motion.div>
+            )}
+            
+            {submitStatus === 'error' && (
+              <motion.div 
+                className="form-status error"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+              >
+                ❌ Fehler beim Senden. Bitte versuche es später erneut.
+              </motion.div>
+            )}
           </motion.form>
         </div>
       </div>
