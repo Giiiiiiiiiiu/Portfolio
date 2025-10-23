@@ -37,7 +37,13 @@ const EducationSection = memo(() => {
                       <h3 className="card-title-3d">{item.title}</h3>
                       <div className="card-meta">
                         <span className="location-tag">
-                          <span className="location-icon">⚡</span>
+                          <img 
+                            src={item.icon} 
+                            alt={item.location}
+                            className="location-icon-svg"
+                            width="20"
+                            height="20"
+                          />
                           {item.location}
                         </span>
                       </div>

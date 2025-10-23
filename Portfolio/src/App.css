@@ -1133,6 +1133,16 @@ html {
   animation: spark 2s infinite;
 }
 
+.location-icon-svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.3rem;
+  display: inline-block;
+  vertical-align: middle;
+  animation: spark 2s infinite;
+  filter: drop-shadow(0 0 3px var(--primary));
+}
+
 @keyframes spark {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.2); }
