@@ -1,0 +1,24 @@
+# Robots.txt for Sergey Kotenkov Portfolio
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: *.json$
+Disallow: *.xml$
+
+# Sitemap
+Sitemap: https://sergeykotenkov.com/sitemap.xml
+
+# Crawl-delay for bots that respect it
+Crawl-delay: 1
+
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
