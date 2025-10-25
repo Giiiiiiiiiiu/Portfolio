@@ -10,7 +10,7 @@ const FooterSection = memo(() => {
     {
       name: 'GitHub',
       icon: <FaGithub />,
-      url: 'https://github.com/giiiiiiiiiiu',
+      url: 'https://github.com/sergeykotenkov',
       color: '#333'
     },
     {
