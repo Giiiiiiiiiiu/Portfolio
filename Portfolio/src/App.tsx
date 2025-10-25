@@ -34,6 +34,35 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
+    
+    setViewportHeight()
+    
+    let resizeTimer: number | undefined
+    const handleResize = () => {
+      document.documentElement.style.setProperty('--vh-updating', '1')
+      
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        setViewportHeight()
+        document.documentElement.style.setProperty('--vh-updating', '0')
+      }, 100)
+    }
+    
+    window.addEventListener('resize', handleResize, { passive: true })
+    window.addEventListener('orientationchange', handleResize, { passive: true })
+    
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleResize)
+      clearTimeout(resizeTimer)
+    }
+  }, [])
+  
+  useEffect(() => {
     let ticking = false
     
     const scrollListener = () => {
