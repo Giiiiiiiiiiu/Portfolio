@@ -31,11 +31,8 @@ const ContactSection = memo(() => {
     setSubmitStatus('idle');
     
     try {
-      // Initialize EmailJS (only needs to be done once)
       emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
       
-      // Prepare template parameters
-      // Include name and email in the message body
       const fullMessage = `Von: ${formData.name}
 E-Mail: ${formData.email}
 
@@ -48,18 +45,15 @@ ${formData.message}`;
         message: fullMessage
       };
       
-      // Send email
       await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
         EMAILJS_CONFIG.TEMPLATE_ID,
         templateParams
       );
       
-      // Success
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });
       
-      // Reset success message after 5 seconds
       setTimeout(() => {
         setSubmitStatus('idle');
       }, 5000);
@@ -68,7 +62,6 @@ ${formData.message}`;
       console.error('Failed to send email:', error);
       setSubmitStatus('error');
       
-      // Reset error message after 5 seconds
       setTimeout(() => {
         setSubmitStatus('idle');
       }, 5000);

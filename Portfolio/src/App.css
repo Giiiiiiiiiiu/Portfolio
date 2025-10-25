@@ -541,7 +541,6 @@ html {
   transition: opacity 0.6s ease;
   opacity: 1;
 }
-/* Expanded state - similar to hover but more subtle */
 .skill-card.expanded::before {
   opacity: 0 !important;
 }
@@ -555,7 +554,6 @@ html {
   border: 1px solid rgba(59, 130, 246, 0.2) !important;
 }
 
-/* Skill card hover effects only for devices with mouse/cursor */
 @media (hover: hover) {
   .skill-card:hover::before {
     opacity: 0;
@@ -602,7 +600,6 @@ html {
   width: 70%;
   height: 70%;
   object-fit: contain;
-  /* Filter entfernt, um SVGs sichtbar zu machen */
 }
 .skill-title-large {
   font-size: 2.2rem;
@@ -646,7 +643,6 @@ html {
   border-radius: 1rem;
   backdrop-filter: blur(10px);
 }
-/* Combos Container Styles */
 .combos-container {
   background: rgba(59, 130, 246, 0.05);
   border: 2px solid rgba(59, 130, 246, 0.2);
@@ -795,7 +791,6 @@ html {
   filter: blur(8px);
   border-radius: 100px;
 }
-/* Tech badge hover effects only for devices with mouse/cursor */
 @media (hover: hover) {
   .tech-badge:hover::before {
     opacity: 1;
@@ -945,7 +940,6 @@ html {
   line-height: 1.6;
 }
 
-/* Education Section */
 .education-section {
   min-height: 100vh;
   display: flex;
@@ -964,7 +958,6 @@ html {
   z-index: 1;
 }
 
-/* Header Styles */
 .education-header {
   text-align: center;
   margin-bottom: 6rem;
@@ -1009,13 +1002,11 @@ html {
   50% { transform: scale(1.5); opacity: 0.5; }
 }
 
-/* 3D Timeline Container */
 .timeline-3d-container {
   position: relative;
   padding: 4rem 0;
 }
 
-/* Timeline */
 .timeline-beam {
   position: absolute;
   left: 50%;
@@ -1032,7 +1023,6 @@ html {
   box-shadow: 0 0 10px var(--glow);
 }
 
-/* 3D Cards */
 .timeline-card-3d {
   position: relative;
   margin-bottom: 6rem;
@@ -1088,7 +1078,6 @@ html {
   z-index: 1;
 }
 
-/* Year Section */
 .card-year-section {
   display: flex;
   justify-content: space-between;
@@ -1096,7 +1085,6 @@ html {
   margin-bottom: 2rem;
 }
 
-/* Card Content */
 .card-content-body {
   position: relative;
 }
@@ -1159,7 +1147,6 @@ html {
   display: none;
 }
 
-/* Connection Nodes */
 .connection-node {
   position: absolute;
   left: calc(50% - 8px);
@@ -1183,7 +1170,6 @@ html {
   display: none;
 }
 
-/* Dark Mode */
 @media (prefers-color-scheme: dark) {
   .education-section {
     background: var(--bg-dark);
@@ -1256,7 +1242,6 @@ html {
   }
 }
 
-/* Light Mode */
 @media (prefers-color-scheme: light) {
   .education-section {
     background: var(--bg-light);
@@ -1330,7 +1315,6 @@ html {
   }
 }
 
-/* Mobile Responsive - New Gen */
 @media (max-width: 768px) {
   .education-section {
     padding: 3rem 1rem;
@@ -1467,7 +1451,6 @@ html {
   }
 }
 
-/* Tablet Responsive */
 @media (min-width: 769px) and (max-width: 1024px) {
   .timeline-item.left {
     padding-right: calc(50% + 2rem);
@@ -1482,9 +1465,7 @@ html {
   }
 }
 
-/* All door styles have been removed - using modern timeline design instead */
 
-/* Company Card Styles */
 .company-card {
   background: var(--card-bg);
   border: 2px solid var(--card-border);
@@ -1742,7 +1723,6 @@ html {
   transform: translateX(5px) translateY(-5px);
 }
 
-/* Disabled state for submit button */
 .send-button:disabled,
 .send-button.submitting {
   opacity: 0.6;
@@ -1753,7 +1733,6 @@ html {
   box-shadow: none;
 }
 
-/* Form status messages */
 .form-status {
   margin-top: 1rem;
   padding: 1rem 1.5rem;
@@ -1990,7 +1969,6 @@ html {
   .skill-card {
     transform: translateZ(-15px);
   }
-  /* Expanded state for tablets in portrait */
   .skill-card.expanded {
     transform: translateY(-5px) scale(1.01) !important;
     box-shadow: 
@@ -1998,7 +1976,6 @@ html {
       inset -4px -4px 10px rgba(0, 0, 0, 0.12),
       0 10px 30px rgba(59, 130, 246, 0.12) !important;
   }
-  /* Tablet hover effect only for devices with cursor */
   @media (hover: hover) {
     .skill-card:hover {
       transform: translateY(-10px) translateZ(20px) scale(1.04);
@@ -2201,7 +2178,6 @@ html {
     height: 150px;
     margin-bottom: 1.2rem;
   }
-  /* Mobile hover effect only for devices with cursor */
   @media (hover: hover) {
     .skill-card:hover {
       transform: translateY(-8px) scale(1.03);
@@ -2262,7 +2238,6 @@ html {
     padding: 2rem;
     min-height: 350px;
   }
-  /* Expanded state for mobile */
   .skill-card.expanded {
     transform: translateY(-3px) scale(1.005) !important;
     box-shadow: 

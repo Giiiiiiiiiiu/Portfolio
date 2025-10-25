@@ -52,13 +52,11 @@ a {
 a:hover {
   color: #8b5cf6;
 }
-/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 12px;
   height: 12px;
 }
 
-/* Dark Mode Scrollbar */
 ::-webkit-scrollbar-track {
   background: linear-gradient(180deg, #1a1a1c 0%, #0a0a0f 100%);
   border-radius: 10px;
@@ -83,7 +81,6 @@ a:hover {
   background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
 }
 
-/* Light Mode Scrollbar */
 @media (prefers-color-scheme: light) {
   ::-webkit-scrollbar-track {
     background: linear-gradient(180deg, #f8f9fa 0%, #e5e7eb 100%);

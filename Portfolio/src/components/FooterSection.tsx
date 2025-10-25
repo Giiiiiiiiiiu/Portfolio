@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import React, { memo, useMemo } from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-/* import { FaXTwitter } from 'react-icons/fa6'; */
 
 const FooterSection = memo(() => {
   const isMobile = useMemo(() => window.innerWidth <= 768, []);
@@ -18,13 +17,7 @@ const FooterSection = memo(() => {
       icon: <FaLinkedin />,
       url: 'https://www.linkedin.com/in/sergey-kotenkov-22b718382',
       color: '#0077B5'
-    },
-   /*  {
-      name: 'X',
-      icon: <FaXTwitter />,
-      url: 'https://x.com/yourusername',
-      color: '#000000'
-    } */
+    }
   ];
 
   return (

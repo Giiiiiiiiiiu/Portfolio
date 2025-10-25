@@ -22,17 +22,17 @@ const SkillsSection = memo(() => {
   
   const getSkillIcon = useCallback((skillId: number) => {
     switch(skillId) {
-      case 1: // App Entwicklung
+      case 1:
         return <img src={handySvg} alt="App Entwicklung" className="skill-svg-icon" />;
-      case 2: // Web Entwicklung
+      case 2:
         return <img src={webSvg} alt="Web Entwicklung" className="skill-svg-icon" />;
-      case 3: // Game Entwicklung
+      case 3:
         return <img src={gameSvg} alt="Game Entwicklung" className="skill-svg-icon" />;
-      case 4: // Cloud & DevOps
+      case 4:
         return <img src={cloudSvg} alt="Cloud & DevOps" className="skill-svg-icon" />;
-      case 5: // Datenbanken
+      case 5:
         return <img src={databaseSvg} alt="Datenbanken" className="skill-svg-icon" />;
-      case 6: // Echtzeit-Kommunikation
+      case 6:
         return <img src={lightningSvg} alt="Echtzeit-Kommunikation" className="skill-svg-icon" />;
       default:
         return <span className="skill-emoji">🔧</span>;
