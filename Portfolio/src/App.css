@@ -84,11 +84,13 @@ html {
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   height: -webkit-fill-available;
+  overflow-anchor: none;
 }
 body {
   min-height: 100vh;
   min-height: -webkit-fill-available;
   min-height: calc(var(--vh, 1vh) * 100);
+  overflow-anchor: none;
 }
 .app {
   background: var(--bg-dark);
@@ -364,11 +366,15 @@ body {
   overflow: hidden;
   min-height: calc(var(--vh, 1vh) * 100);
   min-height: -webkit-fill-available;
+  isolation: isolate;
+  contain: layout;
 }
 .hero-background-reveal {
   will-change: mask-position, -webkit-mask-position;
   transform: translateZ(0);
   backface-visibility: hidden;
+  pointer-events: none;
+  contain: layout style paint;
 }
 @media (prefers-color-scheme: light) {
   .hero-background-reveal {
@@ -378,8 +384,11 @@ body {
 }
 @media (max-width: 768px) {
   .hero-background-reveal {
-    mask-size: 150% 150% !important;
-    -webkit-mask-size: 150% 150% !important;
+    background-size: 150% 150% !important;
+    mask-size: 100% 100% !important;
+    -webkit-mask-size: 100% 100% !important;
+    transform: scale(1);
+    transform-origin: center center;
   }
 }
 @media (prefers-color-scheme: light) and (max-width: 768px) {
@@ -392,6 +401,8 @@ body {
   text-align: center;
   position: relative;
   z-index: 2;
+  transform: translateZ(0);
+  will-change: transform;
 }
 .profile-image-container {
   position: relative;
