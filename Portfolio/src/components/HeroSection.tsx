@@ -4,7 +4,6 @@ import heroData from '../resources/hero.json';
 
 const HeroSection = memo(() => {
   const isMobile = useMemo(() => window.innerWidth <= 768, []);
-  const [viewportSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [mousePosition, setMousePosition] = useState({ x: 150, y: 150 });
   const [isEffectActive, setIsEffectActive] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -63,18 +62,14 @@ const HeroSection = memo(() => {
       <div 
         className="hero-background-reveal"
           style={{
-            position: 'fixed',
+            position: 'absolute',
             top: 0,
             left: 0,
-            right: 0,
-            bottom: 0,
-            width: isMobile ? `${viewportSize.width}px` : '100vw',
-            height: isMobile ? `${viewportSize.height}px` : '100vh',
-            maxWidth: isMobile ? `${viewportSize.width}px` : '100vw',
-            maxHeight: isMobile ? `${viewportSize.height}px` : '100vh',
+            width: '100%',
+            height: '100%',
             backgroundImage: `url(${import.meta.env.BASE_URL}${isDarkMode ? 'OpacityBackground_BLACK.svg' : 'OpacityBackground_WHITE.svg'})`,
-            backgroundSize: isMobile ? `${viewportSize.width * 1.5}px ${viewportSize.height * 1.5}px` : '120% 120%',
-            backgroundPosition: 'center center',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             opacity: isEffectActive ? 1 : 0,
             zIndex: 0,
